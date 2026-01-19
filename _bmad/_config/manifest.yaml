@@ -1,0 +1,12 @@
+installation:
+  version: 6.0.0-alpha.23
+  installDate: 2026-01-18T21:49:14.290Z
+  lastUpdated: 2026-01-18T21:49:14.290Z
+modules:
+  - core
+  - bmb
+  - bmm
+  - cis
+ides:
+  - github-copilot
+  - roo
