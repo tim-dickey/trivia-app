@@ -628,6 +628,59 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 
 ---
 
+#### Feature 6.4: Enterprise AI Model Selection
+
+**Purpose:** Enable enterprise organizations to customize AI model selection for events while maintaining security and governance at other tiers
+
+**User Stories:**
+
+**US-6.4.1:** As an enterprise facilitator, I can select from approved AI models when creating trivia events.
+
+**Acceptance Criteria:**
+- [ ] Enterprise tier only: model selection available
+- [ ] Dropdown showing available models (default: Microsoft Copilot or organization-selected model)
+- [ ] Model selection appears in session setup wizard
+- [ ] Selected model used for generating explanations, hints, and feedback
+- [ ] Selection persists as organization default (can be overridden per-event)
+- [ ] Clear labeling: "GPT-5.1-Codex-Max" vs. other available options
+- [ ] Feature locked/hidden for free and premium tiers (shows selected org model only)
+
+**US-6.4.2:** As an enterprise admin, I can set default AI model and approved models for all facilitators.
+
+**Acceptance Criteria:**
+- [ ] Admin console: "AI Model Configuration" section
+- [ ] Set organization-wide default model
+- [ ] Whitelist approved models available to facilitators
+- [ ] Audit log: track which facilitators use which models
+- [ ] Can restrict to single model or allow facilitator choice
+- [ ] Default: Microsoft Copilot (fallback for all orgs not configured)
+- [ ] Alternative: API call to organization's preferred model provider
+- [ ] Configuration tied to organization profile (not user)
+
+**US-6.4.3:** As the product, I route model requests appropriately based on subscription tier.
+
+**Acceptance Criteria:**
+- [ ] Free tier: locked to Microsoft Copilot (no selection)
+- [ ] Premium tier: locked to organization-selected default model (no selection)
+- [ ] Enterprise tier: facilitators can select from approved models per event
+- [ ] API layer: transparent model routing based on tier and org config
+- [ ] Fallback to Microsoft Copilot if model unavailable
+- [ ] Error handling: graceful degradation if selected model fails
+
+**US-6.4.4:** As an organization, I can integrate with my preferred AI API provider.
+
+**Acceptance Criteria:**
+- [ ] Admin console: "AI Provider Integration" section
+- [ ] Configure API keys securely (encrypted at rest, httpOnly storage)
+- [ ] Support for multiple providers: OpenAI, Anthropic, Azure OpenAI, etc.
+- [ ] Test connection: validate API credentials before saving
+- [ ] Usage tracking: see API call volume per model per org
+- [ ] Cost allocation: understand spend by model and session
+- [ ] Failover: automatically fall back to Microsoft Copilot on auth failure
+- [ ] Documentation: clear setup guide for each provider
+
+---
+
 ## 5. Non-Functional Requirements
 
 ### Performance Requirements
@@ -1131,6 +1184,7 @@ ws.onmessage = (event) => {
 4. Time-limited challenges
 5. Progress tracking dashboard
 6. New hire onboarding module
+7. Enterprise AI Model Selection (GPT-5.1-Codex-Max and provider integration)
 
 **Tier 2: Medium Priority (Months 7-9)**
 1. Video conferencing deep integration (Zoom, Teams native)
@@ -1140,6 +1194,7 @@ ws.onmessage = (event) => {
 5. Competency mapping framework
 6. Peer learning/mentorship
 7. Micro-credentialing and badges
+8. AI Model cost optimization and usage analytics
 
 **Tier 3: Lower Priority (Months 10+)**
 1. Streaming service personalization patterns
@@ -1231,6 +1286,10 @@ ws.onmessage = (event) => {
 | **White-Label** | Branded interface for enterprise customers |
 | **Coffee Break Trivia** | Async trivia integrated into Slack/Teams for daily engagement |
 | **Observer Mode** | Low-pressure viewing of trivia without competitive scoring |
+| **Enterprise Tier** | Premium subscription with model selection and governance features |
+| **AI Model Selection** | Enterprise feature allowing facilitators to choose from approved AI models |
+| **Model Provider Integration** | Enterprise feature for connecting to custom AI API providers (OpenAI, Anthropic, etc.) |
+| **Microsoft Copilot** | Default AI model used across free and standard tiers |
 
 ---
 
