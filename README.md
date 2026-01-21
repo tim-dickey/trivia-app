@@ -1,0 +1,2 @@
+# trivia-app
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/385240962b854619a77ac4459e1b3087)](https://app.codacy.com/gh/tim-dickey/trivia-app?utm_source=github.com&utm_medium=referral&utm_content=tim-dickey/trivia-app&utm_campaign=Badge_Grade)
