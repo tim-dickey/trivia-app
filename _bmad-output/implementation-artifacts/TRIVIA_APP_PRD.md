@@ -82,7 +82,99 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 
 ---
 
-## 3. User Personas & Scenarios
+## 3. Product Scope
+
+### MVP In-Scope (Phase 1: Months 1-3)
+
+**Core Platform:**
+- User authentication and session management
+- Multi-organization and team management with role-based access
+- Session creation wizard with <2 minute setup target
+- Real-time WebSocket infrastructure for live scoring
+
+**Core Facilitation Features:**
+- Lightning round opening trivia (3-5 questions, 5-7 minute duration)
+- Post-session knowledge check trivia (8-10 questions with immediate feedback)
+- Real-time team scoring and leaderboards
+- Live question display optimized for screen sharing
+
+**Mobile Experience:**
+- Responsive mobile-web interface (no native apps)
+- Mobile-first design (320px-1920px)
+- Touch-optimized question answering
+- Real-time score updates on mobile devices
+
+**Integration & Persistence:**
+- Slack bot integration for coffee break trivia
+- Microsoft Teams bot integration (basic)
+- Chat platform slash commands and scheduled questions
+- WebSocket-based hybrid session support (in-person + remote participants)
+
+**Engagement Mechanics:**
+- Team-based competition (3-5 people per team)
+- Immediate educational feedback on answers
+- Basic analytics dashboard (session results, team performance)
+- Question bank management with pre-built templates
+
+### Explicitly Out-of-Scope (Deferred Post-MVP)
+
+**Not in MVP:**
+- Native mobile applications (iOS/Android app store apps)
+- Deep video conferencing SDK integration (Zoom, Teams, WebEx native plugins)
+- Advanced admin dashboards with drill-down analytics
+- Streak tracking and habit formation features
+- AI-powered knowledge gap analysis (rule-based postponed to Phase 2)
+- Time-limited flash challenges with FOMO mechanics
+- Progress tracking over time and learning trajectories
+- New hire onboarding specialized module
+- Observer mode for low-pressure participation
+- Practice mode for solo preparation
+- Enterprise AI model selection and provider integration
+- Client/partner education platform (white-label)
+- Event sponsorship/conference mode
+
+**Deferred Features by Phase:**
+
+**Phase 2 (Months 4-6):**
+- Streak tracking and participation milestones
+- Knowledge gap analysis with recommendations
+- Time-limited flash challenges
+- Progress tracking dashboard with learning velocity
+- Video conferencing integration improvements
+- Observer mode and practice mode
+- Enhanced coffee break trivia features
+
+**Phase 3+ (Months 7+):**
+- Enterprise AI model selection (Feature 6.4)
+- New hire onboarding module with learning paths
+- Peer-led session mode
+- Advanced analytics and ROI reporting
+- Client education platform (white-label licensing)
+- Conference/event sponsorship mode
+- LMS integrations
+- Additional engagement mechanics (badges, micro-credentialing, competency mapping)
+
+### Scope Boundaries & Constraints
+
+**Technical Constraints:**
+- MVP targets 5000 concurrent participants maximum (not 10K+)
+- Browser-based only (no native platform apps)
+- Basic real-time infrastructure (optimize in Phase 2)
+- Manual team assignment initially (auto-assign in Phase 2)
+
+**Business Constraints:**
+- Free tier with limited features (validate adoption)
+- Premium tier deferred to Month 5 (monetization phase)
+- White-label licensing deferred to Month 6 (enterprise readiness)
+
+**Integration Constraints:**
+- Slack and Teams basic integration only (no advanced workflows)
+- Video conferencing: shallow integration via URL sharing (no SDK)
+- Authentication: basic email/password (SSO deferred to post-MVP)
+
+---
+
+## 4. User Personas & Scenarios
 
 ### Persona 1: Training Facilitator (Laura)
 
@@ -164,20 +256,20 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 **Acceptance Criteria:**
 - [ ] Facilitator can launch new session with pre-built template in <2 minutes
 - [ ] Template includes prompt to select question category (industry knowledge, company culture, professional backgrounds)
-- [ ] Facilitator can quickly form teams (auto-assign or manual)
+- [ ] Facilitator can form teams in <30 seconds (auto-assign or manual)
 - [ ] Team size options: 3-5 people per team
 - [ ] Session duration countdown visible (5-7 minutes)
-- [ ] Questions display clearly on central screen (supports screen sharing)
+- [ ] Questions display on central screen with font ≥24px, contrast ≥4.5:1, readable from 30ft (supports screen sharing)
 - [ ] Participants answer on mobile devices simultaneously
 - [ ] Real-time answer submission with clear "question locked" state
 - [ ] Team scores update live during session
 
-**US-1.1.2:** As a participant, I can quickly answer opening trivia questions on my mobile device so that I feel welcomed into the training moment.
+**US-1.1.2:** As a participant, I can answer opening trivia questions on my mobile device in <10 seconds per question so that I feel welcomed into the training moment.
 
 **Acceptance Criteria:**
 - [ ] Mobile interface loads within 2 seconds
-- [ ] Question text readable on any device size
-- [ ] Multiple choice options clearly clickable on mobile
+- [ ] Question text readable on any device size (minimum 16px font, contrast ≥4.5:1)
+- [ ] Multiple choice options clickable on mobile with buttons ≥48x48px, spacing ≥8px, contrast ≥4.5:1
 - [ ] Answer submission requires single click/tap
 - [ ] Clear visual feedback when answer submitted (button state change)
 - [ ] Countdown timer visible for question window
@@ -189,7 +281,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 - [ ] Live scoreboard displays team names and scores
 - [ ] Updates in real-time as answers come in
 - [ ] Scoreboard visible on screen facilitator controls
-- [ ] Final scores clearly announced at end of round
+- [ ] Final scores announced at end of round with font ≥32px, visible to all participants
 - [ ] Option to announce winning team or keep scores private
 
 ---
@@ -245,7 +337,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 **US-2.1.1:** As an in-person participant, I can answer trivia on my phone while seeing questions displayed on the screen, just like remote participants.
 
 **Acceptance Criteria:**
-- [ ] Facilitator shares screen showing current question (simple design)
+- [ ] Facilitator shares screen showing current question (minimal distractions, focus on question text ≥24px)
 - [ ] Participants access web URL (unique session code) on phones
 - [ ] All participants see same question displayed on screen simultaneously
 - [ ] Participants answer on phones, scores update in real-time on screen
@@ -283,7 +375,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 **Acceptance Criteria:**
 - [ ] Bot responds to `/trivia` command to start challenge
 - [ ] Question posts in channel or via DM (configurable)
-- [ ] Multiple choice options clearly formatted
+- [ ] Multiple choice options formatted with clear numbering/emoji, one option per line, readable formatting
 - [ ] Participants reply with their answer in thread
 - [ ] Bot accepts emoji reactions or text responses
 - [ ] 24-hour window to answer (async participation)
@@ -301,7 +393,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 **US-2.2.3:** As a team, we see coffee break trivia as part of our learning culture, not corporate compliance.
 
 **Acceptance Criteria:**
-- [ ] Questions feel relevant and interesting
+- [ ] Questions achieve ≥90% participant satisfaction rating in post-session survey (measured on 5-point scale)
 - [ ] Mix of reinforcement (training-related) + culture (company knowledge)
 - [ ] Tone is playful, not mandatory
 - [ ] No leaderboards (psychological safety)
@@ -405,7 +497,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 - [ ] Track topics trending up vs. down
 - [ ] Compare same questions asked at different times
 - [ ] Team-level aggregation
-- [ ] Show learning velocity: how quickly topics mastered
+- [ ] Show learning velocity: time to reach 80% mastery threshold per topic
 
 **US-3.4.2:** As an individual, I can see my learning progress.
 
@@ -458,12 +550,12 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 **US-4.1.3:** As a participant, I receive clear instructions on how to join and participate.
 
 **Acceptance Criteria:**
-- [ ] Session link clear and simple (trivia.app/join/ABC123)
+- [ ] Session link follows simple pattern (trivia.app/join/ABC123) - participant completes join in <3 clicks
 - [ ] Mobile page auto-detects device
 - [ ] Single input field: "Enter team name"
 - [ ] Join button immediately enters session
 - [ ] Waiting screen shows: "Waiting for facilitator to start"
-- [ ] No confusing options or settings
+- [ ] Join process completes with zero errors in usability testing (95% success rate first attempt)
 
 ---
 
@@ -477,7 +569,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 
 **Acceptance Criteria:**
 - [ ] After question closes, show results screen with:
-  - Correct answer clearly highlighted
+  - Correct answer highlighted in green (#00B34D) with checkmark, font ≥18px
   - Brief explanation (1-2 sentences) of correct concept
   - If wrong: common misconceptions explained
   - Visual indicator (green checkmark for correct, red X for wrong)
@@ -561,7 +653,7 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 **US-6.1.1:** As a team member (not official trainer), I can launch a trivia session for my team.
 
 **Acceptance Criteria:**
-- [ ] Same simple 3-step wizard as facilitator
+- [ ] Same 3-step wizard as facilitator (completes setup in <2 minutes)
 - [ ] No special permissions required
 - [ ] Pre-built templates available
 - [ ] Can be launched spontaneously during team meetings
@@ -696,25 +788,25 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 
 ### Security Requirements
 
-- [ ] HTTPS/TLS encryption for all data in transit
-- [ ] Password hashing (bcrypt or equivalent)
-- [ ] Rate limiting on API endpoints (prevent abuse)
-- [ ] SQL injection prevention (parameterized queries)
-- [ ] CSRF protection for forms
-- [ ] Input validation on all user inputs
-- [ ] Secure session management (httpOnly cookies)
-- [ ] Data encryption at rest (MVP: application-level, post-MVP: DB-level)
-- [ ] GDPR compliance (data export, deletion)
-- [ ] SOC 2 audit readiness (post-MVP)
+- [ ] HTTPS/TLS encryption for all data in transit (validated via SSL Labs testing)
+- [ ] Password hashing (bcrypt or equivalent with salt rounds ≥10, validated via code review)
+- [ ] Rate limiting on API endpoints 100 req/min per IP (validated via load testing)
+- [ ] SQL injection prevention (parameterized queries, validated via OWASP ZAP automated scanning)
+- [ ] CSRF protection for forms (validated via security testing)
+- [ ] Input validation on all user inputs (validated via fuzzing and penetration testing)
+- [ ] Secure session management (httpOnly cookies, validated via security audit)
+- [ ] Data encryption at rest (MVP: application-level AES-256, post-MVP: DB-level, validated via compliance review)
+- [ ] GDPR compliance (data export, deletion, validated via legal review and automated testing)
+- [ ] SOC 2 audit readiness (post-MVP, enables enterprise sales and demonstrates security maturity, validated via third-party audit)
 
 ### Scalability Requirements
 
-- [ ] Horizontal scaling: stateless app servers
-- [ ] Database: connection pooling, read replicas for analytics
-- [ ] Static assets: CDN delivery
-- [ ] Real-time: WebSocket scalability (Redis Pub/Sub or similar)
-- [ ] Load testing: simulate 5000 concurrent users
-- [ ] Auto-scaling: infrastructure auto-scales with load
+- [ ] Horizontal scaling: stateless app servers (validated via load testing with multiple instances)
+- [ ] Database: connection pooling, read replicas for analytics (validated via query performance monitoring under load)
+- [ ] Static assets: CDN delivery (validated via geographic latency testing from multiple regions)
+- [ ] Real-time: WebSocket scalability supporting 5000+ concurrent connections (Redis Pub/Sub or similar, validated via concurrent connection testing)
+- [ ] Load testing: simulate 5000 concurrent users with Locust or JMeter, maintaining <500ms p95 response time
+- [ ] Auto-scaling: infrastructure auto-scales with load (validated via progressive load testing triggering scale events)
 
 ### Accessibility Requirements
 
@@ -728,13 +820,13 @@ MVP success = validated product/market fit demonstrating that trivia-based engag
 
 ### Browser & Device Support
 
-- [ ] Chrome (latest 2 versions)
-- [ ] Safari (latest 2 versions)
-- [ ] Firefox (latest 2 versions)
-- [ ] Mobile Safari iOS 12+
-- [ ] Chrome Mobile Android 9+
-- [ ] Responsive design: 320px - 1920px
-- [ ] Touch-optimized mobile experience
+- [ ] Chrome (latest 2 versions, validated on BrowserStack)
+- [ ] Safari (latest 2 versions, validated on BrowserStack)
+- [ ] Firefox (latest 2 versions, validated on BrowserStack)
+- [ ] Mobile Safari iOS 12+ (validated on real devices and BrowserStack)
+- [ ] Chrome Mobile Android 9+ (validated on real devices and BrowserStack)
+- [ ] Responsive design: 320px - 1920px (validated via responsive design testing tools)
+- [ ] Touch-optimized mobile experience (buttons ≥48x48px, validated via mobile usability testing)
 
 ---
 
