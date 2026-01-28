@@ -2,12 +2,12 @@
 Integration tests for Authentication API endpoints
 Tests registration, login, and logout with complete request/response cycle
 """
-import pytest
+# import pytest  # Removed unused import
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from backend.models.organization import Organization
-from backend.models.user import User, UserRole
+from backend.models.organization import Organization  # noqa: F401
+from backend.models.user import User, UserRole  # noqa: F401
 from backend.core.security import verify_password
 from backend.db.crud import user_crud
 

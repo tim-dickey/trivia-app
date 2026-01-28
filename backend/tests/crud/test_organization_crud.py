@@ -9,7 +9,7 @@ import uuid
 
 from backend.db.crud import organization_crud
 from backend.schemas.organization import OrganizationCreate
-from backend.models.organization import Organization, PlanType
+from backend.models.organization import Organization, PlanType  # noqa: F401
 
 
 class TestOrganizationCRUD:
