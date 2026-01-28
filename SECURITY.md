@@ -2,36 +2,34 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+This project is currently in active development (v0.1.0). Security updates are applied to the main branch and all active development branches.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 0.1.x (dev) | :white_check_mark: |
+| < 0.1   | :x:                |
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in this project, **do not open a public issue**.
-Instead, please use GitHub’s private security advisories for this repository:
+We take security vulnerabilities seriously. If you discover a security issue, please report it responsibly:
 
-1. Navigate to this repository on GitHub.
-2. Click on the **Security** tab.
-3. Select **Report a vulnerability** and follow the instructions to open a private security advisory.
+1. **Do not** open a public GitHub issue for security vulnerabilities
+2. Report security concerns using GitHub's private vulnerability reporting feature (Security tab, then Report a vulnerability)
+3. Include detailed information about the vulnerability:
+   - Description of the issue
+   - Steps to reproduce
+   - Potential impact
+   - Version(s) affected
+   - Suggested fixes (if any)
 
-When reporting, please include as much of the following information as possible:
+**Response Timeline:**
+- Initial acknowledgment within 5 business days
+- Status updates every 5-7 days
+- Target fix timeline provided within 1 week of confirmation
 
-- A clear description of the issue and its potential impact.
-- Steps to reproduce, including sample code or configuration if applicable.
-- The version(s) of this project you tested.
-- Any relevant logs, stack traces, or screenshots.
+**What to Expect:**
+- **Accepted vulnerabilities**: We'll work with you on a fix timeline and coordinate public disclosure after a patch is released and users have had time to upgrade
+- **Declined reports**: We'll provide a detailed explanation if the report doesn't qualify as a security issue
 
-### Response and disclosure process
-
-- We aim to acknowledge new reports within **5 business days**.
-- We will provide updates at least every **7 business days** while the issue is being investigated.
-- Once a fix is identified, we will work to prepare and release a patch and update the SECURITY.md or release notes as appropriate.
-- We prefer **coordinated disclosure**: details of the vulnerability should remain private until a fix has been released and users have had a reasonable opportunity to upgrade.
-- After a fix is available, we may publish a public advisory summarizing the issue, impact, and remediation steps.
+**Coordinated Disclosure:**
+Please keep vulnerability details private until we've released a fix and notified users. We'll work with you to coordinate disclosure timing that protects users while giving you proper credit for the discovery.
