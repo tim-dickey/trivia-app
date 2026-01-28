@@ -14,7 +14,7 @@ This project is currently in active development (v0.1.0). Security updates are a
 We take security vulnerabilities seriously. If you discover a security issue, please report it responsibly:
 
 1. **Do not** open a public GitHub issue for security vulnerabilities
-2. Report security concerns using GitHub's private vulnerability reporting feature (Security tab, then "Report a vulnerability")
+2. Report security concerns using GitHub's private vulnerability reporting feature (Security tab, then Report a vulnerability)
 3. Include detailed information about the vulnerability:
    - Description of the issue
    - Steps to reproduce
