@@ -16,4 +16,4 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/" # Location of GitHub Actions workflows (typically .github/workflows)
     schedule:
-      interval: "bi-weekly"
+      interval: "weekly"
