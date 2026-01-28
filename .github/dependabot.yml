@@ -5,7 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/frontend" # Location of npm package manifests
+    schedule:
+      interval: "bi-weekly"
+  - package-ecosystem: "pip"
+    directory: "/backend" # Location of Python package manifests
+    schedule:
+      interval: "bi-weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/" # Location of GitHub Actions workflows (typically .github/workflows)
     schedule:
       interval: "bi-weekly"
