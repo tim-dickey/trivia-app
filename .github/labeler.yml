@@ -1,0 +1,33 @@
+# Auto-label PRs based on changed files
+
+backend:
+  - changed-files:
+    - any-glob-to-any-file: 'backend/**/*'
+
+frontend:
+  - changed-files:
+    - any-glob-to-any-file: 'frontend/**/*'
+
+docs:
+  - changed-files:
+    - any-glob-to-any-file: 'docs/**/*'
+
+tests:
+  - changed-files:
+    - any-glob-to-any-file: '**/*test*.py'
+    - any-glob-to-any-file: '**/tests/**/*'
+
+dependencies:
+  - changed-files:
+    - any-glob-to-any-file: '**/requirements.txt'
+    - any-glob-to-any-file: '**/package.json'
+
+ci-cd:
+  - changed-files:
+    - any-glob-to-any-file: '.github/**/*'
+    - any-glob-to-any-file: 'docker-compose.yml'
+
+security:
+  - changed-files:
+    - any-glob-to-any-file: '.codacy.yml'
+    - any-glob-to-any-file: '**/security.py'

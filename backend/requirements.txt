@@ -2,34 +2,33 @@
 # Generated for trivia-app Story 1.1
 
 # Core Framework
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
 
 # Database
-sqlalchemy==2.0.23
-alembic==1.12.1
+sqlalchemy==2.0.46
+alembic==1.13.1
 psycopg[binary]==3.1.13
 
 # Authentication & Security
-python-jose[cryptography]==3.3.0
+python-jose[cryptography]==3.4.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.6
+python-multipart==0.0.22
 
 # Task Queue
 celery==5.3.4
 redis==5.0.1
 
 # Validation & Settings
-pydantic==2.5.0
+pydantic==2.12.5
 pydantic-settings==2.1.0
 
 # Testing
-pytest==7.4.3
-pytest-asyncio==0.21.1
+pytest==7.4.4
+pytest-asyncio==0.23.3
 pytest-cov==4.1.0
-httpx==0.25.1
+httpx==0.25.2
 
 # Development
 ruff==0.1.6
-black==23.11.0
+black==24.3.0
