@@ -1,3 +1,11 @@
 {
-    "codacy.cli.cliVersion": "1.0.0-main.368.sha.e1bb1bc"
+    "codacy.cli.cliVersion": "1.0.0-main.368.sha.e1bb1bc",
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+    "python.analysis.extraPaths": ["${workspaceFolder}/backend"],
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticMode": "workspace",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnSave": true
+    }
 }
