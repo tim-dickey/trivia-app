@@ -37,8 +37,8 @@ def db() -> Generator[Session, None, None]:
     Rolls back all changes after test completes
     """
     # Import all models to ensure they're registered with Base
-    from backend.models.organization import Organization
-    from backend.models.user import User
+    from backend.models.organization import Organization  # noqa: F401
+    from backend.models.user import User  # noqa: F401
     
     # Create all tables before each test
     Base.metadata.drop_all(bind=test_engine)  # Ensure clean state
@@ -67,8 +67,8 @@ def client(db: Session) -> Generator[TestClient, None, None]:
     Uses the same db session as other fixtures for consistency
     """
     # Ensure all models are imported and registered
-    from backend.models.organization import Organization
-    from backend.models.user import User
+    from backend.models.organization import Organization  # noqa: F401
+    from backend.models.user import User  # noqa: F401
     
     def override_get_db():
         try:

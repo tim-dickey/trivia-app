@@ -9,7 +9,7 @@ import uuid
 from datetime import datetime
 
 from backend.models.user import User, UserRole
-from backend.models.organization import Organization, PlanType
+from backend.models.organization import Organization, PlanType  # noqa: F401
 from backend.core.security import hash_password, verify_password
 
 

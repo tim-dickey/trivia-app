@@ -13,7 +13,7 @@ psycopg[binary]==3.1.13
 # Authentication & Security
 python-jose[cryptography]==3.4.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.18
+python-multipart==0.0.22
 
 # Task Queue
 celery==5.3.4

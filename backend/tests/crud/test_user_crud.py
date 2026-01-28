@@ -10,7 +10,7 @@ import uuid
 from backend.db.crud import user_crud
 from backend.schemas.user import UserCreate, UserUpdate
 from backend.models.user import User, UserRole
-from backend.models.organization import Organization, PlanType
+from backend.models.organization import Organization, PlanType  # noqa: F401
 from backend.core.security import verify_password
 
 
