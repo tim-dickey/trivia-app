@@ -14,11 +14,12 @@ This project is currently in active development (v0.1.0). Security updates are a
 We take security vulnerabilities seriously. If you discover a security issue, please report it responsibly:
 
 1. **Do not** open a public GitHub issue for security vulnerabilities
-2. Report security concerns using GitHub's private vulnerability reporting feature (Security → Report a vulnerability)
+2. Report security concerns using GitHub's private vulnerability reporting feature (Security tab, then "Report a vulnerability")
 3. Include detailed information about the vulnerability:
    - Description of the issue
    - Steps to reproduce
    - Potential impact
+   - Version(s) affected
    - Suggested fixes (if any)
 
 **Response Timeline:**
@@ -27,5 +28,8 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 - Target fix timeline provided within 1 week of confirmation
 
 **What to Expect:**
-- **Accepted vulnerabilities**: We'll work with you on a fix timeline and coordinate disclosure
+- **Accepted vulnerabilities**: We'll work with you on a fix timeline and coordinate public disclosure after a patch is released and users have had time to upgrade
 - **Declined reports**: We'll provide a detailed explanation if the report doesn't qualify as a security issue
+
+**Coordinated Disclosure:**
+Please keep vulnerability details private until we've released a fix and notified users. We'll work with you to coordinate disclosure timing that protects users while giving you proper credit for the discovery.
