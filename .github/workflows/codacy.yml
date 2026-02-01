@@ -80,8 +80,9 @@ jobs:
       - name: Run tests with coverage
         env:
           DATABASE_URL: sqlite:///./test_trivia.db
+          PYTHONPATH: .
         run: |
-          PYTHONPATH=. pytest --cov=backend --cov-report=xml
+          pytest --cov=backend --cov-report=xml
 
       - name: Upload coverage to Codacy
         uses: codacy/codacy-coverage-reporter-action@v1
