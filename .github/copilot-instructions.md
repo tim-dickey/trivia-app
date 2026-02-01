@@ -57,7 +57,7 @@ trivia-app/
 - Never commit secrets or sensitive data to the repository
 - Use environment variables for configuration
 - JWT tokens should use httpOnly cookies for refresh tokens
-- Password hashing uses bcrypt with 12 rounds (configured in core/security.py)
+- Password hashing uses bcrypt (12 rounds by default via passlib's `CryptContext` in `backend/core/security.py`)
 - Always validate and sanitize user inputs using Pydantic schemas
 
 #### Testing
@@ -69,7 +69,7 @@ trivia-app/
 
 #### API Standards
 - All endpoints must be under `/api/v1/` prefix
-- Success responses: `{"data": {...}}`
+- Success responses: Return Pydantic schemas directly (no wrapper)
 - Error responses: `{"error": {"code": "ERROR_CODE", "message": "description"}}`
 - Use proper HTTP status codes (200, 201, 400, 401, 403, 404, 500)
 
