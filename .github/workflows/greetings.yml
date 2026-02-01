@@ -15,3 +15,6 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: "Message that will be displayed on users' first issue"
         pr-message: "Message that will be displayed on users' first pull request"
+    
+    - name: Ensure success
+      run: echo "Greeting workflow completed"
