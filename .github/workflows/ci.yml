@@ -72,9 +72,13 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
-          # Note: Using npm install (not npm ci) because package-lock.json doesn't exist yet
-          # TODO: Generate package-lock.json and switch to npm ci for faster, reproducible builds
-          npm install
+          if [ -f package-lock.json ]; then
+            echo "Detected package-lock.json, using npm ci for reproducible installs"
+            npm ci
+          else
+            echo "No package-lock.json found, using npm install (consider adding a lockfile)"
+            npm install
+          fi
 
       - name: Run linter
         run: |

@@ -33,9 +33,9 @@ The trivia-app project uses GitHub Actions for continuous integration, code qual
 1. Checks out repository code
 2. Sets up Node.js 20 environment
 3. Installs frontend dependencies
-4. Runs ESLint linter
-5. Runs Vitest test suite
-6. Builds frontend to verify no build errors
+4. Runs ESLint linter (non-blocking)
+5. Runs Vitest test suite (non-blocking)
+6. Attempts to build frontend to surface build errors (non-blocking; failures do not currently fail CI)
 
 **Requirements**:
 - **Secret**: `CODACY_PROJECT_TOKEN` (optional - workflow continues without it)

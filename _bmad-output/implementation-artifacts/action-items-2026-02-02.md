@@ -24,7 +24,7 @@ This document contains prioritized action items derived from the comprehensive c
   - Checkout + Setup
   - Backend tests (once)
   - Frontend tests (optional until tests added)
-  - Upload results to Codacy AND CodeHub/Codecov
+  - Upload results to Codacy and Codecov
   
 .github/workflows/security-scheduled.yml:
   - Run only on schedule + main branch merges
