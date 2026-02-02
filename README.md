@@ -2,6 +2,8 @@
 
 A multi-tenant trivia application for corporate training and team engagement.
 
+> 📍 **New to the project?** See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to finding files in the repository.
+
 ## Project Structure
 
 ```
@@ -185,10 +187,18 @@ npm run lint
 
 **Current Sprint**: Epic 1 - Platform Foundation & Authentication
 
-### ✅ Completed Stories (Validated 2026-01-26)
+### ✅ Completed Stories (As of February 2, 2026)
 - ✅ **Story 1.1**: Project Initialization & Development Environment Setup (9/9 ACs met)
 - ✅ **Story 1.2**: Organization & User Data Models (9/9 ACs met)
-- ✅ **Story 1.3**: User Registration with Email (10/10 ACs met - backend)
+- ✅ **Story 1.3**: User Registration with Email (10/10 ACs met - backend with tests)
+
+**Recent Updates (PR #21 - Feb 2, 2026)**:
+- ✅ Comprehensive CI/CD workflows (Codacy, CodeQL, dependency review)
+- ✅ Authentication endpoints fully implemented with JWT
+- ✅ Comprehensive test suite (pytest with 80%+ coverage)
+- ✅ Code quality tooling (Codacy CLI, linting configurations)
+- ✅ BMAD agent framework integration (23 custom agents)
+- ✅ Complete documentation suite (README, CONTRIBUTING, architecture docs)
 
 **Validation Report**: See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-validation-report.md)
 
@@ -196,36 +206,90 @@ npm run lint
 - Acceptance Criteria: 28/28 (100%)
 - Implementation Quality: 96.3%
 - Architecture Compliance: 92%
+- Test Coverage: 80%+ (backend)
 
 ### 🔄 In Progress
-- 🔄 Story 1.3: Frontend implementation + tests
-- 🔄 Story 1.4: User Login with JWT Authentication (50% complete)
+- 🔄 Story 1.4: User Login with JWT Authentication (implementation complete, needs frontend integration)
+- 🔄 Story 1.5: Session Management & Token Refresh (ready for development)
 
 ### 📋 Upcoming Stories
-- Story 1.5: Session Management & Token Refresh
 - Story 1.6: Multi-Tenant Access Control
 - Story 1.7: User Profile Management
 
-### ⚠️ Known Technical Debt
-**Critical (Must Address Before Story 1.4)**:
-1. No unit tests implemented - test structure exists but no test cases written
-2. Placeholder JWT secret key - needs secure generation (see setup instructions)
+### ⚠️ Known Technical Debt & Action Items
+
+**Critical (Must Address Before Feature Work)**:
+1. **CI/CD Optimization**: Consolidate duplicate test runs (Codacy + CodeQL both run tests on every PR)
+2. **Multi-Tenant Middleware**: Implement organization scoping middleware for automatic data isolation
+3. **WebSocket Infrastructure**: Real-time features not yet implemented (required for Epic 3)
+4. **Frontend CI Pipeline**: No automated testing for frontend changes
 
 **High Priority**:
-3. Frontend components not yet implemented
-4. No seed data script for development organizations
-5. `verify_org_access()` dependency not implemented
+5. Frontend components not yet implemented (placeholders exist)
+6. CodeQL only scans GitHub Actions files (needs Python/TypeScript configuration)
+7. Test database uses SQLite in CI vs PostgreSQL in production (potential compatibility issues)
 
-See validation report for complete technical debt analysis.
+**Medium Priority**:
+8. Dependency updates available (FastAPI, Pydantic, React, Vite)
+9. No seed data script for development organizations
+10. Security headers middleware not implemented
+
+See [`_bmad-output/implementation-artifacts/action-items-2026-02-02.md`](_bmad-output/implementation-artifacts/action-items-2026-02-02.md) for complete action items and [`_bmad-output/implementation-artifacts/code-review-2026-02-02.md`](_bmad-output/implementation-artifacts/code-review-2026-02-02.md) for detailed code review findings.
+
+## CI/CD Workflows
+
+The project uses GitHub Actions for continuous integration and code quality. Current workflows:
+
+### Active Workflows
+
+**Codacy Workflow** (`.github/workflows/codacy.yml`)
+- **Triggers**: Pull requests, pushes to main, weekly schedule (Thursday 5:33 PM UTC)
+- **Purpose**: Code quality analysis, security scanning, test coverage
+- **What it does**:
+  - Runs backend tests with pytest
+  - Generates coverage reports (XML format)
+  - Uploads coverage to Codacy
+  - Runs Codacy CLI security analysis
+- **Requirements**: `CODACY_PROJECT_TOKEN` secret (for external contributors, maintainers will handle this)
+
+**CodeQL Workflow** (`.github/workflows/codeql.yml`)
+- **Triggers**: Pull requests, pushes to main, weekly schedule (Saturday 11:21 AM UTC)
+- **Purpose**: Security vulnerability scanning
+- **What it does**:
+  - Analyzes GitHub Actions files for security issues
+  - Uploads results to GitHub Security tab
+- **Note**: Currently only analyzes GitHub Actions. Python/TypeScript analysis to be added.
+
+**Other Workflows**:
+- **Greetings**: Welcomes new contributors on their first issue/PR
+- **Summary**: AI-powered issue summarization
+- **Dependency Review** (disabled): Planned for dependency vulnerability scanning
+
+### Known CI/CD Issues
+
+⚠️ **Duplicate Test Runs**: Both Codacy and CodeQL workflows run tests, causing redundancy. See action items for consolidation plan.
+
+⚠️ **No Frontend CI**: Frontend tests are not currently run in CI. This is planned for implementation.
 
 ## Architecture
 
 - **Multi-tenancy**: Row-level isolation via `organization_id`
 - **Authentication**: JWT access tokens (15min) + refresh tokens (7 days)
-- **Real-time**: WebSocket + Redis Pub/Sub
+- **Real-time**: WebSocket + Redis Pub/Sub (planned, not yet implemented)
 - **API Response Format**: 
   - Success: `{data: {...}}`
   - Error: `{error: {code, message}}`
+
+### Current Implementation Status
+- ✅ Backend API with FastAPI
+- ✅ PostgreSQL database with SQLAlchemy ORM
+- ✅ JWT authentication with refresh tokens
+- ✅ Multi-tenant data models
+- ✅ Alembic migrations
+- ✅ pytest test infrastructure
+- ⏳ WebSocket handlers (structure exists, not implemented)
+- ⏳ Redis Pub/Sub (infrastructure ready, not used yet)
+- ⏳ Frontend React app (structure exists, components not implemented)
 
 ## Environment Variables
 
@@ -267,6 +331,152 @@ Key achievements:
 - ✅ Production-ready database design with migrations
 
 See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-validation-report.md) for detailed analysis.
+
+## Troubleshooting
+
+### Common Issues
+
+#### Database Connection Errors
+
+**Problem**: `FATAL: database "trivia_db" does not exist` or connection refused errors
+
+**Solutions**:
+1. Ensure Docker containers are running:
+   ```bash
+   docker-compose ps
+   ```
+2. If containers aren't running:
+   ```bash
+   docker-compose up -d
+   ```
+3. Check PostgreSQL logs:
+   ```bash
+   docker-compose logs postgres
+   ```
+4. Verify database connection settings in `.env`:
+   ```
+   DATABASE_URL=postgresql://trivia_user:trivia_pass@localhost:5432/trivia_db
+   ```
+
+#### Alembic Migration Errors
+
+**Problem**: `Target database is not up to date` or migration conflicts
+
+**Solutions**:
+1. Check current migration status:
+   ```bash
+   cd backend
+   alembic current
+   alembic history
+   ```
+2. Reset to head:
+   ```bash
+   alembic upgrade head
+   ```
+3. If corrupted, drop and recreate database:
+   ```bash
+   docker-compose down -v
+   docker-compose up -d
+   alembic upgrade head
+   ```
+
+#### Test Failures
+
+**Problem**: Tests fail with import errors or database issues
+
+**Solutions**:
+1. Ensure PYTHONPATH is set when running tests:
+   ```bash
+   # From backend directory
+   PYTHONPATH=.. pytest
+   
+   # Or from project root
+   pytest backend/tests
+   ```
+2. Check pytest.ini configuration is present in backend/
+3. Verify test database is configured (uses SQLite automatically)
+4. Clear pytest cache if needed:
+   ```bash
+   rm -rf .pytest_cache __pycache__
+   ```
+
+#### JWT Token Issues
+
+**Problem**: 401 Unauthorized errors or token validation failures
+
+**Solutions**:
+1. Ensure SECRET_KEY is set in `.env` and is at least 32 characters
+2. Generate a secure key:
+   ```bash
+   openssl rand -hex 32
+   ```
+3. Restart the backend server after changing SECRET_KEY
+4. Check token expiration (access tokens expire after 15 minutes)
+
+#### Port Already in Use
+
+**Problem**: `Address already in use` when starting services
+
+**Solutions**:
+1. Check what's using the port:
+   ```bash
+   # For backend (port 8000)
+   lsof -i :8000
+   
+   # For frontend (port 5173)
+   lsof -i :5173
+   
+   # For PostgreSQL (port 5432)
+   lsof -i :5432
+   ```
+2. Kill the process or use a different port:
+   ```bash
+   # Kill process by PID
+   kill -9 <PID>
+   
+   # Or change port in .env or vite.config.ts
+   ```
+
+#### Frontend Dependencies Issues
+
+**Problem**: `npm install` fails or module not found errors
+
+**Solutions**:
+1. Clear npm cache:
+   ```bash
+   cd frontend
+   rm -rf node_modules package-lock.json
+   npm cache clean --force
+   npm install
+   ```
+2. Ensure Node.js version is 18+:
+   ```bash
+   node --version
+   ```
+3. Try using npm instead of yarn or vice versa
+
+#### CI/CD Workflow Failures
+
+**Problem**: GitHub Actions workflows fail
+
+**Common Issues**:
+1. **Missing secrets**: Codacy workflow requires `CODACY_PROJECT_TOKEN`
+   - For external contributors: Maintainers will handle this
+   - For maintainers: Add token in repository settings > Secrets
+2. **Test failures**: Check workflow logs for specific test errors
+3. **Coverage upload issues**: Temporary Codacy service issues (will retry)
+
+### Getting Additional Help
+
+If you encounter issues not covered here:
+1. Check existing [GitHub Issues](https://github.com/tim-dickey/trivia-app/issues)
+2. Review documentation in `docs/` directory
+3. Check validation reports for architectural guidance
+4. Open a new issue with:
+   - Clear description of the problem
+   - Steps to reproduce
+   - Error messages/logs
+   - Environment details (OS, Python version, Node version)
 
 ## Contributing
 
@@ -346,7 +556,9 @@ See [`_bmad-output/planning-artifacts/epics.md`](_bmad-output/planning-artifacts
 
 ## Support & Documentation
 
+- **📍 File Locations Guide**: `FILE_LOCATIONS.md` - Complete index of all files
 - **Architecture Document**: `_bmad-output/implementation-artifacts/architecture.md`
+- **CI/CD Workflows**: `docs/CI_CD.md` - Complete workflow documentation
 - **PRD**: `_bmad-output/implementation-artifacts/TRIVIA_APP_PRD.md`
 - **UX Specifications**: `_bmad-output/implementation-artifacts/UI_UX_SPECIFICATIONS.md`
 - **QA Test Strategy**: `_bmad-output/implementation-artifacts/QA_TEST_STRATEGY.md`
