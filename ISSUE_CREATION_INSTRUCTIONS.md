@@ -1,5 +1,16 @@
 # Instructions to Create GitHub Issues from Code Review #21
 
+## ⚠️ Environment Limitation Encountered
+
+**Issue**: The Copilot agent cannot directly create GitHub issues due to environment constraints.
+
+**Reason**: 
+- No GitHub API authentication available in agent environment
+- GitHub MCP Server tools do not include issue creation capabilities
+- Requires user authentication (gh CLI or GitHub token)
+
+**Impact**: Issues must be created by the user using the provided automation or manual methods below.
+
 ## Overview
 
 Issue #21 documented 15 critical issues from a comprehensive code review. All necessary files have been created, but the actual GitHub issues need to be created manually or via the automation scripts.
