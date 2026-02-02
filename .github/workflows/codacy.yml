@@ -11,15 +11,14 @@
 # For more information on Codacy Analysis CLI in general, see
 # https://github.com/codacy/codacy-analysis-cli.
 
-name: Codacy Security Scan
+# NOTE: This workflow is now scheduled-only. For PR checks, see ci.yml
+
+name: Codacy Security Scan (Legacy - Scheduled Only)
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   schedule:
     - cron: '33 17 * * 4'
+  workflow_dispatch:  # Allow manual triggers
 
 permissions:
   contents: read
