@@ -19,11 +19,12 @@ Issue #21 documented 15 critical issues from a comprehensive code review. All ne
 
 ✅ **Complete**: All infrastructure and documentation
 - Issue JSON files (P0, P1, P2) in `_bmad-output/implementation-artifacts/`
+- **Consolidated Issues Log** in `_bmad-output/implementation-artifacts/issues-log.json` (20 issues)
 - Python automation script in `scripts/create-github-issues.py`
 - Bash scripts in `scripts/` directory
 - Comprehensive documentation in `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 
-❌ **Pending**: Actual GitHub issues creation (15 issues)
+❌ **Pending**: Actual GitHub issues creation (20 issues total: 15 from code review + 5 from PRD validation)
 
 ## Why Issues Weren't Created Automatically
 
@@ -57,11 +58,17 @@ The automated scripts require GitHub CLI (`gh`) authentication, which is not ava
 
 Visit https://github.com/tim-dickey/trivia-app/issues/new for each issue and use the content from:
 
-1. **Detailed Documentation**: `_bmad-output/implementation-artifacts/all-issues-to-create.md`
-   - Contains all 15 issues with full body text
+1. **Consolidated Issues Log** (RECOMMENDED): `_bmad-output/implementation-artifacts/issues-log.md`
+   - Contains all 20 issues (15 code review + 5 PRD validation)
+   - Well-formatted with all details
+   - Organized by priority (P0, P1, P2)
+
+2. **Detailed Documentation**: `_bmad-output/implementation-artifacts/all-issues-to-create.md`
+   - Contains 15 code review issues with full body text
    - Each issue separated by `---ISSUE-SEPARATOR---`
 
-2. **JSON Data Files** (for API/automation):
+3. **JSON Data Files** (for API/automation):
+   - `_bmad-output/implementation-artifacts/issues-log.json` - All 20 issues consolidated
    - `_bmad-output/implementation-artifacts/code-review-issues-p0.json` - 5 P0 Critical issues
    - `_bmad-output/implementation-artifacts/code-review-issues-p1.json` - 5 P1 High priority issues
    - `_bmad-output/implementation-artifacts/code-review-issues-p2.json` - 5 P2 Medium priority issues
@@ -81,6 +88,12 @@ curl -X POST \
 
 ## Issue Summary
 
+**Total: 20 issues - 5.4 days effort**
+
+### Sources
+- **Code Review 2026-02-02**: 15 issues (PR #20 findings)
+- **PRD Validation 2026-01-24**: 5 issues (requirements improvements)
+
 ### P0 (Critical) - 5 issues - 2.6 days effort
 1. **[P0] Consolidate CI/CD Workflows** (3h) - Eliminate duplicate test runs
 2. **[P0] Organization Scoping Middleware** (8h) - Multi-tenant data isolation
@@ -95,22 +108,32 @@ curl -X POST \
 9. **[P1] Docker Compose Services** (3h) - Add application services
 10. **[P1] Security Headers Middleware** (2h) - Add security headers
 
-### P2 (Medium Priority) - 5 issues - 1 day effort
+### P2 (Medium Priority) - 10 issues - 0.8 days effort
+
+**Code Review Issues (5)**:
 11. **[P2] Quick Start README** (15min) - Add quick start section
 12. **[P2] Architecture Diagram** (1h) - Visual architecture documentation
 13. **[P2] Pre-commit Hooks** (1h) - Code quality automation
 14. **[P2] Dependabot Configuration** (30min) - Automated dependency updates
 15. **[P2] Troubleshooting Guide** (1h) - Common issues documentation
 
-**Total Effort**: 6.5 days of foundational work before safe feature development
+**PRD Validation Issues (5)**:
+16. **[P2] Replace Subjective Adjectives in FRs** (30min) - Make requirements measurable
+17. **[P2] Add Measurement Methods to Security NFRs** (15min) - Specify validation approaches
+18. **[P2] Add Detailed Measurement to Scalability NFRs** (15min) - Define load testing methodology
+19. **[P2] Add Testing Methodology for Browser Support** (15min) - Cross-browser testing approach
+20. **[P2] Add Dedicated Product Scope Section to PRD** (15min) - Complete BMAD compliance
+
+**Total Effort**: 5.4 days of foundational work before safe feature development
 
 ## Verification
 
 After creating the issues, verify:
-- [ ] All 15 issues created
+- [ ] All 20 issues created
 - [ ] Correct labels applied (priority:critical, priority:high, priority:medium, etc.)
-- [ ] Issue numbers tracked
+- [ ] Issue numbers tracked in `issues-log.json`
 - [ ] Issues are properly linked in project board (if applicable)
+- [ ] Update `github_issue_number` field in issues-log.json for each created issue
 
 ## Next Steps
 
@@ -122,9 +145,12 @@ After creating the issues, verify:
 
 ## Additional Resources
 
+- **Consolidated Issues Log**: `_bmad-output/implementation-artifacts/issues-log.md` (all 20 issues)
+- **Issues Log JSON**: `_bmad-output/implementation-artifacts/issues-log.json` (machine-readable)
 - **Full documentation**: `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 - **Action items detail**: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` (916 lines)
 - **Code review source**: `_bmad-output/implementation-artifacts/code-review-2026-02-02.md`
+- **PRD validation**: `_bmad-output/implementation-artifacts/TRIVIA_APP_PRD_validation_report.md`
 
 ---
 
