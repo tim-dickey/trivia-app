@@ -134,8 +134,13 @@ Frontend will be available at: http://localhost:5173
 **Backend:**
 ```bash
 cd backend
-pytest
-pytest --cov=backend --cov-report=html
+PYTHONPATH=.. pytest
+PYTHONPATH=.. pytest --cov=backend --cov-report=html
+```
+
+Alternatively, run from project root:
+```bash
+pytest backend/tests --cov=backend --cov-report=html
 ```
 
 **Frontend:**
@@ -283,8 +288,11 @@ We welcome contributions from the development community! This is an **open sourc
    - Frontend: Vitest + React Testing Library
 5. **Ensure all tests pass**
    ```bash
-   # Backend
-   cd backend && pytest
+   # Backend (from project root)
+   pytest backend/tests
+   
+   # Or from backend directory
+   cd backend && PYTHONPATH=.. pytest
    
    # Frontend
    cd frontend && npm test
