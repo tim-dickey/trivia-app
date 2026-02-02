@@ -13,6 +13,7 @@ psycopg[binary]==3.1.13
 # Authentication & Security
 python-jose[cryptography]==3.4.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 python-multipart==0.0.22
 
 # Task Queue
@@ -22,12 +23,14 @@ redis==5.0.1
 # Validation & Settings
 pydantic==2.12.5
 pydantic-settings==2.1.0
+email-validator==2.1.0
 
 # Testing
 pytest==7.4.4
 pytest-asyncio==0.23.3
 pytest-cov==4.1.0
 httpx==0.25.2
+codacy-coverage==1.3.0
 
 # Development
 ruff==0.1.6
