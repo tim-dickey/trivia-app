@@ -8,6 +8,32 @@ This is a multi-tenant trivia application built for corporate training and team 
 - **Frontend**: React 18+ with TypeScript, Vite, and Tailwind CSS
 - **Architecture**: Multi-tenant with row-level isolation via `organization_id`
 
+### Current Implementation Status (Updated: February 2, 2026)
+
+**✅ Implemented (Epic 1 Complete)**:
+- Backend API with FastAPI (auth endpoints, user/org models)
+- PostgreSQL database with Alembic migrations
+- JWT authentication with refresh tokens
+- pytest test suite with 80%+ coverage
+- CI/CD workflows (Codacy, CodeQL)
+- Comprehensive documentation
+
+**⏳ Planned (Not Yet Implemented)**:
+- WebSocket infrastructure (structure exists, no handlers)
+- Redis Pub/Sub (Redis running, not used)
+- Multi-tenant middleware (no automatic organization scoping yet)
+- Frontend React components (structure exists, no components)
+- Session management features
+- Real-time scoring
+
+**🔴 Critical Gaps to Address**:
+1. Multi-tenant middleware missing (security risk - manual filtering required)
+2. WebSocket handlers not implemented (required for Epic 3+)
+3. Frontend CI/CD pipeline missing
+4. CodeQL only scans GitHub Actions (not Python/TypeScript)
+
+See `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` for complete action items.
+
 ## Repository Structure
 
 ```
@@ -186,6 +212,37 @@ ruff check .            # Lint code
 ```bash
 cd frontend
 npm run lint            # Lint code
+```
+
+### CI/CD Workflows
+
+**Active Workflows**:
+1. **Codacy**: Code quality, security scanning, test coverage (runs on PRs, main pushes, weekly)
+2. **CodeQL**: Security vulnerability detection (runs on PRs, main pushes, weekly)
+3. **Greetings**: Welcome messages for first-time contributors
+4. **Summary**: AI-powered issue summarization
+
+**Important Notes**:
+- External contributors don't need to set up secrets
+- Maintainers need `CODACY_PROJECT_TOKEN` for coverage uploads
+- Tests run automatically on all PRs
+- See `docs/CI_CD.md` for detailed workflow documentation
+
+**Known Issues**:
+- Duplicate test runs (Codacy + CodeQL both run tests)
+- No frontend CI pipeline yet
+- CodeQL only scans GitHub Actions files (Python/TypeScript config needed)
+
+**Running CI Checks Locally**:
+```bash
+# Backend (same as CI)
+cd backend
+PYTHONPATH=.. pytest --cov=backend --cov-report=term-missing
+
+# Linting
+black --check .
+ruff check .
+mypy backend/
 ```
 
 ## Common Tasks
