@@ -252,6 +252,71 @@ npm run type-check
 - **Constraints**: Use database constraints for data integrity
 - **Multi-tenancy**: Include `organization_id` in all tenant tables
 
+### Working with Database Migrations
+
+**Creating a New Migration**:
+```bash
+cd backend
+
+# Auto-generate migration from model changes
+alembic revision --autogenerate -m "Add user profile fields"
+
+# Or create empty migration for data changes
+alembic revision -m "Seed initial organizations"
+```
+
+**Important Migration Guidelines**:
+1. **Always review auto-generated migrations** before committing
+2. **Test migrations both up and down**:
+   ```bash
+   # Apply migration
+   alembic upgrade head
+   
+   # Test rollback
+   alembic downgrade -1
+   
+   # Re-apply
+   alembic upgrade head
+   ```
+3. **Never modify existing migrations** that have been merged to main
+4. **Include both upgrade and downgrade** operations
+5. **Add indexes and constraints** in the same migration as the table
+
+**Migration Best Practices**:
+```python
+# Good: Descriptive operation with proper naming
+def upgrade():
+    op.create_table(
+        'sessions',
+        sa.Column('id', sa.UUID(), primary_key=True),
+        sa.Column('organization_id', sa.UUID(), nullable=False),
+        sa.Column('title', sa.String(255), nullable=False),
+        sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()')),
+    )
+    # Add index immediately
+    op.create_index('ix_sessions_organization_id', 'sessions', ['organization_id'])
+    # Add foreign key constraint
+    op.create_foreign_key(
+        'fk_sessions_organization', 'sessions', 'organizations',
+        ['organization_id'], ['id'], ondelete='CASCADE'
+    )
+
+def downgrade():
+    op.drop_table('sessions')
+```
+
+**Checking Migration Status**:
+```bash
+# View current migration
+alembic current
+
+# View migration history
+alembic history
+
+# View pending migrations
+alembic upgrade head --sql  # Shows SQL without applying
+```
+
 ## 🧪 Testing Requirements
 
 ### Backend Testing
@@ -329,6 +394,105 @@ npm run test:coverage
 # Run in watch mode
 npm run test:watch
 ```
+
+## 🔄 CI/CD and GitHub Actions
+
+### Understanding Our CI/CD Workflows
+
+The project uses several GitHub Actions workflows for automated testing and code quality:
+
+**1. Codacy Workflow** (`.github/workflows/codacy.yml`)
+- **Runs on**: PRs, pushes to main, weekly schedule
+- **Purpose**: Code quality, security scanning, test coverage
+- **What it does**:
+  - Sets up Python 3.11 environment
+  - Installs backend dependencies with caching
+  - Runs pytest test suite
+  - Generates coverage reports (XML format)
+  - Uploads coverage to Codacy
+  - Runs Codacy CLI security analysis
+
+**2. CodeQL Workflow** (`.github/workflows/codeql.yml`)
+- **Runs on**: PRs, pushes to main, weekly schedule
+- **Purpose**: Security vulnerability detection
+- **What it does**:
+  - Analyzes code for security issues
+  - Currently configured for GitHub Actions files
+  - Uploads results to GitHub Security tab
+
+**3. Other Workflows**:
+- **Greetings**: Welcomes new contributors
+- **Summary**: AI-powered issue summarization
+- **Dependency Review** (disabled): For dependency vulnerability scanning
+
+### For External Contributors
+
+**You don't need to set up any secrets!** 
+
+When you submit a PR:
+- All tests will run automatically
+- You'll see results in the PR checks
+- Some workflows may show warnings about missing secrets (like `CODACY_PROJECT_TOKEN`)
+- **This is normal** - maintainers will handle coverage uploads and security scanning
+- Your PR will still be reviewed and can be merged
+
+### For Maintainers: Required GitHub Secrets
+
+If you're a maintainer setting up a fork or need to configure CI/CD:
+
+**Required Secrets** (Repository Settings → Secrets and variables → Actions):
+
+1. **`CODACY_PROJECT_TOKEN`** (Required for Codacy workflow)
+   - Get from: [Codacy Project Settings](https://app.codacy.com/)
+   - Navigate to: Project → Settings → Integrations → Project API Token
+   - Used for: Uploading test coverage and security scan results
+
+**Optional Secrets** (for future features):
+- `DEPENDABOT_TOKEN`: For automated dependency updates
+- `SLACK_WEBHOOK`: For deployment notifications
+
+**Setting up Codacy** (Maintainers only):
+1. Sign up at [codacy.com](https://www.codacy.com/) with your GitHub account
+2. Add the trivia-app repository
+3. Go to Project Settings → Integrations
+4. Copy the Project API Token
+5. Add to GitHub: Repository Settings → Secrets → New repository secret
+   - Name: `CODACY_PROJECT_TOKEN`
+   - Value: [paste token]
+
+### Workflow Debugging
+
+**If CI/CD checks fail on your PR**:
+
+1. **Click on "Details"** next to the failed check
+2. **Review the logs** to identify the issue
+3. **Common failures**:
+   - Test failures: Fix the failing tests locally first
+   - Linting errors: Run `ruff check .` and `black .` locally
+   - Import errors: Ensure all dependencies are in requirements.txt
+   - Coverage below 80%: Add more tests
+
+**Running CI checks locally before pushing**:
+```bash
+# Backend tests (same as CI)
+cd backend
+PYTHONPATH=.. pytest --cov=backend --cov-report=term-missing
+
+# Linting (same as CI would run)
+ruff check .
+black --check .
+
+# Type checking
+mypy backend/
+```
+
+### Known CI/CD Issues
+
+⚠️ **Duplicate Test Runs**: Both Codacy and CodeQL workflows currently run tests, causing some redundancy. This is being addressed in future improvements.
+
+⚠️ **No Frontend CI**: Frontend tests are not yet integrated into CI. This is planned for implementation.
+
+⚠️ **CodeQL Limited Scope**: Currently only analyzes GitHub Actions files. Python and TypeScript analysis will be added.
 
 ## 📝 Pull Request Process
 
