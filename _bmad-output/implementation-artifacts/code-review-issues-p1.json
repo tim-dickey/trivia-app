@@ -1,0 +1,49 @@
+{
+  "source": "Code Review 2026-02-02",
+  "total_issues": 5,
+  "categories": {
+    "P1_high": 5
+  },
+  "issues": [
+    {
+      "id": "P1-1",
+      "title": "[P1] Update Outdated Dependencies with Security Patches",
+      "priority": "high",
+      "labels": ["priority:high", "security", "dependencies", "backend", "frontend"],
+      "effort_hours": 4,
+      "body": "## Problem\n\nMultiple packages have security updates and performance improvements available:\n\n**Backend**:\n- `fastapi`: 0.109.0 → 0.115.0+ (security & performance)\n- `pydantic`: 2.12.5 → 2.13.x (security fixes - CVEs)\n- `pytest`: 7.4.4 → 8.x (better performance)\n- `python-jose`: 3.4.0 has known vulnerabilities\n\n**Frontend**:\n- `react`: ^18.2.0 → ^18.3.1\n- `vite`: ^5.0.8 → ^5.4.x (security patches)\n- `typescript`: ^5.2.2 → ^5.7.x (performance)\n- `tailwindcss`: ^3.3.6 → ^3.4.x\n\n## Security Impact\n\n- Pydantic 2.12.5 has known security vulnerabilities\n- `python-jose` has CVEs - consider migrating to `PyJWT`\n- Vite has security patches in 5.4.x\n\n## Proposed Solution\n\n1. Update backend dependencies in `requirements.txt`\n2. Update frontend dependencies in `package.json`\n3. Run full test suite after each ecosystem update\n4. Document any breaking changes\n5. Consider migrating from `python-jose` to `PyJWT`\n\n## Acceptance Criteria\n\n- [ ] All major dependencies updated to latest stable\n- [ ] Backend tests pass\n- [ ] Frontend tests pass\n- [ ] No new deprecation warnings\n- [ ] CHANGELOG updated with dependency changes\n- [ ] Security scan shows no critical vulnerabilities\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 6\n\n**Estimated Effort**: 4 hours (+ testing)  \n**Priority**: P1 - Security & Performance  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P1-2",
+      "title": "[P1] Add Frontend CI Workflow for Quality Validation",
+      "priority": "high",
+      "labels": ["priority:high", "ci/cd", "frontend", "testing"],
+      "effort_hours": 2,
+      "body": "## Problem\n\nNo automated validation of frontend code quality:\n- Backend: ✅ Tested in Codacy workflow\n- Frontend: ❌ No CI validation\n\n**Risk**: Frontend bugs, type errors, and lint issues won't be caught until deployment.\n\n## Proposed Solution\n\nCreate `.github/workflows/frontend-ci.yml` with comprehensive checks:\n- Linting (ESLint)\n- Type checking (TypeScript)\n- Build verification\n- Unit tests with coverage\n- Coverage upload to Codecov\n\n## Acceptance Criteria\n\n- [ ] Workflow runs on frontend changes\n- [ ] All checks pass (lint, type-check, build, test)\n- [ ] Coverage reports uploaded\n- [ ] Workflow badge added to README\n- [ ] Runs within 5 minutes\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 7\n\n**Estimated Effort**: 2 hours  \n**Priority**: P1 - Quality Assurance  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P1-3",
+      "title": "[P1] Expand CodeQL Security Analysis to Python and TypeScript",
+      "priority": "high",
+      "labels": ["priority:high", "security", "ci/cd", "codeql"],
+      "effort_hours": 1,
+      "body": "## Problem\n\nCodeQL workflow only analyzes GitHub Actions, not application code.\n\n**Security Gap**: Python and TypeScript code vulnerabilities won't be detected.\n\n## Proposed Solution\n\nExpand CodeQL analysis to cover all languages:\n\n```yaml\n# Update: .github/workflows/codeql.yml\nstrategy:\n  matrix:\n    include:\n    - language: python\n      build-mode: none\n    - language: javascript-typescript\n      build-mode: none\n    - language: actions\n      build-mode: none\n```\n\n## Security Benefits\n\nCodeQL will detect:\n- SQL injection vulnerabilities\n- XSS vulnerabilities\n- Authentication bypasses\n- Insecure cryptography\n- Path traversal issues\n- And 200+ other vulnerability types\n\n## Acceptance Criteria\n\n- [ ] Python analysis enabled\n- [ ] JavaScript/TypeScript analysis enabled\n- [ ] First scan completes successfully\n- [ ] Security issues (if any) documented\n- [ ] False positives marked and justified\n- [ ] Results appear in Security tab\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 8\n\n**Estimated Effort**: 1 hour  \n**Priority**: P1 - Security Scanning  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P1-4",
+      "title": "[P1] Add Application Services to Docker Compose",
+      "priority": "high",
+      "labels": ["priority:high", "docker", "developer-experience", "infrastructure"],
+      "effort_hours": 3,
+      "body": "## Problem\n\n`docker-compose.yml` only defines infrastructure (PostgreSQL, Redis), not application services. Developers must:\n- Manually run backend in one terminal\n- Manually run frontend in another terminal\n- Remember 4+ commands to start development environment\n\n**Poor Developer Experience**: No unified development startup.\n\n## Proposed Solution\n\nAdd backend and frontend services to `docker-compose.yml` with:\n- Hot reload for both services\n- Automatic dependency management\n- Health checks\n- Proper volume mounting\n\n## Acceptance Criteria\n\n- [ ] Single `docker-compose up` starts everything\n- [ ] Hot reload works for backend and frontend\n- [ ] Database migrations run automatically\n- [ ] README updated with Docker instructions\n- [ ] Development environment starts in <2 minutes\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 9\n\n**Estimated Effort**: 3 hours  \n**Priority**: P1 - Developer Experience  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P1-5",
+      "title": "[P1] Add Security Headers Middleware",
+      "priority": "high",
+      "labels": ["priority:high", "security", "backend", "middleware"],
+      "effort_hours": 2,
+      "body": "## Problem\n\nMissing common security headers:\n- No HSTS (HTTP Strict Transport Security)\n- No CSP (Content Security Policy)\n- No X-Frame-Options (clickjacking protection)\n- No X-Content-Type-Options\n- No X-XSS-Protection\n\n**Security Risk**: Application vulnerable to common attacks.\n\n## Security Best Practices\n\n- **HSTS**: Force HTTPS connections\n- **CSP**: Prevent XSS attacks by restricting resource loading\n- **X-Frame-Options**: Prevent clickjacking\n- **X-Content-Type-Options**: Prevent MIME sniffing attacks\n\n## Proposed Solution\n\nCreate security headers middleware in `backend/core/security_middleware.py` and integrate with FastAPI application.\n\n## Acceptance Criteria\n\n- [ ] All security headers present in responses\n- [ ] CSP policy doesn't break functionality\n- [ ] Tests verify headers are set correctly\n- [ ] Documentation explains each header\n- [ ] Security scan shows improved rating\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 10\n\n**Estimated Effort**: 2 hours  \n**Priority**: P1 - Security Hardening  \n**Source**: Code Review 2026-02-02"
+    }
+  ]
+}
