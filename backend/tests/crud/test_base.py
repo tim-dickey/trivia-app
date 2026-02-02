@@ -15,7 +15,7 @@ from backend.models.organization import Organization
 
 
 # Test model for CRUD operations
-class TestSession(Base):
+class SessionTestModel(Base):
     """Test model with organization_id for multi-tenant CRUD testing"""
     __tablename__ = "test_sessions"
     
@@ -39,8 +39,8 @@ class TestMultiTenantCRUDInitialization:
     def test_initialization_with_valid_model_succeeds(self):
         """Test that initialization succeeds with a model that has organization_id"""
         # Act & Assert - Should not raise
-        crud = MultiTenantCRUD(TestSession)
-        assert crud.model == TestSession
+        crud = MultiTenantCRUD(SessionTestModel)
+        assert crud.model == SessionTestModel
     
     def test_initialization_without_organization_id_raises_error(self):
         """Test that initialization fails if model lacks organization_id column"""
@@ -57,7 +57,7 @@ class TestMultiTenantCRUDOperations:
     @pytest.fixture
     def test_crud(self):
         """Create CRUD instance for test model"""
-        return MultiTenantCRUD(TestSession)
+        return MultiTenantCRUD(SessionTestModel)
     
     @pytest.fixture
     def setup_db(self, db: Session):

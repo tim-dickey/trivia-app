@@ -14,19 +14,6 @@ from backend.core.security import create_access_token
 class TestTenantIsolation:
     """Integration tests for tenant isolation via API endpoints"""
     
-    def test_user_cannot_list_other_org_users(
-        self,
-        client: TestClient,
-        db: Session,
-        sample_user: User,
-        other_org_user: User,
-        auth_token: str
-    ):
-        """Test that listing users only returns users from same organization"""
-        # This test demonstrates the expected behavior once endpoints use multi-tenancy
-        # Currently, no user list endpoint exists, so this is a specification test
-        pass
-    
     def test_user_cannot_access_other_org_data_with_id_guessing(
         self,
         db: Session,
