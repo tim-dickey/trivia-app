@@ -273,19 +273,21 @@ backend/tests/
 
 **Running Tests**:
 ```bash
+# From project root (recommended)
+pytest backend/tests --cov=backend --cov-report=html
+
+# Or from backend directory (requires PYTHONPATH)
 cd backend
+PYTHONPATH=.. pytest
 
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=backend --cov-report=html
+# Run with coverage from backend directory
+PYTHONPATH=.. pytest --cov=backend --cov-report=html
 
 # Run specific test file
-pytest tests/api/test_auth.py
+PYTHONPATH=.. pytest tests/api/test_auth.py
 
 # Run specific test
-pytest tests/api/test_auth.py::test_user_registration
+PYTHONPATH=.. pytest tests/api/test_auth.py::test_user_registration
 ```
 
 **Example Test**:
