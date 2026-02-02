@@ -43,7 +43,7 @@ jobs:
           pytest backend/tests --cov=backend --cov-report=xml --cov-report=term-missing --cov-fail-under=80
 
       - name: Upload coverage to Codacy
-        if: ${{ secrets.CODACY_PROJECT_TOKEN != '' }}
+        if: secrets.CODACY_PROJECT_TOKEN != ''
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
@@ -72,6 +72,8 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend
+          # Note: Using npm install (not npm ci) because package-lock.json doesn't exist yet
+          # TODO: Generate package-lock.json and switch to npm ci for faster, reproducible builds
           npm install
 
       - name: Run linter
