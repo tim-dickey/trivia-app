@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing to **trivia-app**! This is an open source project aimed at helping organizations create engaging learning experiences through gamified trivia. We welcome contributions from developers of all skill levels.
 
+> 📍 **Finding Files**: See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to navigating the repository.
+
 ## 📋 Table of Contents
 
 - [Code of Conduct](#code-of-conduct)
@@ -589,8 +591,10 @@ Review the [Epic Breakdown](_bmad-output/planning-artifacts/epics.md) for upcomi
 
 ### Resources
 
+- **📍 File Locations**: [FILE_LOCATIONS.md](FILE_LOCATIONS.md) - Find any file in the repository
 - **Documentation**: Check the `docs/` directory
 - **Architecture**: Review `_bmad-output/implementation-artifacts/architecture.md`
+- **CI/CD Guide**: See `docs/CI_CD.md` for workflow documentation
 - **Validation Reports**: See `docs/validation/` for quality standards
 - **PRD**: Review `_bmad-output/implementation-artifacts/TRIVIA_APP_PRD.md`
 

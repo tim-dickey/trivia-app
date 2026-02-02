@@ -2,6 +2,8 @@
 
 A multi-tenant trivia application for corporate training and team engagement.
 
+> 📍 **New to the project?** See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to finding files in the repository.
+
 ## Project Structure
 
 ```
@@ -554,7 +556,9 @@ See [`_bmad-output/planning-artifacts/epics.md`](_bmad-output/planning-artifacts
 
 ## Support & Documentation
 
+- **📍 File Locations Guide**: `FILE_LOCATIONS.md` - Complete index of all files
 - **Architecture Document**: `_bmad-output/implementation-artifacts/architecture.md`
+- **CI/CD Workflows**: `docs/CI_CD.md` - Complete workflow documentation
 - **PRD**: `_bmad-output/implementation-artifacts/TRIVIA_APP_PRD.md`
 - **UX Specifications**: `_bmad-output/implementation-artifacts/UI_UX_SPECIFICATIONS.md`
 - **QA Test Strategy**: `_bmad-output/implementation-artifacts/QA_TEST_STRATEGY.md`
