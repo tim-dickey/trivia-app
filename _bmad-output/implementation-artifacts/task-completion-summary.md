@@ -21,7 +21,7 @@
 
 All 15 issues from the code review have been fully documented and prepared for creation:
 
-**Location**: `_bmad-output/implementation-artifacts/ISSUES-CREATION-GUIDE.md`
+**Location**: `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 
 Each issue includes:
 - ✅ Clear, actionable title with priority prefix
@@ -59,7 +59,7 @@ Issue data provided in multiple formats:
 
 - **JSON Format**: `code-review-issues-p0.json` (machine-readable)
 - **Markdown Format**: `ALL-ISSUES-TO-CREATE.md` (human-readable)
-- **Guide Format**: `ISSUES-CREATION-GUIDE.md` (comprehensive)
+- **Guide Format**: `issues-creation-guide.md` (comprehensive)
 
 ---
 
@@ -127,7 +127,7 @@ python3 scripts/create-github-issues.py
 
 ### Option 2: Manual Creation 📋
 
-1. Open `_bmad-output/implementation-artifacts/ISSUES-CREATION-GUIDE.md`
+1. Open `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 2. Expand each issue section (collapsible)
 3. Copy title, labels, and body
 4. Create via GitHub web UI
@@ -147,7 +147,7 @@ Use the pre-filled GitHub issue creation URLs provided in the guide:
 ## Files Created
 
 ### Documentation (3 files)
-- `ISSUES-CREATION-GUIDE.md` (12,870 bytes) - Main guide
+- `issues-creation-guide.md` (12,870 bytes) - Main guide
 - `ALL-ISSUES-TO-CREATE.md` (3,600 bytes) - Simplified format
 - `TASK-COMPLETION-SUMMARY.md` (this file) - Task summary
 
@@ -287,7 +287,7 @@ After issues are created, success can be measured by:
 ### Issue Creation Materials
 
 4. **Creation Guide** (505 lines)
-   - `ISSUES-CREATION-GUIDE.md`
+   - `issues-creation-guide.md`
    - Main document for creating issues
 
 5. **Scripts** (3 files)
