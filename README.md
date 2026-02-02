@@ -1,5 +1,7 @@
 # Trivia App
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7320c7c9b4bc48b180216fb85a5f4172)](https://app.codacy.com/gh/tim-dickey/trivia-app?utm_source=github.com&utm_medium=referral&utm_content=tim-dickey/trivia-app&utm_campaign=Badge_Grade)
+
 A multi-tenant trivia application for corporate training and team engagement.
 
 > 📍 **New to the project?** See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to finding files in the repository.
