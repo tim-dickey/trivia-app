@@ -1,4 +1,4 @@
-# Instructions to Create GitHub Issues from Code Review #21
+# Instructions to Create GitHub Issues from Code Review (PR #20)
 
 ## ⚠️ Environment Limitation Encountered
 
@@ -13,14 +13,15 @@
 
 ## Overview
 
-Issue #21 documented 15 critical issues from a comprehensive code review. All necessary files have been created, but the actual GitHub issues need to be created manually or via the automation scripts.
+Code review of PR #20 documented critical issues. All necessary files have been created, but the actual GitHub issues need to be created manually or via the automation scripts.
 
 ## Current Status
 
 ✅ **Complete**: All infrastructure and documentation
 - Issue JSON files (P0, P1, P2) in `_bmad-output/implementation-artifacts/`
 - **Consolidated Issues Log** in `_bmad-output/implementation-artifacts/issues-log.json` (20 issues)
-- Python automation script in `scripts/create-github-issues.py`
+- **Recommended**: `scripts/create-issues-from-log.py` - Creates all 20 issues and updates log
+- **Alternative**: `scripts/create-github-issues.py` - Creates only 15 code review issues
 - Bash scripts in `scripts/` directory
 - Comprehensive documentation in `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 
@@ -42,17 +43,26 @@ The automated scripts require GitHub CLI (`gh`) authentication, which is not ava
    gh auth login
    ```
 
-2. **Run the Python script**:
+2. **Run the consolidated log script** (creates all 20 issues):
    ```bash
    cd /home/runner/work/trivia-app/trivia-app
-   python3 scripts/create-github-issues.py
+   python3 scripts/create-issues-from-log.py
    ```
 
    This will:
-   - Create all 15 issues automatically
+   - Create all 20 issues automatically (15 code review + 5 PRD validation)
    - Apply correct labels (priority:critical, priority:high, priority:medium, etc.)
-   - Generate a tracking file with issue numbers
+   - Update `issues-log.json` with GitHub issue numbers automatically
+   - Update status and date fields in the log
+   - Skip already-created issues (idempotent - safe to re-run)
    - Provide a summary of created issues
+
+**Alternative** (code review issues only):
+   ```bash
+   python3 scripts/create-github-issues.py
+   ```
+   
+   This creates only the 15 code review issues and generates a separate tracking file. Does not update `issues-log.json` or include PRD validation issues.
 
 ### Option 2: Manual Creation via Web UI
 

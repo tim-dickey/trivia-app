@@ -70,7 +70,8 @@ jq '.summary' issues-log.json
 
 ### Automation Scripts
 Located in `/scripts/`:
-- **create-github-issues.py** - Python script to create all issues via GitHub CLI
+- **create-issues-from-log.py** (RECOMMENDED) - Creates all 20 issues from consolidated log and updates `issues-log.json`
+- **create-github-issues.py** - Creates only 15 code review issues, separate tracking file
 - **create-code-review-issues.sh** - Bash alternative for issue creation
 - **run-issue-creation.sh** - Wrapper script with authentication checks
 
@@ -79,20 +80,31 @@ Located in `/scripts/`:
 # Authenticate
 gh auth login
 
-# Create all issues automatically
+# Create all 20 issues automatically (recommended)
+python3 scripts/create-issues-from-log.py
+
+# Or: Create only 15 code review issues
 python3 scripts/create-github-issues.py
 
 # Or manually create from issues-log.md
 ```
 
+**Recommended**: Use `create-issues-from-log.py` as it:
+- Creates all 20 issues (code review + PRD validation)
+- Updates `issues-log.json` with GitHub issue numbers
+- Is idempotent (safe to re-run)
+- Provides complete tracking
+
 ## Issue Statistics
 
-| Priority | Count | Effort |
-|----------|-------|--------|
-| P0 (Critical) | 5 | 2.6 days |
-| P1 (High) | 5 | 2 days |
-| P2 (Medium) | 10 | 0.8 days |
-| **Total** | **20** | **5.4 days** |
+| Priority | Count | Notes |
+|----------|-------|-------|
+| P0 (Critical) | 5 | Blocks feature development |
+| P1 (High) | 5 | Security & quality |
+| P2 (Medium) | 10 | Documentation & improvements |
+| **Total** | **20** | |
+
+_Detailed effort estimates by issue and priority are tracked in `issues-log.md` and `issues-log.json`. These files are the canonical source for effort calculations._
 
 ### By Source
 - Code Review 2026-02-02: 15 issues

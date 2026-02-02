@@ -19,7 +19,7 @@ This document provides a consolidated, trackable log of all identified issues fr
 | **Critical (P0)** | 5 |
 | **High Priority (P1)** | 5 |
 | **Medium Priority (P2)** | 10 |
-| **Total Effort** | 43 hours (5.4 days) |
+| **Total Effort** | 47.25 hours (5.9 days) |
 | **GitHub Issues Created** | 0 |
 
 ### By Source
@@ -454,23 +454,29 @@ This document provides a consolidated, trackable log of all identified issues fr
 
 ### Creating GitHub Issues
 
-**Option 1: Use Automation Script**
+**Option 1: Use Automation Script (Recommended)**
 ```bash
 # Authenticate with GitHub CLI
 gh auth login
 
-# Run the Python script to create all issues
-python3 scripts/create-github-issues.py
+# Run the consolidated log script to create all 20 issues
+python3 scripts/create-issues-from-log.py
 ```
+
+This script:
+- Creates all 20 issues from the consolidated log
+- Updates `github_issue_number`, `status`, and `date_opened` fields automatically
+- Skips already-created issues (idempotent)
+- Updates summary statistics
 
 **Option 2: Manual Creation**
 1. Visit https://github.com/tim-dickey/trivia-app/issues/new
 2. Copy title, labels, and description from each issue above
-3. Create issue and update `github_issue_number` field in issues-log.json
+3. Create issue and manually update `github_issue_number` field in issues-log.json
 
 ### Tracking Issues
 
-After creating GitHub issues, update the issues-log.json file:
+After creating GitHub issues (automatically updated by the script or manually):
 1. Set `github_issue_number` to the created issue number
 2. Update `status` from "open" to "in_progress" or "closed"
 3. Set `date_opened` and `assignee` as appropriate
