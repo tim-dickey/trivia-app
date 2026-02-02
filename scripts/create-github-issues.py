@@ -62,6 +62,16 @@ def load_issues_from_json(filepath):
         data = json.load(f)
     return data.get('issues', [])
 
+def validate_issue(issue):
+    """Validate that issue has all required fields"""
+    required_fields = ['title', 'body', 'labels']
+    for field in required_fields:
+        if field not in issue:
+            return False, f"Missing required field: {field}"
+        if not issue[field]:
+            return False, f"Empty required field: {field}"
+    return True, None
+
 def main():
     print("╔" + "═" * 78 + "╗")
     print("║" + " " * 20 + "Creating GitHub Issues from Code Review" + " " * 19 + "║")
@@ -93,6 +103,8 @@ def main():
             issues = load_issues_from_json(filepath)
             all_issues.extend(issues)
             print(f"✓ Loaded {len(issues)} issues from {filename}")
+        else:
+            print(f"⚠️  Warning: Expected issues file not found: {filename}. Skipping.")
     
     print()
     print(f"Total issues to create: {len(all_issues)}")
@@ -101,6 +113,14 @@ def main():
     # Create issues
     created_issues = []
     for issue in all_issues:
+        # Validate issue before creating
+        is_valid, error_msg = validate_issue(issue)
+        if not is_valid:
+            print(f"⚠️  Skipping invalid issue: {error_msg}")
+            print(f"   Issue ID: {issue.get('id', 'unknown')}")
+            print()
+            continue
+            
         issue_num = create_issue(
             issue['title'],
             issue['body'],

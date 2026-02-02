@@ -20,6 +20,9 @@ echo "Note: Creating 15 issues (5 P0, 5 P1, 5 P2)"
 echo "This may take a few minutes..."
 echo ""
 
-# The actual issue creation will be done by the agent using gh CLI
+# Trigger issue creation using the Python helper script
 echo "Please wait while issues are created..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export GITHUB_REPOSITORY="$REPO"
+python3 "${SCRIPT_DIR}/create-github-issues.py"
 

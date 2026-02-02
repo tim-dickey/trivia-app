@@ -1,0 +1,49 @@
+{
+  "source": "Code Review 2026-02-02",
+  "total_issues": 5,
+  "categories": {
+    "P2_medium": 5
+  },
+  "issues": [
+    {
+      "id": "P2-1",
+      "title": "[P2] Add Quick Start Section to README",
+      "priority": "medium",
+      "labels": ["priority:medium", "documentation", "developer-experience"],
+      "effort_hours": 0.25,
+      "body": "## Problem\n\nREADME is comprehensive but lacks quick start at the top. Users must read extensive documentation before running the application.\n\n## Proposed Solution\n\nAdd quick start section at top of README.md with:\n- One-command Docker startup\n- Manual setup steps\n- Access URLs for frontend, backend, and API docs\n\n## Acceptance Criteria\n\n- [ ] Quick start section added at top of README\n- [ ] Single-command option documented\n- [ ] Manual setup documented\n- [ ] All commands tested and work\n- [ ] Time-to-first-run < 5 minutes for new contributors\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 11\n\n**Estimated Effort**: 15 minutes  \n**Priority**: P2 - Documentation  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P2-2",
+      "title": "[P2] Create Architecture Diagram",
+      "priority": "medium",
+      "labels": ["priority:medium", "documentation", "architecture"],
+      "effort_hours": 1,
+      "body": "## Problem\n\nArchitecture document is text-heavy with no visual representation. Diagrams improve understanding.\n\n## Proposed Solution\n\nCreate Mermaid or Excalidraw diagram showing:\n- System components (Frontend, Backend, Database, Redis, Celery)\n- Data flow for key operations\n- External integrations (Slack, Teams, AI)\n- Multi-tenant isolation\n\n## Acceptance Criteria\n\n- [ ] High-level architecture diagram created\n- [ ] Embedded in architecture.md\n- [ ] Shows all major components\n- [ ] Data flow clearly illustrated\n- [ ] Multi-tenancy boundaries shown\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 12\n\n**Estimated Effort**: 1 hour  \n**Priority**: P2 - Documentation  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P2-3",
+      "title": "[P2] Add Pre-commit Hooks for Code Quality",
+      "priority": "medium",
+      "labels": ["priority:medium", "code-quality", "developer-experience"],
+      "effort_hours": 1,
+      "body": "## Problem\n\nCode quality checks only run in CI, not locally. Developers push code that fails CI checks.\n\n## Proposed Solution\n\nInstall pre-commit hooks with:\n- Black (Python formatting)\n- Ruff (Python linting)\n- ESLint (JavaScript/TypeScript)\n- Trailing whitespace checks\n- YAML/JSON validation\n- Secret detection\n\n## Acceptance Criteria\n\n- [ ] Pre-commit hooks configured\n- [ ] Installation instructions in CONTRIBUTING.md\n- [ ] Hooks run before commits\n- [ ] CI checks match pre-commit checks\n- [ ] Hooks can be bypassed with --no-verify if needed\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 13\n\n**Estimated Effort**: 1 hour  \n**Priority**: P2 - Developer Experience  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P2-4",
+      "title": "[P2] Configure Dependabot for Automated Dependency Updates",
+      "priority": "medium",
+      "labels": ["priority:medium", "dependencies", "automation"],
+      "effort_hours": 0.5,
+      "body": "## Problem\n\nNo automated dependency update notifications. Security patches and updates are missed.\n\n## Proposed Solution\n\nCreate `.github/dependabot.yml` with:\n- Python (pip) updates for backend\n- npm updates for frontend\n- GitHub Actions updates\n- Weekly schedule\n- Automatic PR creation with proper labels\n\n## Acceptance Criteria\n\n- [ ] Dependabot configured for all ecosystems\n- [ ] Weekly PRs created automatically\n- [ ] Proper labels and reviewers assigned\n- [ ] Documentation explains workflow\n- [ ] Auto-merge configured for patch updates (optional)\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 14\n\n**Estimated Effort**: 30 minutes  \n**Priority**: P2 - Automation  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P2-5",
+      "title": "[P2] Add Troubleshooting Guide to Documentation",
+      "priority": "medium",
+      "labels": ["priority:medium", "documentation", "developer-experience"],
+      "effort_hours": 1,
+      "body": "## Problem\n\nNo documentation for common development issues. Developers waste time solving known problems.\n\n## Proposed Solution\n\nCreate troubleshooting section covering:\n- Database connection issues\n- Frontend/backend connection problems\n- Migration errors\n- Port conflicts\n- Test failures\n- Common setup problems\n\n## Acceptance Criteria\n\n- [ ] Troubleshooting guide created\n- [ ] Covers 10+ common issues\n- [ ] Solutions tested and verified\n- [ ] Linked from README\n- [ ] Easy to find and search\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 15\n\n**Estimated Effort**: 1 hour  \n**Priority**: P2 - Documentation  \n**Source**: Code Review 2026-02-02"
+    }
+  ]
+}
