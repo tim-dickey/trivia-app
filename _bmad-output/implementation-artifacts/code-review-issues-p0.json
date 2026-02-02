@@ -1,0 +1,56 @@
+{
+  "source": "Code Review 2026-02-02",
+  "total_issues": 15,
+  "categories": {
+    "P0_critical": 5,
+    "P1_high": 5,
+    "P2_medium": 5
+  },
+  "issues": [
+    {
+      "id": "P0-1",
+      "title": "[P0] Consolidate CI/CD Workflows to Eliminate Duplicate Test Runs",
+      "priority": "critical",
+      "labels": ["priority:critical", "ci/cd", "tech-debt"],
+      "effort_hours": 3,
+      "blocks": ["efficient-development"],
+      "body": "## Problem\n\nCurrently, both Codacy and CodeQL workflows run tests on every PR, causing:\n- Duplicate test execution (wastes CI/CD minutes)\n- Slower PR feedback cycles\n- Confusion about which workflow to check\n\n## Impact\n\n- **Efficiency**: CI runs take 2x longer than necessary\n- **Cost**: Wastes GitHub Actions minutes\n- **Developer Experience**: Slower feedback on PRs\n\n## Proposed Solution\n\nCreate a consolidated CI workflow structure:\n\n```yaml\n# .github/workflows/ci.yml - Runs on all PRs\n- Checkout + Setup\n- Backend tests (once)\n- Frontend tests  \n- Upload results to both Codacy AND CodeQL\n\n# .github/workflows/security-scheduled.yml - Runs on schedule only\n- Deep security scans (Bandit, CodeQL, dependency audit)\n- Runs weekly + on main branch merges\n```\n\n## Acceptance Criteria\n\n- [ ] Single workflow runs tests on PRs\n- [ ] No duplicate test executions\n- [ ] Coverage reports uploaded to both Codacy and GitHub\n- [ ] Security scans run on schedule only\n- [ ] PR feedback time reduced by ~50%\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 1\n\n**Estimated Effort**: 3 hours  \n**Priority**: P0 - Blocks efficient development  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P0-2",
+      "title": "[P0] Implement Organization Scoping Middleware for Multi-Tenancy",
+      "priority": "critical",
+      "labels": ["priority:critical", "security", "multi-tenancy", "backend"],
+      "effort_hours": 8,
+      "blocks": ["feature-development", "data-security"],
+      "body": "## Problem\n\nMulti-tenant data isolation is not enforced at the application layer. Currently:\n- No middleware to automatically filter by `organization_id`\n- Developers must manually add filters to every query\n- Risk of data leakage between tenants\n\n## Security Risk\n\n**HIGH**: Without automatic scoping, a developer could accidentally:\n- Return data from wrong organization\n- Allow cross-tenant data access\n- Create compliance violations (GDPR, SOC 2)\n\n## Proposed Solution\n\nImplement organization scoping at two levels:\n\n1. **Middleware**: Extract organization from JWT and set in request context\n2. **Base CRUD Class**: Automatically filter all queries by organization_id\n\n```python\n# backend/core/multi_tenancy.py\nasync def get_current_organization(\n    token: str = Depends(oauth2_scheme),\n    db: Session = Depends(get_db)\n) -> Organization:\n    \"\"\"Extract organization from JWT and validate access\"\"\"\n    # Implementation details in action items doc\n\n# backend/db/crud/base.py  \nclass MultiTenantCRUD:\n    \"\"\"Base CRUD with automatic organization scoping\"\"\"\n    def get_multi_for_org(self, db: Session, org_id: int, ...):\n        # Auto-filter by organization_id\n```\n\n## Acceptance Criteria\n\n- [ ] Middleware extracts organization from JWT\n- [ ] Base CRUD class auto-filters by organization_id\n- [ ] All existing CRUD operations use base class\n- [ ] Integration tests validate tenant isolation\n- [ ] Documentation updated with usage examples\n- [ ] No queries bypass organization filter\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 2\n\n**Estimated Effort**: 1 day (8 hours)  \n**Priority**: P0 - Security Critical  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P0-3",
+      "title": "[P0] Implement WebSocket Infrastructure for Real-Time Features",
+      "priority": "critical",
+      "labels": ["priority:critical", "websocket", "real-time", "backend", "frontend"],
+      "effort_hours": 16,
+      "blocks": ["mvp-features", "session-management", "live-scoring"],
+      "body": "## Problem\n\nArchitecture requires real-time features (live scoring, session updates, chat), but no WebSocket infrastructure exists. This blocks:\n\n- Session management\n- Live scoring updates\n- Real-time participant tracking\n- Chat features\n- **All MVP core features**\n\n## Impact\n\n**BLOCKS MVP**: Cannot implement any real-time features without this foundation.\n\n## Proposed Solution\n\nImplement WebSocket infrastructure on both backend and frontend:\n\n**Backend** (`backend/websocket/manager.py`):\n```python\nclass ConnectionManager:\n    def __init__(self):\n        self.active_connections: Dict[str, List[WebSocket]] = {}\n    \n    async def connect(self, websocket: WebSocket, session_id: str):\n        # Connection management\n    \n    async def broadcast_to_session(self, session_id: str, message: dict):\n        # Broadcast to all connections in session\n```\n\n**Frontend** (`frontend/src/services/websocket.ts`):\n```typescript\nexport class WebSocketService {\n  private ws: WebSocket | null = null;\n  \n  connect(sessionId: string) {\n    this.ws = new WebSocket(`ws://localhost:8000/ws/${sessionId}`);\n    // Message handling\n  }\n}\n```\n\n## Acceptance Criteria\n\n- [ ] WebSocket endpoint implemented in FastAPI\n- [ ] Connection manager handles multiple sessions\n- [ ] Authentication integrated with WebSocket\n- [ ] Frontend WebSocket service created\n- [ ] Basic message broadcast working\n- [ ] Integration tests for WebSocket functionality\n- [ ] Documentation with usage examples\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 3\n\n**Estimated Effort**: 2 days (16 hours)  \n**Priority**: P0 - Blocks MVP  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P0-4",
+      "title": "[P0] Fix Test Database Configuration (PostgreSQL in CI)",
+      "priority": "critical",
+      "labels": ["priority:critical", "testing", "ci/cd", "backend"],
+      "effort_hours": 2,
+      "blocks": ["test-reliability"],
+      "body": "## Problem\n\nCI workflows use SQLite for tests while production uses PostgreSQL:\n\n```yaml\n# .github/workflows/codacy.yml\nDATABASE_URL: sqlite:///./test_trivia.db  # ⚠️ Different from production\n```\n\n## Risk\n\nSQLite and PostgreSQL have different SQL dialects and features:\n- **PostgreSQL**: Full-text search, array types, JSON operators, specific ALTER TABLE syntax\n- **SQLite**: Limited ALTER TABLE, no array types, different JSON handling\n\n**Impact**: Tests may pass in CI but fail in production (or vice versa).\n\n## Proposed Solution\n\nUse PostgreSQL for CI tests via Docker service:\n\n```yaml\n# Update: .github/workflows/codacy.yml\nservices:\n  postgres:\n    image: postgres:13\n    env:\n      POSTGRES_USER: test_user\n      POSTGRES_PASSWORD: test_pass\n      POSTGRES_DB: test_db\n    options: >-\n      --health-cmd pg_isready\n      --health-interval 10s\n\njobs:\n  test:\n    env:\n      DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db\n    steps:\n      - name: Run migrations\n        run: cd backend && alembic upgrade head\n      - name: Run tests\n        run: cd backend && pytest\n```\n\n## Acceptance Criteria\n\n- [ ] PostgreSQL service added to CI workflows\n- [ ] All tests use PostgreSQL in CI\n- [ ] Migrations run before tests\n- [ ] Test database properly cleaned between runs\n- [ ] No SQLite-specific code in tests\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 4\n\n**Estimated Effort**: 2 hours  \n**Priority**: P0 - Test Reliability  \n**Source**: Code Review 2026-02-02"
+    },
+    {
+      "id": "P0-5",
+      "title": "[P0] Document Required GitHub Secrets for CI/CD",
+      "priority": "critical",
+      "labels": ["priority:critical", "documentation", "ci/cd", "contributor-experience"],
+      "effort_hours": 1,
+      "blocks": ["external-contributions"],
+      "body": "## Problem\n\nWorkflows require `CODACY_PROJECT_TOKEN` but there's no documentation on:\n- What secrets are needed\n- How to obtain them\n- How to configure them\n- What happens if they're missing\n\n**Impact**: External contributors cannot run full CI pipeline, workflows fail for forks.\n\n## Proposed Solution\n\n1. **Document all required secrets** in `CONTRIBUTING.md`:\n\n```markdown\n## CI/CD Setup\n\n### Required GitHub Secrets\n\nFor full CI/CD functionality, configure these secrets:\n\n1. **CODACY_PROJECT_TOKEN** (Optional for external contributors)\n   - Navigate to: Settings → Secrets → Actions\n   - Add secret: `CODACY_PROJECT_TOKEN`\n   - Value: Obtain from https://app.codacy.com/\n\n### Running CI Locally\n\n```bash\n# Backend tests (no secrets needed)\ncd backend && pytest --cov=backend\n\n# Frontend tests\ncd frontend && npm test\n```\n```\n\n2. **Make Codacy optional** in workflows:\n\n```yaml\n- name: Upload to Codacy\n  if: ${{ secrets.CODACY_PROJECT_TOKEN != '' }}\n  uses: codacy/codacy-coverage-reporter-action@v1\n```\n\n## Acceptance Criteria\n\n- [ ] All required secrets documented in CONTRIBUTING.md\n- [ ] Instructions for obtaining secrets provided\n- [ ] Local testing instructions (no secrets needed)\n- [ ] Workflows skip optional steps if secrets missing\n- [ ] README links to CONTRIBUTING.md CI section\n- [ ] External contributors can run CI locally\n\n## Implementation Details\n\nSee: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 5\n\n**Estimated Effort**: 1 hour  \n**Priority**: P0 - Blocks Contributions  \n**Source**: Code Review 2026-02-02"
+    }
+  ]
+}
