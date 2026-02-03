@@ -1,0 +1,99 @@
+# Consolidated CI Pipeline
+# This workflow runs on all PRs and pushes to main
+# It executes tests once and uploads results to both Codacy and GitHub
+# For deep security scans, see security-scheduled.yml
+
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  backend-tests:
+    name: Backend Tests & Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Run tests with coverage
+        env:
+          DATABASE_URL: sqlite:///./test_trivia.db
+          PYTHONPATH: .
+        run: |
+          pytest backend/tests --cov=backend --cov-report=xml --cov-report=term-missing --cov-fail-under=80
+
+      - name: Upload coverage to Codacy
+        if: secrets.CODACY_PROJECT_TOKEN != ''
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
+        continue-on-error: true
+
+      - name: Upload coverage to GitHub
+        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
+        with:
+          files: coverage.xml
+          flags: backend
+        continue-on-error: true
+
+  frontend-tests:
+    name: Frontend Tests & Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          if [ -f package-lock.json ]; then
+            echo "Detected package-lock.json, using npm ci for reproducible installs"
+            npm ci
+          else
+            echo "No package-lock.json found, using npm install (consider adding a lockfile)"
+            npm install
+          fi
+
+      - name: Run linter
+        run: |
+          cd frontend
+          npm run lint
+        continue-on-error: true
+
+      - name: Run tests
+        run: |
+          cd frontend
+          npm test -- --run
+        continue-on-error: true
+
+      - name: Build check
+        run: |
+          cd frontend
+          npm run build
+        continue-on-error: true

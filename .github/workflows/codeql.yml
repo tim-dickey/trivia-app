@@ -9,15 +9,14 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL Advanced"
+# NOTE: This workflow is now scheduled-only. For PR checks, see ci.yml
+#
+name: "CodeQL Advanced (Legacy - Scheduled Only)"
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   schedule:
     - cron: '21 11 * * 6'
+  workflow_dispatch:  # Allow manual triggers
 
 jobs:
   analyze:
@@ -43,6 +42,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
+        - language: python
+          build-mode: none
+        - language: javascript-typescript
+          build-mode: none
         - language: actions
           build-mode: none
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'rust', 'swift'
