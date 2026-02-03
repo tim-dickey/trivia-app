@@ -71,6 +71,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
         run: |
+          export PYTHONPATH="${GITHUB_WORKSPACE}"
           cd backend && alembic upgrade head
 
       # Run tests with coverage (if needed for Codacy)
@@ -136,6 +137,7 @@ jobs:
         env:
           DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
         run: |
+          export PYTHONPATH="${GITHUB_WORKSPACE}"
           cd backend && alembic upgrade head
 
       - name: Run tests with coverage
