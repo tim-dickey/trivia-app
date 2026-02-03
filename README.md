@@ -461,11 +461,14 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
 **Problem**: GitHub Actions workflows fail
 
 **Common Issues**:
-1. **Missing secrets**: Codacy workflow requires `CODACY_PROJECT_TOKEN`
-   - For external contributors: Maintainers will handle this
-   - For maintainers: Add token in repository settings > Secrets
+1. **Missing secrets**: Some workflows use `CODACY_PROJECT_TOKEN` for coverage uploads
+   - For external contributors: **This is normal** - workflows skip optional steps gracefully
+   - For maintainers: See [CI/CD Setup in CONTRIBUTING.md](CONTRIBUTING.md#for-maintainers-required-github-secrets) for instructions
 2. **Test failures**: Check workflow logs for specific test errors
-3. **Coverage upload issues**: Temporary Codacy service issues (will retry)
+3. **Coverage below 80%**: Add more tests to meet the coverage threshold
+4. **Linting errors**: Run `ruff check .` and `black .` locally before pushing
+
+**For detailed CI/CD documentation and local testing instructions**, see the [CI/CD section in CONTRIBUTING.md](CONTRIBUTING.md#-cicd-and-github-actions).
 
 ### Getting Additional Help
 
@@ -482,6 +485,10 @@ If you encounter issues not covered here:
 ## Contributing
 
 We welcome contributions from the development community! This is an **open source project** aimed at helping organizations create engaging learning experiences through gamified trivia.
+
+**📖 For complete contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md)**
+
+**🔧 For CI/CD setup and running tests locally, see [CI/CD Setup in CONTRIBUTING.md](CONTRIBUTING.md#-cicd-and-github-actions)**
 
 ### How to Contribute
 

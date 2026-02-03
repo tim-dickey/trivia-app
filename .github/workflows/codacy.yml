@@ -59,6 +59,7 @@ jobs:
 
       # Execute Codacy Analysis CLI
       - name: Run Codacy Analysis CLI
+        if: secrets.CODACY_PROJECT_TOKEN != ''
         uses: codacy/codacy-analysis-cli-action@d840f886c4bd4edc059706d09c6a1586111c540b
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
@@ -70,6 +71,7 @@ jobs:
 
       # Upload SARIF results
       - name: Upload SARIF results file
+        if: secrets.CODACY_PROJECT_TOKEN != ''
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
@@ -99,6 +101,7 @@ jobs:
           pytest backend/tests --cov=backend --cov-report=xml
 
       - name: Upload coverage to Codacy
+        if: secrets.CODACY_PROJECT_TOKEN != ''
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
