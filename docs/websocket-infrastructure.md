@@ -202,10 +202,22 @@ WebSocket connections require JWT authentication:
 
 ### Security Considerations
 
-- Tokens are validated on every connection
-- Invalid/expired tokens result in immediate connection rejection (1008 Policy Violation)
-- Organization ID is extracted from token for multi-tenant isolation
-- WebSocket messages are not persisted (ephemeral communication only)
+- **Token Validation**: Tokens are validated on every connection
+- **Rejection Policy**: Invalid/expired tokens result in immediate connection rejection (1008 Policy Violation)
+- **Multi-Tenant Isolation**: Organization ID is extracted from token for proper data isolation
+- **Ephemeral Messages**: WebSocket messages are not persisted (ephemeral communication only)
+- **Token in URL**: Due to WebSocket API limitations in browsers, JWT tokens are passed via query parameter
+  - This is industry-standard practice for WebSocket authentication
+  - Browsers don't support custom headers in WebSocket connections
+  - **Mitigation strategies**:
+    - Use short-lived access tokens (15 minutes default)
+    - Always use WSS (WebSocket Secure) in production
+    - Server-side: Avoid logging URLs containing tokens
+    - Client-side: Clear token from memory after disconnect
+- **Production Deployment**: 
+  - Use WSS (WebSocket Secure) with TLS/SSL certificates
+  - The frontend service auto-detects protocol (wss:// for HTTPS, ws:// for HTTP development)
+  - Configure proper CORS and firewall rules
 
 ## Connection Lifecycle
 

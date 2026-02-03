@@ -149,7 +149,11 @@ async def websocket_endpoint(
     except Exception as e:
         logger.error(f"WebSocket error for user {user_id} in session {session_id}: {e}")
         manager.disconnect(websocket, session_id)
-        await websocket.close(code=status.WS_1011_INTERNAL_ERROR)
+        try:
+            await websocket.close(code=status.WS_1011_INTERNAL_ERROR)
+        except Exception as close_error:
+            # Connection may already be closed, log and continue
+            logger.debug(f"Error closing WebSocket (may already be closed): {close_error}")
 
 
 if __name__ == "__main__":

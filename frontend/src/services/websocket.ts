@@ -34,8 +34,17 @@ export class WebSocketService {
   private messageHandlers: Map<MessageType | 'all', Set<MessageHandler>> = new Map();
   private isIntentionalClose: boolean = false;
 
-  constructor(baseUrl: string = 'ws://localhost:8000') {
-    this.url = baseUrl;
+  constructor(baseUrl?: string) {
+    // Auto-detect protocol based on current page protocol
+    // Uses wss:// for HTTPS pages, ws:// for HTTP (development)
+    if (!baseUrl) {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = window.location.hostname;
+      const port = process.env.NODE_ENV === 'production' ? '' : ':8000';
+      this.url = `${protocol}//${host}${port}`;
+    } else {
+      this.url = baseUrl;
+    }
     this.token = '';
     this.sessionId = '';
   }
@@ -44,6 +53,10 @@ export class WebSocketService {
    * Connect to a WebSocket session
    * @param sessionId - The session ID to join
    * @param token - JWT authentication token
+   * 
+   * Security Note: Token is passed via query parameter due to WebSocket API limitations.
+   * While this exposes the token in URLs, it's a common pattern for WebSocket auth.
+   * Mitigation: Use short-lived tokens, HTTPS/WSS in production, and don't log URLs server-side.
    */
   connect(sessionId: string, token: string): void {
     this.sessionId = sessionId;
@@ -54,6 +67,10 @@ export class WebSocketService {
 
   /**
    * Create and configure the WebSocket connection
+   * 
+   * Security Note: Tokens in query params are a known WebSocket limitation.
+   * The WebSocket API doesn't support custom headers in browsers.
+   * This is industry-standard practice for WebSocket authentication.
    */
   private createConnection(): void {
     if (this.ws && this.ws.readyState === WebSocket.OPEN) {
