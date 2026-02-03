@@ -4,10 +4,8 @@ Validates that tests work correctly with both PostgreSQL and SQLite
 """
 import os
 import pytest
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
 
-from backend.core.database import Base, get_db
 from backend.models.organization import Organization, PlanType
 from backend.models.user import User, UserRole
 
