@@ -43,6 +43,7 @@ trivia-app/
 - **ORM**: SQLAlchemy 2.0+
 - **Migrations**: Alembic
 - **Authentication**: JWT with refresh tokens
+- **Real-Time**: WebSocket infrastructure for live updates
 - **Testing**: pytest with 80%+ coverage target
 
 ### Frontend
@@ -138,6 +139,12 @@ Frontend will be available at: http://localhost:5173
 cd backend
 PYTHONPATH=.. pytest
 PYTHONPATH=.. pytest --cov=backend --cov-report=html
+
+# Run WebSocket integration tests
+PYTHONPATH=.. pytest tests/integration/test_websocket.py -v
+
+# Run all integration tests
+PYTHONPATH=.. pytest tests/integration/ -v
 ```
 
 Alternatively, run from project root:
@@ -201,6 +208,15 @@ npm run lint
 - ✅ Complete documentation suite (README, CONTRIBUTING, architecture docs)
 - ✅ **Multi-tenant middleware** (organization scoping, security isolation)
 
+**Recent Updates (PR #29 - Feb 3, 2026)**:
+- ✅ **WebSocket Infrastructure** implemented for real-time features
+  - Connection manager with session-based tracking
+  - JWT authentication for WebSocket connections
+  - Message broadcasting and session isolation
+  - Frontend WebSocket service with auto-reconnection
+  - 6 integration tests (100% pass rate)
+  - Complete documentation in `docs/websocket-infrastructure.md`
+
 **Validation Report**: See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-validation-report.md)
 
 **Quality Metrics**:
@@ -222,7 +238,7 @@ npm run lint
 **Critical (Must Address Before Feature Work)**:
 1. **CI/CD Optimization**: Consolidate duplicate test runs (Codacy + CodeQL both run tests on every PR)
 2. ~~**Multi-Tenant Middleware**: Implement organization scoping middleware for automatic data isolation~~ ✅ **COMPLETED**
-3. **WebSocket Infrastructure**: Real-time features not yet implemented (required for Epic 3)
+3. ~~**WebSocket Infrastructure**: Real-time features not yet implemented (required for Epic 3)~~ ✅ **COMPLETED** (PR #29)
 4. **Frontend CI Pipeline**: No automated testing for frontend changes
 
 **High Priority**:

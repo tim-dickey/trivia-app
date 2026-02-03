@@ -31,6 +31,23 @@ jobs:
       actions: read
     name: Codacy Security Scan
     runs-on: ubuntu-latest
+    
+    # PostgreSQL service for testing
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -49,10 +66,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
+      # Run migrations
+      - name: Run migrations
+        env:
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
+        run: |
+          export PYTHONPATH="${GITHUB_WORKSPACE}"
+          cd backend && alembic upgrade head
+
       # Run tests with coverage (if needed for Codacy)
       - name: Run tests
         env:
-          DATABASE_URL: sqlite:///./test_trivia.db
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
           PYTHONPATH: .
         run: |
           pytest backend/tests --cov=backend --cov-report=xml
@@ -79,6 +104,23 @@ jobs:
   codacy-coverage:
     name: Codacy Coverage
     runs-on: ubuntu-latest
+    
+    # PostgreSQL service for testing
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -93,9 +135,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
 
+      - name: Run migrations
+        env:
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
+        run: |
+          export PYTHONPATH="${GITHUB_WORKSPACE}"
+          cd backend && alembic upgrade head
+
       - name: Run tests with coverage
         env:
-          DATABASE_URL: sqlite:///./test_trivia.db
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
           PYTHONPATH: .
         run: |
           pytest backend/tests --cov=backend --cov-report=xml

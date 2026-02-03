@@ -335,6 +335,8 @@ backend/tests/
 ├── crud/            # CRUD operation tests
 ├── api/             # API endpoint tests
 ├── services/        # Business logic tests
+├── integration/     # Integration tests (tenant isolation, WebSocket, etc.)
+├── core/            # Core functionality tests (multi-tenancy, security)
 └── conftest.py      # Pytest fixtures
 ```
 
@@ -355,9 +357,15 @@ PYTHONPATH=.. pytest tests/api/test_auth.py
 
 # Run specific test
 PYTHONPATH=.. pytest tests/api/test_auth.py::test_user_registration
+
+# Run WebSocket integration tests
+PYTHONPATH=.. pytest tests/integration/test_websocket.py -v
+
+# Run all integration tests
+PYTHONPATH=.. pytest tests/integration/ -v
 ```
 
-**Example Test**:
+**Example API Test**:
 ```python
 def test_user_registration_success(test_client, test_organization):
     """Test successful user registration."""
@@ -375,6 +383,37 @@ def test_user_registration_success(test_client, test_organization):
     assert data["email"] == "newuser@example.com"
     assert "password" not in data
 ```
+
+**Example WebSocket Test**:
+```python
+def test_websocket_connection_with_valid_token(client, sample_user):
+    """Test WebSocket accepts connection with valid JWT token."""
+    token = create_access_token(
+        data={
+            "sub": str(sample_user.id),
+            "org_id": str(sample_user.organization_id),
+            "roles": [sample_user.role.value]
+        }
+    )
+    
+    session_id = "test-session-1"
+    
+    with client.websocket_connect(f"/ws/{session_id}?token={token}") as websocket:
+        # Receive welcome message
+        data = websocket.receive_json()
+        
+        assert data["type"] == "connection"
+        assert data["session_id"] == session_id
+        assert data["user_id"] == str(sample_user.id)
+```
+
+**Test Categories**:
+- **Unit Tests**: Test individual functions and classes in isolation
+- **Integration Tests**: Test interactions between components (API + DB, WebSocket + Auth)
+- **Multi-Tenancy Tests**: Verify organization isolation and security
+- **WebSocket Tests**: Test real-time communication, broadcasting, and session management
+
+For WebSocket testing details, see [WebSocket Infrastructure Documentation](../docs/websocket-infrastructure.md#testing).
 
 ### Frontend Testing
 
