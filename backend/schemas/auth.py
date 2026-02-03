@@ -7,7 +7,7 @@ from pydantic import BaseModel, EmailStr, Field
 class TokenResponse(BaseModel):
     """Schema for token responses"""
     access_token: str
-    token_type: str = "bearer"
+    token_type: str = "bearer"  # noqa: S105 - OAuth2 token type, not a password
     expires_in: int  # seconds
 
 
