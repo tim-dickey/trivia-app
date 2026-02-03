@@ -6,11 +6,10 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import HTTPBearer
 from sqlalchemy.orm import Session
 from backend.core.database import get_db
-from backend.core.security import hash_password, verify_password, create_access_token, create_refresh_token
+from backend.core.security import verify_password, create_access_token, create_refresh_token
 from backend.schemas.user import UserCreate, UserWithOrganization
 from backend.schemas.auth import LoginRequest, TokenResponse
 from backend.db.crud import user_crud, organization_crud
-from backend.models.user import UserRole
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 security = HTTPBearer()
