@@ -16,7 +16,7 @@ export interface WebSocketMessage {
   type: MessageType;
   user_id?: string;
   session_id?: string;
-  data?: any;
+  data?: unknown;
   message?: string;
   participant_count?: number;
 }
@@ -106,13 +106,17 @@ export class WebSocketService {
       // Call type-specific handlers
       const typeHandlers = this.messageHandlers.get(message.type);
       if (typeHandlers) {
-        typeHandlers.forEach(handler => handler(message));
+        typeHandlers.forEach((handler) => {
+          handler(message);
+        });
       }
 
       // Call generic handlers
       const allHandlers = this.messageHandlers.get('all');
       if (allHandlers) {
-        allHandlers.forEach(handler => handler(message));
+        allHandlers.forEach((handler) => {
+          handler(message);
+        });
       }
     } catch (error) {
       console.error('Error parsing WebSocket message:', error);
@@ -153,7 +157,7 @@ export class WebSocketService {
    * @param type - Message type
    * @param data - Message data
    */
-  send(type: MessageType, data?: any): void {
+  send(type: MessageType, data?: unknown): void {
     if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
       console.error('WebSocket is not connected');
       return;
