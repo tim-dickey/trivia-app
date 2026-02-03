@@ -3,6 +3,7 @@ Pytest fixtures and configuration for trivia-app backend tests
 Provides test database, client, and sample data fixtures
 """
 import pytest
+import os
 from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
@@ -15,16 +16,15 @@ from backend.models.organization import Organization, PlanType
 from backend.models.user import User, UserRole
 from backend.core.security import hash_password, create_access_token
 
-# Test database URL - Use file-based SQLite for better test stability
-TEST_DATABASE_URL = "sqlite:///./test_trivia.db"
-# Alternatively for PostgreSQL: "postgresql://trivia_user:trivia_pass@localhost:5432/trivia_test"
+# Test database URL - Use environment variable if set (CI), otherwise use SQLite for local dev
+TEST_DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./test_trivia.db")
 
-# Create test engine
-test_engine = create_engine(
-    TEST_DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in TEST_DATABASE_URL else {},
-    poolclass=None if "sqlite" in TEST_DATABASE_URL else None
-)
+# Create test engine with appropriate configuration for SQLite vs PostgreSQL
+engine_kwargs = {}
+if "sqlite" in TEST_DATABASE_URL:
+    engine_kwargs["connect_args"] = {"check_same_thread": False}
+
+test_engine = create_engine(TEST_DATABASE_URL, **engine_kwargs)
 
 # Create test session factory
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
