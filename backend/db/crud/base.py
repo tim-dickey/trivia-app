@@ -88,6 +88,12 @@ class MultiTenantCRUD(Generic[ModelType]):
         Returns:
             List of model instances
         """
+        # Defensive validation of pagination parameters to prevent abuse
+        if skip < 0:
+            skip = 0
+        if limit < 1 or limit > 1000:
+            limit = 100
+        
         return db.query(self.model).filter(
             self.model.organization_id == organization_id
         ).offset(skip).limit(limit).all()

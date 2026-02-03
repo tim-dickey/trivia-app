@@ -47,6 +47,16 @@ class TestTenantIsolation:
         assert payload1["org_id"] != payload2["org_id"]
         assert payload1["sub"] == str(sample_user.id)
         assert payload2["sub"] == str(other_org_user.id)
+        
+        # Test actual data access isolation - user cannot access other org's data
+        from backend.db.crud.base import MultiTenantCRUD
+        from backend.models.user import User as UserModel
+        
+        user_crud = MultiTenantCRUD(UserModel)
+        
+        # Try to access other_org_user's data using sample_user's organization
+        result = user_crud.get_by_id(db, other_org_user.id, sample_user.organization_id)
+        assert result is None  # Should not be able to access cross-org data
 
 
 class TestTokenSecurity:

@@ -13,7 +13,7 @@ from backend.core.multi_tenancy import (
     require_organization_access
 )
 from backend.core.security import create_access_token
-from backend.models.user import User, UserRole
+from backend.models.user import User
 from backend.models.organization import Organization
 from unittest.mock import Mock
 

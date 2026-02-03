@@ -6,7 +6,6 @@ import pytest
 from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Session
-from uuid import uuid4
 import uuid
 
 from backend.db.crud.base import MultiTenantCRUD
@@ -15,7 +14,7 @@ from backend.models.organization import Organization
 
 
 # Test model for CRUD operations
-class SessionTestModel(Base):
+class CrudTestModel(Base):
     """Test model with organization_id for multi-tenant CRUD testing"""
     __tablename__ = "test_sessions"
     
@@ -39,8 +38,8 @@ class TestMultiTenantCRUDInitialization:
     def test_initialization_with_valid_model_succeeds(self):
         """Test that initialization succeeds with a model that has organization_id"""
         # Act & Assert - Should not raise
-        crud = MultiTenantCRUD(SessionTestModel)
-        assert crud.model == SessionTestModel
+        crud = MultiTenantCRUD(CrudTestModel)
+        assert crud.model == CrudTestModel
     
     def test_initialization_without_organization_id_raises_error(self):
         """Test that initialization fails if model lacks organization_id column"""
@@ -57,7 +56,7 @@ class TestMultiTenantCRUDOperations:
     @pytest.fixture
     def test_crud(self):
         """Create CRUD instance for test model"""
-        return MultiTenantCRUD(SessionTestModel)
+        return MultiTenantCRUD(CrudTestModel)
     
     @pytest.fixture
     def setup_db(self, db: Session):
@@ -148,9 +147,9 @@ class TestMultiTenantCRUDOperations:
     ):
         """Test that get_multi only returns objects from the specified organization"""
         # Arrange - Create objects in different organizations
-        obj1 = test_crud.create(setup_db, {"name": "Session 1"}, sample_organization.id)
-        obj2 = test_crud.create(setup_db, {"name": "Session 2"}, sample_organization.id)
-        obj3 = test_crud.create(setup_db, {"name": "Session 3"}, premium_organization.id)
+        test_crud.create(setup_db, {"name": "Session 1"}, sample_organization.id)
+        test_crud.create(setup_db, {"name": "Session 2"}, sample_organization.id)
+        test_crud.create(setup_db, {"name": "Session 3"}, premium_organization.id)
         
         # Act
         org1_objects = test_crud.get_multi(setup_db, sample_organization.id)

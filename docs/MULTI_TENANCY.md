@@ -115,11 +115,17 @@ Provides automatic organization scoping for all database operations.
 ##### Usage
 
 ```python
+from fastapi import Depends, HTTPException
+from sqlalchemy.orm import Session
+from uuid import UUID
+
 from backend.db.crud.base import MultiTenantCRUD
-from backend.models.session import Session
+from backend.models.session import Session as SessionModel
+from backend.core.multi_tenancy import OrganizationId
+from backend.core.database import get_db
 
 # Create CRUD instance
-session_crud = MultiTenantCRUD(Session)
+session_crud = MultiTenantCRUD(SessionModel)
 
 # Use in endpoints
 @router.post("/sessions")
@@ -311,7 +317,12 @@ session_crud = SessionCRUD(Session)
 ### Example 3: Endpoint with User Context
 
 ```python
+from fastapi import Depends, HTTPException
+from sqlalchemy.orm import Session
+from uuid import UUID
+
 from backend.core.multi_tenancy import CurrentUser, OrganizationId
+from backend.core.database import get_db
 
 @router.post("/sessions/{session_id}/join")
 async def join_session(
