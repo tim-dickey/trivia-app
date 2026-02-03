@@ -4,7 +4,6 @@ Uses pydantic-settings for environment variable management
 """
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pydantic import field_validator
-from typing import Optional
 import secrets
 
 
@@ -59,7 +58,7 @@ class Settings(BaseSettings):
         ]
         if v.lower() in [x.lower() for x in insecure_values]:
             raise ValueError(
-                f"SECRET_KEY contains an insecure default value. "
+                "SECRET_KEY contains an insecure default value. "
                 "Generate a secure key with: openssl rand -hex 32"
             )
         return v
