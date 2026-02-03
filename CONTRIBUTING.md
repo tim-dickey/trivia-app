@@ -442,29 +442,31 @@ npm run test:watch
 
 The project uses several GitHub Actions workflows for automated testing and code quality:
 
-**1. Codacy Workflow** (`.github/workflows/codacy.yml`)
-- **Runs on**: PRs, pushes to main, weekly schedule
-- **Purpose**: Code quality, security scanning, test coverage
+**1. CI Pipeline** (`.github/workflows/ci.yml`)
+- **Runs on**: All PRs and pushes to main
+- **Purpose**: Fast feedback on code quality and test results
 - **What it does**:
-  - Sets up Python 3.11 environment
-  - Installs backend dependencies with caching
-  - Runs pytest test suite
-  - Generates coverage reports (XML format)
-  - Uploads coverage to Codacy
-  - Runs Codacy CLI security analysis
+  - Runs backend tests with pytest (enforces 80%+ coverage)
+  - Runs frontend tests and linting
+  - Uploads coverage to Codacy and GitHub (when secrets available)
+  - **Note**: Coverage upload is optional - works without secrets for external contributors
 
-**2. CodeQL Workflow** (`.github/workflows/codeql.yml`)
-- **Runs on**: PRs, pushes to main, weekly schedule
-- **Purpose**: Security vulnerability detection
+**2. Security Scans** (`.github/workflows/security-scheduled.yml`)
+- **Runs on**: Weekly schedule (Saturday) and pushes to main
+- **Purpose**: Deep security analysis
 - **What it does**:
-  - Analyzes code for security issues
-  - Currently configured for GitHub Actions files
-  - Uploads results to GitHub Security tab
+  - Runs Codacy security analysis
+  - Runs CodeQL analysis for Python and JavaScript/TypeScript
+  - Uploads security results to GitHub Security tab
+  - **Note**: Codacy security analysis is optional and is skipped if the `CODACY_PROJECT_TOKEN` secret is not available; CodeQL analysis still runs regardless of this secret
 
-**3. Other Workflows**:
+**3. Legacy Workflows** (scheduled only):
+- **Codacy** (`.github/workflows/codacy.yml`): Weekly security scans (Thursday)
+- **CodeQL** (`.github/workflows/codeql.yml`): Weekly security scans (Saturday)
+
+**4. Other Workflows**:
 - **Greetings**: Welcomes new contributors
 - **Summary**: AI-powered issue summarization
-- **Dependency Review** (disabled): For dependency vulnerability scanning
 
 ### For External Contributors
 
@@ -477,29 +479,41 @@ When you submit a PR:
 - **This is normal** - maintainers will handle coverage uploads and security scanning
 - Your PR will still be reviewed and can be merged
 
-### For Maintainers: Required GitHub Secrets
+### For Maintainers: GitHub Secrets Setup
 
 If you're a maintainer setting up a fork or need to configure CI/CD:
 
-**Required Secrets** (Repository Settings → Secrets and variables → Actions):
+**GitHub Secrets Setup** (Repository Settings → Secrets and variables → Actions):
 
-1. **`CODACY_PROJECT_TOKEN`** (Required for Codacy workflow)
-   - Get from: [Codacy Project Settings](https://app.codacy.com/)
-   - Navigate to: Project → Settings → Integrations → Project API Token
-   - Used for: Uploading test coverage and security scan results
+#### 1. CODACY_PROJECT_TOKEN (Optional for PR CI, recommended for main branch)
 
-**Optional Secrets** (for future features):
-- `DEPENDABOT_TOKEN`: For automated dependency updates
-- `SLACK_WEBHOOK`: For deployment notifications
+**Purpose**: Uploads test coverage and security scan results to Codacy
 
-**Setting up Codacy** (Maintainers only):
+**How to Obtain**:
 1. Sign up at [codacy.com](https://www.codacy.com/) with your GitHub account
-2. Add the trivia-app repository
-3. Go to Project Settings → Integrations
+2. Add the `trivia-app` repository to Codacy
+3. Navigate to: Project → Settings → Integrations → Project API Token
 4. Copy the Project API Token
-5. Add to GitHub: Repository Settings → Secrets → New repository secret
-   - Name: `CODACY_PROJECT_TOKEN`
-   - Value: [paste token]
+5. In GitHub: Repository Settings → Secrets and variables → Actions → New repository secret
+   - **Name**: `CODACY_PROJECT_TOKEN`
+   - **Value**: [paste token from Codacy]
+
+**What Happens Without This Secret**:
+- ✅ All tests still run on PRs
+- ✅ CI checks will pass/fail normally
+- ❌ Coverage reports won't be uploaded to Codacy
+- ❌ Codacy security scans will be skipped
+- **External contributors don't need this** - workflows gracefully skip optional steps
+
+**Used By**:
+- `.github/workflows/ci.yml` - Coverage upload (optional)
+- `.github/workflows/security-scheduled.yml` - Security scans (optional)
+- `.github/workflows/codacy.yml` - Legacy scheduled scans (optional)
+
+#### Optional Secrets (For Future Features)
+
+- **`DEPENDABOT_TOKEN`**: For automated dependency updates (not currently used)
+- **`SLACK_WEBHOOK`**: For deployment notifications (not currently used)
 
 ### Workflow Debugging
 
@@ -515,25 +529,78 @@ If you're a maintainer setting up a fork or need to configure CI/CD:
 
 **Running CI checks locally before pushing**:
 ```bash
-# Backend tests (same as CI)
+# Backend tests (same as CI runs)
 cd backend
-PYTHONPATH=.. pytest --cov=backend --cov-report=term-missing
+PYTHONPATH=.. pytest --cov=backend --cov-report=term-missing --cov-fail-under=80
 
-# Linting (same as CI would run)
+# Backend linting
+cd backend
 ruff check .
 black --check .
 
-# Type checking
+# Backend type checking
 mypy backend/
+
+# Frontend tests (if implemented)
+cd frontend
+npm test
+
+# Frontend linting
+cd frontend
+npm run lint
 ```
+
+### Running CI Locally (No Secrets Required)
+
+**You can run the full CI pipeline locally without any GitHub secrets**. This approximates the backend CI job that runs on PRs:
+
+#### Backend Tests
+```bash
+# Set DATABASE_URL to point at your local PostgreSQL instance (CI uses PostgreSQL)
+export DATABASE_URL="postgresql://test_user:test_pass@localhost:5432/test_db"
+
+# Apply Alembic migrations before running tests (CI does this automatically)
+cd backend
+alembic upgrade head
+
+# Run tests with coverage (matches CI exactly)
+PYTHONPATH=.. pytest --cov=backend --cov-report=term-missing --cov-fail-under=80
+
+# The coverage threshold must be 80% or higher for CI to pass
+```
+
+#### Frontend Tests
+```bash
+# Install dependencies
+cd frontend
+npm ci  # or npm install if no package-lock.json
+
+# Run linter
+npm run lint
+
+# Run tests
+npm test
+
+# Build check
+npm run build
+```
+
+#### Security Scanning (Optional)
+```bash
+# Install Codacy CLI (optional - for local security scans)
+curl -L https://github.com/codacy/codacy-analysis-cli/releases/download/7.10.7/codacy-analysis-cli-assembly.jar -o codacy-cli.jar
+
+# Run analysis (no token needed for local scan)
+java -jar codacy-cli.jar analyze --directory . --format json --output results.json
+```
+
+**Note**: The security scans are optional and primarily run on a schedule. You don't need to run them locally unless you're specifically working on security improvements.
 
 ### Known CI/CD Issues
 
-⚠️ **Duplicate Test Runs**: Both Codacy and CodeQL workflows currently run tests, causing some redundancy. This is being addressed in future improvements.
+⚠️ **Test Database Configuration**: CI and production both use PostgreSQL (via `DATABASE_URL` in `.github/workflows/ci.yml`). If you run tests locally with SQLite or another database, be aware of potential behavior differences and ensure migrations and tests are validated against PostgreSQL before merging. See [action items](../_bmad-output/implementation-artifacts/action-items-2026-02-02.md) for details.
 
-⚠️ **No Frontend CI**: Frontend tests are not yet integrated into CI. This is planned for implementation.
-
-⚠️ **CodeQL Limited Scope**: Currently only analyzes GitHub Actions files. Python and TypeScript analysis will be added.
+⚠️ **Frontend Tests**: Frontend test suite is still being developed. CI runs tests but they are currently optional (continue-on-error).
 
 ## 📝 Pull Request Process
 

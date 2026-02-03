@@ -386,10 +386,11 @@ npm run type-check
 
 Set these in: **Repository Settings** → **Secrets and variables** → **Actions**
 
-1. **`CODACY_PROJECT_TOKEN`** (Required)
+1. **`CODACY_PROJECT_TOKEN`** (Optional for PR CI, recommended for main branch)
    - Purpose: Upload test coverage and security scan results
    - Get from: [Codacy Project Settings](https://app.codacy.com/)
    - Path: Project → Settings → Integrations → Project API Token
+   - Note: PR workflows skip coverage upload gracefully when this secret is unavailable
 
 2. **`DEPENDABOT_TOKEN`** (Optional, for future)
    - Purpose: Automated dependency updates
