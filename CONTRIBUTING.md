@@ -458,7 +458,7 @@ The project uses several GitHub Actions workflows for automated testing and code
   - Runs Codacy security analysis
   - Runs CodeQL analysis for Python and JavaScript/TypeScript
   - Uploads security results to GitHub Security tab
-  - **Note**: Security scans are optional - will skip if secrets not available
+  - **Note**: Codacy security analysis is optional and is skipped if the `CODACY_PROJECT_TOKEN` secret is not available; CodeQL analysis still runs regardless of this secret
 
 **3. Legacy Workflows** (scheduled only):
 - **Codacy** (`.github/workflows/codacy.yml`): Weekly security scans (Thursday)
@@ -479,13 +479,13 @@ When you submit a PR:
 - **This is normal** - maintainers will handle coverage uploads and security scanning
 - Your PR will still be reviewed and can be merged
 
-### For Maintainers: Required GitHub Secrets
+### For Maintainers: GitHub Secrets Setup
 
 If you're a maintainer setting up a fork or need to configure CI/CD:
 
 **GitHub Secrets Setup** (Repository Settings → Secrets and variables → Actions):
 
-#### 1. CODACY_PROJECT_TOKEN (Optional, but recommended)
+#### 1. CODACY_PROJECT_TOKEN (Optional for PR CI, recommended for main branch)
 
 **Purpose**: Uploads test coverage and security scan results to Codacy
 
@@ -552,12 +552,18 @@ npm run lint
 
 ### Running CI Locally (No Secrets Required)
 
-**You can run the full CI pipeline locally without any GitHub secrets**. This is the same environment that runs on PRs:
+**You can run the full CI pipeline locally without any GitHub secrets**. This approximates the backend CI job that runs on PRs:
 
 #### Backend Tests
 ```bash
-# Run tests with coverage (matches CI exactly)
+# Set DATABASE_URL to point at your local PostgreSQL instance (CI uses PostgreSQL)
+export DATABASE_URL="postgresql://test_user:test_pass@localhost:5432/test_db"
+
+# Apply Alembic migrations before running tests (CI does this automatically)
 cd backend
+alembic upgrade head
+
+# Run tests with coverage (matches CI exactly)
 PYTHONPATH=.. pytest --cov=backend --cov-report=term-missing --cov-fail-under=80
 
 # The coverage threshold must be 80% or higher for CI to pass
@@ -592,7 +598,7 @@ java -jar codacy-cli.jar analyze --directory . --format json --output results.js
 
 ### Known CI/CD Issues
 
-⚠️ **Test Database Differences**: CI uses SQLite while production uses PostgreSQL. This is a known limitation being addressed. See [action items](../_bmad-output/implementation-artifacts/action-items-2026-02-02.md) for details.
+⚠️ **Test Database Configuration**: CI and production both use PostgreSQL (via `DATABASE_URL` in `.github/workflows/ci.yml`). If you run tests locally with SQLite or another database, be aware of potential behavior differences and ensure migrations and tests are validated against PostgreSQL before merging. See [action items](../_bmad-output/implementation-artifacts/action-items-2026-02-02.md) for details.
 
 ⚠️ **Frontend Tests**: Frontend test suite is still being developed. CI runs tests but they are currently optional (continue-on-error).
 

@@ -478,11 +478,11 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
 
 **Common Issues**:
 1. **Missing secrets**: Some workflows use `CODACY_PROJECT_TOKEN` for coverage uploads
-   - For external contributors: **This is normal** - workflows skip optional steps gracefully
-   - For maintainers: See [CI/CD Setup in CONTRIBUTING.md](CONTRIBUTING.md#for-maintainers-required-github-secrets) for instructions
+   - For external contributors: **This is normal** – workflows treat `CODACY_PROJECT_TOKEN` as optional and skip coverage upload steps gracefully
+   - For maintainers: `CODACY_PROJECT_TOKEN` is optional for PR CI but recommended if you want coverage reports uploaded from main/default-branch runs. See [CI/CD Setup in CONTRIBUTING.md](CONTRIBUTING.md#for-maintainers-github-secrets-setup) for setup details.
 2. **Test failures**: Check workflow logs for specific test errors
 3. **Coverage below 80%**: Add more tests to meet the coverage threshold
-4. **Linting errors**: Run `ruff check .` and `black .` locally before pushing
+4. **Linting/style issues (Codacy or local checks)**: The main PR CI workflow runs backend tests and coverage only, but Codacy and local tools may report style problems. Run `ruff check .` and `black .` locally to fix these before pushing.
 
 **For detailed CI/CD documentation and local testing instructions**, see the [CI/CD section in CONTRIBUTING.md](CONTRIBUTING.md#-cicd-and-github-actions).
 
