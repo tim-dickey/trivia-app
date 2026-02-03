@@ -13,18 +13,21 @@ from backend.core.security import create_access_token
 class TestWebSocketIntegration:
     """Integration tests for WebSocket endpoint"""
 
+    def _create_user_token(self, user: User) -> str:
+        """Helper method to create JWT token for a user"""
+        return create_access_token(
+            data={
+                "sub": str(user.id),
+                "org_id": str(user.organization_id),
+                "roles": [user.role.value],
+            }
+        )
+
     def test_websocket_connection_with_valid_token(
         self, client: TestClient, sample_user: User
     ):
         """Test that WebSocket accepts connection with valid JWT token"""
-        # Create a valid token for the user
-        token = create_access_token(
-            data={
-                "sub": str(sample_user.id),
-                "org_id": str(sample_user.organization_id),
-                "roles": [sample_user.role.value],
-            }
-        )
+        token = self._create_user_token(sample_user)
 
         session_id = "test-session-1"
 
@@ -72,22 +75,8 @@ class TestWebSocketIntegration:
         self, client: TestClient, sample_user: User, admin_user: User
     ):
         """Test that messages are broadcast to all connections in a session"""
-        # Create tokens for both users
-        token1 = create_access_token(
-            data={
-                "sub": str(sample_user.id),
-                "org_id": str(sample_user.organization_id),
-                "roles": [sample_user.role.value],
-            }
-        )
-
-        token2 = create_access_token(
-            data={
-                "sub": str(admin_user.id),
-                "org_id": str(admin_user.organization_id),
-                "roles": [admin_user.role.value],
-            }
-        )
+        token1 = self._create_user_token(sample_user)
+        token2 = self._create_user_token(admin_user)
 
         session_id = "test-session-4"
 
@@ -127,22 +116,8 @@ class TestWebSocketIntegration:
         self, client: TestClient, sample_user: User, admin_user: User
     ):
         """Test that messages don't leak between different sessions"""
-        # Create tokens for both users
-        token1 = create_access_token(
-            data={
-                "sub": str(sample_user.id),
-                "org_id": str(sample_user.organization_id),
-                "roles": [sample_user.role.value],
-            }
-        )
-
-        token2 = create_access_token(
-            data={
-                "sub": str(admin_user.id),
-                "org_id": str(admin_user.organization_id),
-                "roles": [admin_user.role.value],
-            }
-        )
+        token1 = self._create_user_token(sample_user)
+        token2 = self._create_user_token(admin_user)
 
         session_id_1 = "test-session-5"
         session_id_2 = "test-session-6"
@@ -182,22 +157,8 @@ class TestWebSocketIntegration:
         self, client: TestClient, sample_user: User, admin_user: User
     ):
         """Test that disconnection is broadcast to other participants"""
-        # Create tokens for both users
-        token1 = create_access_token(
-            data={
-                "sub": str(sample_user.id),
-                "org_id": str(sample_user.organization_id),
-                "roles": [sample_user.role.value],
-            }
-        )
-
-        token2 = create_access_token(
-            data={
-                "sub": str(admin_user.id),
-                "org_id": str(admin_user.organization_id),
-                "roles": [admin_user.role.value],
-            }
-        )
+        token1 = self._create_user_token(sample_user)
+        token2 = self._create_user_token(admin_user)
 
         session_id = "test-session-7"
 
