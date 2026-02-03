@@ -119,7 +119,7 @@ async def login(
     # Return access token
     return TokenResponse(
         access_token=access_token,
-        token_type="bearer",
+        token_type="bearer",  # noqa: S106, B106 - OAuth2 token type, not a password
         expires_in=15 * 60  # 15 minutes in seconds
     )
 
