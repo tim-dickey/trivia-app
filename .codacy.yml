@@ -4,4 +4,17 @@ engines:
     enabled: true
     exclude_paths:
       - 'backend/tests/**'
-exclude_paths: []
+      - 'backend/alembic/versions/**'
+exclude_paths:
+  - 'node_modules/**'
+  - 'venv/**'
+  - '.venv/**'
+  - '__pycache__/**'
+  - '.pytest_cache/**'
+  - 'backend/alembic/versions/**'
+  - '**/*.egg-info/**'
+  - 'dist/**'
+  - 'build/**'
+  - '.coverage'
+  - 'coverage.xml'
+  - 'htmlcov/**'
