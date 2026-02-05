@@ -592,3 +592,197 @@ See: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 
 
 ---ISSUE-SEPARATOR---
 
+## ISSUE 11 of 15
+
+**Title**: [P2] Add Quick Start Section to README
+
+**Labels**: priority:medium, documentation, developer-experience
+
+**Body**:
+
+## Problem
+
+README is comprehensive but lacks quick start at the top. Users must read extensive documentation before running the application.
+
+## Proposed Solution
+
+Add quick start section at top of README.md with:
+- One-command Docker startup
+- Manual setup steps
+- Access URLs for frontend, backend, and API docs
+
+## Acceptance Criteria
+
+- [ ] Quick start section added at top of README
+- [ ] Single-command option documented
+- [ ] Manual setup documented
+- [ ] All commands tested and work
+- [ ] Time-to-first-run < 5 minutes for new contributors
+
+## Implementation Details
+
+See: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 11
+
+**Estimated Effort**: 15 minutes  
+**Priority**: P2 - Documentation  
+**Source**: Code Review 2026-02-02
+
+---ISSUE-SEPARATOR---
+
+## ISSUE 12 of 15
+
+**Title**: [P2] Create Architecture Diagram
+
+**Labels**: priority:medium, documentation, architecture
+
+**Body**:
+
+## Problem
+
+Architecture document is text-heavy with no visual representation. Diagrams improve understanding.
+
+## Proposed Solution
+
+Create Mermaid or Excalidraw diagram showing:
+- System components (Frontend, Backend, Database, Redis, Celery)
+- Data flow for key operations
+- External integrations (Slack, Teams, AI)
+- Multi-tenant isolation
+
+## Acceptance Criteria
+
+- [ ] High-level architecture diagram created
+- [ ] Embedded in architecture.md
+- [ ] Shows all major components
+- [ ] Data flow clearly illustrated
+- [ ] Multi-tenancy boundaries shown
+
+## Implementation Details
+
+See: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 12
+
+**Estimated Effort**: 1 hour  
+**Priority**: P2 - Documentation  
+**Source**: Code Review 2026-02-02
+
+---ISSUE-SEPARATOR---
+
+## ISSUE 13 of 15
+
+**Title**: [P2] Add Pre-commit Hooks for Code Quality
+
+**Labels**: priority:medium, code-quality, developer-experience
+
+**Body**:
+
+## Problem
+
+Code quality checks only run in CI, not locally. Developers push code that fails CI checks.
+
+## Proposed Solution
+
+Install pre-commit hooks with:
+- Black (Python formatting)
+- Ruff (Python linting)
+- ESLint (JavaScript/TypeScript)
+- Trailing whitespace checks
+- YAML/JSON validation
+- Secret detection
+
+## Acceptance Criteria
+
+- [ ] Pre-commit hooks configured
+- [ ] Installation instructions in CONTRIBUTING.md
+- [ ] Hooks run before commits
+- [ ] CI checks match pre-commit checks
+- [ ] Hooks can be bypassed with --no-verify if needed
+
+## Implementation Details
+
+See: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 13
+
+**Estimated Effort**: 1 hour  
+**Priority**: P2 - Developer Experience  
+**Source**: Code Review 2026-02-02
+
+---ISSUE-SEPARATOR---
+
+## ISSUE 14 of 15
+
+**Title**: [P2] Configure Dependabot for Automated Dependency Updates
+
+**Labels**: priority:medium, dependencies, automation
+
+**Body**:
+
+## Problem
+
+No automated dependency update notifications. Security patches and updates are missed.
+
+## Proposed Solution
+
+Create `.github/dependabot.yml` with:
+- Python (pip) updates for backend
+- npm updates for frontend
+- GitHub Actions updates
+- Weekly schedule
+- Automatic PR creation with proper labels
+
+## Acceptance Criteria
+
+- [ ] Dependabot configured for all ecosystems
+- [ ] Weekly PRs created automatically
+- [ ] Proper labels and reviewers assigned
+- [ ] Documentation explains workflow
+- [ ] Auto-merge configured for patch updates (optional)
+
+## Implementation Details
+
+See: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 14
+
+**Estimated Effort**: 30 minutes  
+**Priority**: P2 - Automation  
+**Source**: Code Review 2026-02-02
+
+---ISSUE-SEPARATOR---
+
+## ISSUE 15 of 15
+
+**Title**: [P2] Add Troubleshooting Guide to Documentation
+
+**Labels**: priority:medium, documentation, developer-experience
+
+**Body**:
+
+## Problem
+
+No documentation for common development issues. Developers waste time solving known problems.
+
+## Proposed Solution
+
+Create troubleshooting section covering:
+- Database connection issues
+- Frontend/backend connection problems
+- Migration errors
+- Port conflicts
+- Test failures
+- Common setup problems
+
+## Acceptance Criteria
+
+- [ ] Troubleshooting guide created
+- [ ] Covers 10+ common issues
+- [ ] Solutions tested and verified
+- [ ] Linked from README
+- [ ] Easy to find and search
+
+## Implementation Details
+
+See: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` Section 15
+
+**Estimated Effort**: 1 hour  
+**Priority**: P2 - Documentation  
+**Source**: Code Review 2026-02-02
+
+---ISSUE-SEPARATOR---
+
