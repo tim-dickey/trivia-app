@@ -57,21 +57,25 @@ create_issue() {
     echo "Creating: ${title}"
     
     local issue_url
+    local exit_code
     issue_url=$(gh issue create \
         --repo "${REPO}" \
         --title "${title}" \
         --body "${body}" \
         --label "${labels}" 2>&1)
+    exit_code=$?
     
-    if [ $? -eq 0 ]; then
+    if [ $exit_code -eq 0 ]; then
         echo -e "${GREEN}✓ Created: ${issue_url}${NC}"
         # Extract issue number
         local issue_num=$(echo "${issue_url}" | grep -oE '[0-9]+$')
         echo "${issue_num}"
+        return 0
     else
         echo -e "${RED}✗ Failed: ${title}${NC}"
         echo "  Error: ${issue_url}"
         echo ""
+        return 1
     fi
 }
 
@@ -151,7 +155,10 @@ See: \`_bmad-output/implementation-artifacts/action-items-2026-02-02.md\` Sectio
 **Source**: Code Review 2026-02-02" \
         "priority:high,security,dependencies,backend,frontend"
     
-    [ $? -eq 0 ] && ((created_count++)) && ((total_effort+=4))
+    if [ $? -eq 0 ]; then
+        ((created_count++))
+        ((total_effort+=4))
+    fi
     echo ""
     sleep 1  # Rate limiting
     
@@ -195,7 +202,10 @@ See: \`_bmad-output/implementation-artifacts/action-items-2026-02-02.md\` Sectio
 **Source**: Code Review 2026-02-02" \
         "priority:high,ci/cd,frontend,testing"
     
-    [ $? -eq 0 ] && ((created_count++)) && ((total_effort+=2))
+    if [ $? -eq 0 ]; then
+        ((created_count++))
+        ((total_effort+=2))
+    fi
     echo ""
     sleep 1  # Rate limiting
     
@@ -256,7 +266,10 @@ See: \`_bmad-output/implementation-artifacts/action-items-2026-02-02.md\` Sectio
 **Source**: Code Review 2026-02-02" \
         "priority:high,security,ci/cd,codeql"
     
-    [ $? -eq 0 ] && ((created_count++)) && ((total_effort+=1))
+    if [ $? -eq 0 ]; then
+        ((created_count++))
+        ((total_effort+=1))
+    fi
     echo ""
     sleep 1  # Rate limiting
     
@@ -300,7 +313,10 @@ See: \`_bmad-output/implementation-artifacts/action-items-2026-02-02.md\` Sectio
 **Source**: Code Review 2026-02-02" \
         "priority:high,docker,developer-experience,infrastructure"
     
-    [ $? -eq 0 ] && ((created_count++)) && ((total_effort+=3))
+    if [ $? -eq 0 ]; then
+        ((created_count++))
+        ((total_effort+=3))
+    fi
     echo ""
     sleep 1  # Rate limiting
     
@@ -349,7 +365,10 @@ See: \`_bmad-output/implementation-artifacts/action-items-2026-02-02.md\` Sectio
 **Source**: Code Review 2026-02-02" \
         "priority:high,security,backend,middleware"
     
-    [ $? -eq 0 ] && ((created_count++)) && ((total_effort+=2))
+    if [ $? -eq 0 ]; then
+        ((created_count++))
+        ((total_effort+=2))
+    fi
     echo ""
     
     # Summary

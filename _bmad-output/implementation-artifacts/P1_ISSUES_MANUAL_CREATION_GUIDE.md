@@ -11,7 +11,6 @@ This guide provides complete information for creating all 5 P1 (High Priority) i
 gh auth login
 
 # Run the P1 issues creation script
-cd /home/runner/work/trivia-app/trivia-app
 python3 scripts/create-p1-issues.py
 ```
 

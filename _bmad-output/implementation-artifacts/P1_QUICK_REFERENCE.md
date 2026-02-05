@@ -50,6 +50,7 @@ Copy-paste each issue into GitHub
 - **Scripts**: `scripts/create-p1-issues.{py,sh}`
 - **Source Data**: `_bmad-output/implementation-artifacts/code-review-issues-p1.json`
 - **Manual Guide**: `_bmad-output/implementation-artifacts/P1_ISSUES_MANUAL_CREATION_GUIDE.md`
+- **Task Summary**: `_bmad-output/implementation-artifacts/P1_ISSUES_TASK_SUMMARY.md`
 - **Full Docs**: `scripts/README.md`
 
 ## ✅ Verification
@@ -80,6 +81,6 @@ Python script automatically skips them.
 
 ## 📚 More Info
 
-- Full task summary: `P1_ISSUES_TASK_SUMMARY.md`
+- Full task summary: `_bmad-output/implementation-artifacts/P1_ISSUES_TASK_SUMMARY.md`
 - All scripts documentation: `scripts/README.md`
 - Issue creation guide: `ISSUE_CREATION_INSTRUCTIONS.md`

@@ -77,8 +77,20 @@ def create_issue(issue_data):
 def load_existing_tracking():
     """Load existing tracking data if available"""
     if TRACKING_FILE.exists():
-        with open(TRACKING_FILE, 'r') as f:
-            return json.load(f)
+        try:
+            with open(TRACKING_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            # Ensure the data has the expected structure
+            if not isinstance(data, dict):
+                raise ValueError("Tracking data is not a JSON object")
+            if "issues" not in data:
+                data["issues"] = []
+            if "created_at" not in data:
+                data["created_at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            return data
+        except (json.JSONDecodeError, OSError, ValueError) as exc:
+            print(f"⚠️ Warning: Tracking file '{TRACKING_FILE}' is invalid or corrupted: {exc}")
+            print("   Proceeding as if no issues have been created yet.")
     return {
         "created_at": time.strftime('%Y-%m-%d %H:%M:%S'),
         "issues": []
@@ -88,7 +100,8 @@ def load_existing_tracking():
 def save_tracking(tracking_data):
     """Save tracking data to file"""
     tracking_data["last_updated"] = time.strftime('%Y-%m-%d %H:%M:%S')
-    with open(TRACKING_FILE, 'w') as f:
+    TRACKING_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(TRACKING_FILE, 'w', encoding='utf-8') as f:
         json.dump(tracking_data, f, indent=2)
     print(f"✓ Tracking file updated: {TRACKING_FILE}")
 
@@ -117,10 +130,16 @@ def main():
         print(f"❌ Error: P1 issues file not found: {P1_ISSUES_FILE}")
         sys.exit(1)
     
-    with open(P1_ISSUES_FILE, 'r') as f:
-        p1_data = json.load(f)
-    
-    issues = p1_data['issues']
+    try:
+        with open(P1_ISSUES_FILE, 'r', encoding='utf-8') as f:
+            p1_data = json.load(f)
+        issues = p1_data['issues']
+    except json.JSONDecodeError as exc:
+        print(f"❌ Error: Failed to parse JSON from {P1_ISSUES_FILE}: {exc}")
+        sys.exit(1)
+    except KeyError:
+        print(f"❌ Error: JSON file {P1_ISSUES_FILE} is missing required 'issues' key.")
+        sys.exit(1)
     print(f"✓ Loaded {len(issues)} P1 issues from JSON file")
     print()
     

@@ -72,7 +72,6 @@ Created comprehensive tooling and documentation for creating the 5 P1 (High Prio
 gh auth login
 
 # 2. Run the Python script
-cd /home/runner/work/trivia-app/trivia-app
 python3 scripts/create-p1-issues.py
 ```
 
@@ -85,7 +84,6 @@ python3 scripts/create-p1-issues.py
 gh auth login
 
 # 2. Run the bash script
-cd /home/runner/work/trivia-app/trivia-app
 ./scripts/create-p1-issues.sh
 ```
 
@@ -131,6 +129,8 @@ trivia-app/
 └── _bmad-output/implementation-artifacts/
     ├── code-review-issues-p1.json # Source data
     ├── P1_ISSUES_MANUAL_CREATION_GUIDE.md  # Manual guide (NEW)
+    ├── P1_ISSUES_TASK_SUMMARY.md  # Task summary (NEW)
+    ├── P1_QUICK_REFERENCE.md      # Quick reference (NEW)
     └── p1-issues-created.json     # Generated after running Python script
 ```
 
@@ -159,6 +159,7 @@ trivia-app/
 - **All Issues Guide**: `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 - **Issues Log**: `_bmad-output/implementation-artifacts/issues-log.json`
 - **Action Items**: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md`
+- **P1 Quick Reference**: `_bmad-output/implementation-artifacts/P1_QUICK_REFERENCE.md`
 
 ## Summary
 
