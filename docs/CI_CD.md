@@ -21,7 +21,7 @@ The project uses multiple Codacy configuration files for different purposes:
    - Configures engine-specific options
 
 2. **`.codacy/codacy.yaml`** - Runtime and tools configuration
-   - Defines language runtimes (Python 3.11.11, Node.js 22.2.0)
+   - Defines language runtimes (Python 3.11.11, Node.js 20.18.1)
    - Specifies analysis tools (ESLint, Semgrep, Trivy, Lizard)
    - Used by Codacy CLI for local analysis
 
@@ -66,11 +66,13 @@ To run Codacy analysis locally:
 # Run full analysis
 ./.codacy/cli.sh analyze
 
-# Run specific tool
-./.codacy/cli.sh analyze --tool bandit
+# Run specific tool (tools configured in .codacy/codacy.yaml)
 ./.codacy/cli.sh analyze --tool eslint
 ./.codacy/cli.sh analyze --tool semgrep
 ./.codacy/cli.sh analyze --tool trivy
+
+# Note: Bandit is configured as a Codacy engine in .codacy.yml and runs as part
+# of the full analysis. It is not invoked via --tool flag.
 
 # Validate configuration
 ./.codacy/cli.sh validate-configuration

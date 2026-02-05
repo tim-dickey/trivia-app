@@ -32,7 +32,7 @@ runtimes:
     - dart@3.7.2      # ❌ No Dart files in project
     - go@1.22.3       # ❌ No Go files in project
     - java@17.0.10    # ❌ No Java files in project
-    - node@22.2.0     # ✅ Used (1 TypeScript file)
+    - node@20.18.1    # ✅ Used (1 TypeScript file)
     - python@3.11.11  # ✅ Used (45 Python files)
 ```
 
@@ -211,7 +211,7 @@ fatal() {
 1. **Update `.codacy/codacy.yaml`**:
    ```yaml
    runtimes:
-       - node@22.2.0
+       - node@20.18.1
        - python@3.11.11
    tools:
        - eslint@8.57.0

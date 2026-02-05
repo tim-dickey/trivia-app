@@ -28,7 +28,7 @@ A comprehensive review of all Codacy functionality in the trivia-app repository 
 
 1. **Removed Unused Runtimes** (`.codacy/codacy.yaml`)
    - ❌ Removed: Dart, Go, Java
-   - ✅ Kept: Node.js 22.2.0, Python 3.11.11
+   - ✅ Kept: Node.js 20.18.1, Python 3.11.11
 
 2. **Removed Unused Tools** (`.codacy/codacy.yaml`)
    - ❌ Removed: dartanalyzer, PMD, pylint, revive
