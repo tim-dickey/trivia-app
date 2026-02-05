@@ -1,11 +1,82 @@
 # CI/CD Pipeline Documentation
 
-> **Last Updated**: February 2, 2026  
+> **Last Updated**: February 5, 2026  
 > **Status**: Consolidated workflows - Single CI for PRs, scheduled security scans
 
 ## Overview
 
 The trivia-app project uses GitHub Actions for continuous integration, code quality analysis, and security scanning. The workflows have been optimized to eliminate duplicate test runs and improve PR feedback time.
+
+**Codacy Integration**: The project uses Codacy for automated code quality analysis, security scanning, and test coverage tracking. Codacy is configured to analyze only the languages actually used in the project (Python and JavaScript/TypeScript) for optimal performance.
+
+## Codacy Configuration
+
+### Configuration Files
+
+The project uses multiple Codacy configuration files for different purposes:
+
+1. **`.codacy.yml`** - Main Codacy configuration
+   - Defines which analysis engines to enable (e.g., Bandit for Python security)
+   - Specifies paths to exclude from analysis (dependencies, build artifacts, etc.)
+   - Configures engine-specific options
+
+2. **`.codacy/codacy.yaml`** - Runtime and tools configuration
+   - Defines language runtimes (Python 3.11.11, Node.js 20.18.1)
+   - Specifies analysis tools (ESLint, Semgrep, Trivy, Lizard)
+   - Used by Codacy CLI for local analysis
+
+3. **`.codacy/cli.sh`** - Codacy CLI installation script
+   - Downloads and manages Codacy CLI v2
+   - Handles version management and caching
+   - Provides commands for local analysis
+
+### Active Codacy Tools
+
+The following tools are configured for code analysis:
+
+- **ESLint** (v8.57.0): JavaScript/TypeScript linting
+- **Lizard** (v1.17.31): Code complexity analysis (language-agnostic)
+- **Semgrep** (v1.78.0): Security pattern matching (multi-language)
+- **Trivy** (v0.66.0): Vulnerability and security scanning
+- **Bandit** (via Codacy engines): Python security issue detection
+
+**Note**: The project uses `ruff` and `black` for local Python linting, not pylint. This ensures consistency between local development and CI.
+
+### Excluded Paths
+
+To optimize analysis time, the following paths are excluded from Codacy analysis:
+
+- `node_modules/**` - Node.js dependencies
+- `venv/**`, `.venv/**` - Python virtual environments
+- `__pycache__/**` - Python bytecode cache
+- `.pytest_cache/**` - Pytest cache
+- `backend/alembic/versions/**` - Auto-generated database migrations
+- `**/*.egg-info/**` - Python package metadata
+- `dist/**`, `build/**` - Build artifacts
+- `.coverage`, `coverage.xml`, `htmlcov/**` - Coverage reports
+
+### Local Codacy Analysis
+
+To run Codacy analysis locally:
+
+```bash
+# Download Codacy CLI
+./.codacy/cli.sh download
+
+# Run full analysis
+./.codacy/cli.sh analyze
+
+# Run specific tool (tools configured in .codacy/codacy.yaml)
+./.codacy/cli.sh analyze --tool eslint
+./.codacy/cli.sh analyze --tool semgrep
+./.codacy/cli.sh analyze --tool trivy
+
+# Note: Bandit is configured as a Codacy engine in .codacy.yml and runs as part
+# of the full analysis. It is not invoked via --tool flag.
+
+# Validate configuration
+./.codacy/cli.sh validate-configuration
+```
 
 ## Active Workflows
 
