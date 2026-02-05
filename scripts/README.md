@@ -4,7 +4,40 @@ This directory contains automation scripts for creating GitHub issues from colle
 
 ## Available Scripts
 
-### 1. create-issues-from-log.py (RECOMMENDED)
+### 1. create-p1-issues.py / create-p1-issues.sh (NEW - P1 ONLY)
+
+**New in 2026-02-05**: Specifically creates the 5 P1 (High Priority) issues.
+
+Creates GitHub issues from `code-review-issues-p1.json` - ideal when you only want to create P1 issues.
+
+**Python Version Features**:
+- Creates 5 P1 issues only
+- Tracks created issues to prevent duplicates
+- Generates tracking file: `p1-issues-created.json`
+- Comprehensive error handling
+- Rate limiting (1s between issues)
+
+**Bash Version Features**:
+- Standalone bash implementation
+- No dependencies except `gh` CLI
+- Colored output
+- Simple and readable
+
+**Usage**:
+```bash
+# Python version (recommended - tracks created issues)
+python3 scripts/create-p1-issues.py
+
+# Bash version (alternative)
+./scripts/create-p1-issues.sh
+```
+
+**Input**: `_bmad-output/implementation-artifacts/code-review-issues-p1.json`  
+**Output**: `_bmad-output/implementation-artifacts/p1-issues-created.json` (Python only)
+
+---
+
+### 2. create-issues-from-log.py (RECOMMENDED FOR ALL ISSUES)
 
 **New in 2026-02-02**: Works with the consolidated issues log.
 
@@ -31,7 +64,7 @@ python3 scripts/create-issues-from-log.py
 
 ---
 
-### 2. create-github-issues.py (Original)
+### 3. create-github-issues.py (Original)
 
 Creates GitHub issues from the original code review JSON files (P0, P1, P2).
 
@@ -51,7 +84,7 @@ python3 scripts/create-github-issues.py
 
 ---
 
-### 3. create-code-review-issues.sh
+### 4. create-code-review-issues.sh
 
 Bash alternative for creating code review issues. Contains individual functions for each issue.
 
@@ -63,7 +96,7 @@ bash scripts/create-code-review-issues.sh
 
 ---
 
-### 4. run-issue-creation.sh
+### 5. run-issue-creation.sh
 
 Wrapper script that calls the Python automation with proper setup.
 
@@ -78,7 +111,9 @@ bash scripts/run-issue-creation.sh
 
 | Script | Issues | Source | Tracking | Best For |
 |--------|--------|--------|----------|----------|
-| **create-issues-from-log.py** | 20 | Consolidated log | Updates log file | **Most up-to-date, recommended** |
+| **create-p1-issues.py** | 5 | P1 JSON | p1-issues-created.json | **Creating P1 issues only** |
+| **create-p1-issues.sh** | 5 | P1 JSON | None | **Bash users, P1 only** |
+| **create-issues-from-log.py** | 20 | Consolidated log | Updates log file | **Most comprehensive, all issues** |
 | create-github-issues.py | 15 | Code review JSONs | Separate tracking file | Code review issues only |
 | create-code-review-issues.sh | 15 | Inline bash | Manual | Bash users, selective creation |
 | run-issue-creation.sh | 15 | Via Python | Via Python script | Simple wrapper |
@@ -89,8 +124,17 @@ bash scripts/run-issue-creation.sh
 ```bash
 # 1. Authenticate with GitHub CLI
 gh auth login
+```
 
-# 2. Create all issues from consolidated log
+### Create P1 Issues Only
+```bash
+# Create just the 5 P1 (High Priority) issues
+python3 scripts/create-p1-issues.py
+```
+
+### Create All Issues
+```bash
+# Create all 20 issues from consolidated log
 python3 scripts/create-issues-from-log.py
 ```
 
