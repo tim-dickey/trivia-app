@@ -1,8 +1,9 @@
 {
   "source": "Code Review 2026-02-02",
-  "priority_level": "P3",
-  "priority_description": "Low priority - Nice-to-have improvements and optimizations",
   "total_issues": 5,
+  "categories": {
+    "P3_low": 5
+  },
   "issues": [
     {
       "id": "P3-1",
