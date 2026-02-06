@@ -27,7 +27,7 @@ class CodeReviewValidator:
     def load_json(self, filename: str) -> Dict:
         """Load JSON file"""
         filepath = self.artifacts_dir / filename
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             return json.load(f)
     
     def validate_file_structure(self, data: Dict, priority: str) -> List[str]:
