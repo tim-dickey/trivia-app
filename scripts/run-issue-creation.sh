@@ -16,7 +16,7 @@ echo ""
 # Note: This script should be run with proper GitHub authentication
 # If gh is not authenticated, it will use the current session's credentials
 
-echo "Note: Creating 15 issues (5 P0, 5 P1, 5 P2)"
+echo "Note: Creating 20 issues (5 P0, 5 P1, 5 P2, 5 P3)"
 echo "This may take a few minutes..."
 echo ""
 
@@ -25,4 +25,3 @@ echo "Please wait while issues are created..."
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export GITHUB_REPOSITORY="$REPO"
 python3 "${SCRIPT_DIR}/create-github-issues.py"
-
