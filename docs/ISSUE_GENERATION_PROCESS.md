@@ -20,9 +20,10 @@ Each JSON file must contain:
 ```json
 {
   "source": "Code Review 2026-02-02",
-  "priority_level": "P0",
-  "priority_description": "Critical - System-breaking issues",
   "total_issues": 5,
+  "categories": {
+    "P0_critical": 5
+  },
   "issues": [
     {
       "id": "P0-1",

@@ -28,6 +28,23 @@ PRIORITY_LABELS = {
     "low": ["priority:low"],
 }
 
+def get_priority_name(priority_key: str) -> str:
+    """Extract human-readable priority name from priority key.
+    
+    Args:
+        priority_key: Priority key (e.g., 'P0', 'P1', 'P2', 'P3')
+        
+    Returns:
+        Human-readable priority name (e.g., 'critical', 'high', 'medium', 'low')
+    """
+    priority_map = {
+        "P0": "critical",
+        "P1": "high",
+        "P2": "medium",
+        "P3": "low"
+    }
+    return priority_map.get(priority_key.upper(), "unknown")
+
 def check_gh_auth() -> bool:
     """Check if gh CLI is authenticated"""
     try:
@@ -59,11 +76,9 @@ def create_issue(title: str, body: str, labels: List[str]) -> Optional[str]:
         "--repo", REPO,
         "--title", title,
         "--body", body,
-        "--label", ",".join(labels) if labels else ""
     ]
-    
-    # Remove empty label argument
-    cmd = [arg for arg in cmd if arg != ""]
+    if labels:
+        cmd.extend(["--label", ",".join(labels)])
     
     try:
         result = subprocess.run(
@@ -163,7 +178,6 @@ def main():
             priority_counts[priority_key] = len(issues)
             print(f"✓ Loaded {len(issues)} issues from {filepath.name} ({priority_label})")
         else:
-            priority_key = priority_label.split()[0]
             print(f"⚠️  {filepath.name} ({priority_label}) not found. Skipping.")
     
     print()
@@ -244,7 +258,7 @@ def main():
         for priority in ["P0", "P1", "P2", "P3"]:
             priority_issues = [i for i in created_issues if i['priority_label'] == priority]
             if priority_issues:
-                priority_name = PRIORITY_LABELS[priority.lower()][0].split(':')[1] if priority.lower() in PRIORITY_LABELS else "unknown"
+                priority_name = get_priority_name(priority)
                 print(f"  {priority} ({priority_name}):")
                 for issue in priority_issues:
                     print(f"    #{issue['number']} - {issue['title']}")
@@ -261,7 +275,7 @@ def main():
             for priority in ["P0", "P1", "P2", "P3"]:
                 priority_issues = [i for i in created_issues if i['priority_label'] == priority]
                 if priority_issues:
-                    priority_name = PRIORITY_LABELS[priority.lower()][0].split(':')[1] if priority.lower() in PRIORITY_LABELS else "unknown"
+                    priority_name = get_priority_name(priority)
                     f.write(f"### {priority} ({priority_name})\n\n")
                     for issue in priority_issues:
                         f.write(f"- [ ] #{issue['number']} - {issue['title']}\n")
