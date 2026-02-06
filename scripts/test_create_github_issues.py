@@ -10,6 +10,7 @@ Test Coverage:
 - Acceptance criteria validation
 """
 
+import json
 import pytest
 import sys
 from pathlib import Path
@@ -164,7 +165,6 @@ class TestIssueFileLoading:
             ]
         }
         
-        import json
         with open(test_file, 'w') as f:
             json.dump(test_data, f)
         
@@ -184,7 +184,6 @@ class TestIssueFileLoading:
             "issues": []
         }
         
-        import json
         with open(test_file, 'w') as f:
             json.dump(test_data, f)
         
