@@ -26,7 +26,7 @@ PR #53: "feat: Formalize code review to GitHub issues workflow"
   │    Branch: copilot/sub-pr-53
   │    Base: copilot/create-issue-records-p1
   │
-  └─── PR #55: "fix: Remove broken HTML tags from PR description"
+  └─── PR #55: "docs: Clarify PR #55 must merge after PR #53 due to branch dependency"
        Branch: copilot/sub-pr-53-again
        Base: copilot/create-issue-records-p1
 ```
@@ -45,7 +45,8 @@ PR #53: "feat: Formalize code review to GitHub issues workflow"
    - Cannot be merged until PR #53 exists in the target branch
 
 3. **PR #55** is another sub-PR that depends on #53
-   - Fixes PR description formatting for PR #53
+   - Documents the branch dependency and merge order requirements
+   - Includes a cleaned-up version of PR #53's description as a supplementary file
    - Base branch: `copilot/create-issue-records-p1` (PR #53's branch)
    - Cannot be merged until PR #53 exists in the target branch
 
@@ -57,9 +58,9 @@ PR #53: "feat: Formalize code review to GitHub issues workflow"
 3. **Merge Conflicts**: Attempting to merge PR #55 first would fail because its base branch doesn't exist in `main`
 
 ### Logical Reasons
-1. **Purpose**: PR #55 fixes the formatting of PR #53's description
-2. **Context**: The file `PR_DESCRIPTION.md` created in PR #55 is specifically for fixing the unreadable PR description of PR #53
-3. **Scope**: PR #55 is a fix/improvement to PR #53's content, not a standalone change
+1. **Purpose**: PR #55 documents the merge order dependency and branch hierarchy to clarify the submission order
+2. **Context**: The primary deliverable is `PR_ORDERING_ANALYSIS.md`, with `PR_DESCRIPTION.md` as a supplementary file providing a cleaned-up version of PR #53's description
+3. **Scope**: PR #55 provides documentation to clarify the relationship between PRs #53, #54, and #55, not a standalone change
 
 ## Recommended Merge Order
 
@@ -76,7 +77,7 @@ Step 2b: Merge PR #55 into main (OR into copilot/create-issue-records-p1 if stil
 
 - **PR #53**: Open, base=main, 6 commits
 - **PR #54**: Open, base=copilot/create-issue-records-p1, fixes from code review
-- **PR #55**: Open, base=copilot/create-issue-records-p1, fixes PR description formatting
+- **PR #55**: Open, base=copilot/create-issue-records-p1, documents merge order dependency
 
 ## Git Graph Visualization
 
@@ -98,8 +99,8 @@ origin/main (77e3aed)
 2. ✅ Merge PR #53 into `main` first
 3. ⏳ After PR #53 is merged:
    - Merge PR #54 to address code review comments
-   - Merge PR #55 to fix the PR description formatting
-4. Optional: Update PR #53 description on GitHub using the content from `PR_DESCRIPTION.md` (created in PR #55)
+   - Merge PR #55 to provide merge order documentation
+4. Optional: Update PR #53 description on GitHub using the content from `PR_DESCRIPTION.md` (included in PR #55)
 
 ## Conclusion
 
