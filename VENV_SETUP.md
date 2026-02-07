@@ -111,6 +111,7 @@ pytest
 
 ## Notes
 
+- **Naming Convention**: This project uses `venv/` as the standard virtual environment directory name (NOT `.venv/`). Please use `python -m venv venv` to maintain consistency.
 - **Global Installation**: The global Python installation has NOT been modified. All dependencies are isolated in the venv directory.
 - **Compatibility**: SQLAlchemy and Pydantic were upgraded to versions compatible with Python 3.13.
 - **.gitignore**: The `venv/` directory is already configured in `.gitignore` and will not be committed to the repository.

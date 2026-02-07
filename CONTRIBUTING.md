@@ -53,7 +53,17 @@ Before you begin, ensure you have:
    ```bash
    git remote add upstream https://github.com/ORIGINAL_OWNER/trivia-app.git
    ```
-4. **Follow the setup instructions** in the [README.md](README.md)
+4. **Set up Python virtual environment**:
+   ```bash
+   cd backend
+   # IMPORTANT: Use 'venv' as the directory name (not '.venv')
+   # This project standardizes on 'venv/' for consistency across all environments
+   python -m venv venv
+   source venv/bin/activate  # macOS/Linux
+   # or: venv\Scripts\activate  # Windows
+   pip install -r requirements.txt
+   ```
+5. **Follow the remaining setup instructions** in the [README.md](README.md)
 
 ## 🔨 How to Contribute
 

@@ -6,7 +6,7 @@ This document describes the test framework configuration for the trivia-app back
 
 ## Testing Dependencies
 
-The source of truth for backend test dependencies is `backend/requirements.txt`. Use the project `venv` and install dependencies before running tests.
+The source of truth for backend test dependencies is `backend/requirements.txt`. Use the project `venv` (not `.venv`) and install dependencies before running tests.
 
 Key testing-related packages (current requirements):
 - `pytest==9.0.2`
