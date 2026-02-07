@@ -3,12 +3,12 @@
 
 # Core Framework
 fastapi==0.109.0
-uvicorn[standard]==0.27.0
+uvicorn[standard]==0.27.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
 
 # Database
 sqlalchemy==2.0.46
 alembic==1.13.1
-psycopg[binary]==3.1.13
+psycopg[binary]==3.3.2  # PostgreSQL adapter
 
 # Authentication & Security
 python-jose[cryptography]==3.4.0
@@ -18,20 +18,20 @@ python-multipart==0.0.22
 
 # Task Queue
 celery==5.3.4
-redis==5.0.1
+redis==5.0.1 #Ensure actual Redis server version (container or cloud) is reasonably current
 
 # Validation & Settings
 pydantic==2.12.5
 pydantic-settings==2.1.0
-email-validator==2.1.0
+email-validator==2.1.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
 
 # Testing
-pytest==8.3.4
-pytest-asyncio==0.24.0
+pytest==9.0.2
+pytest-asyncio>=0.25.0 # important: not pinned to exactly 0.25.0
 pytest-cov==6.0.0
 httpx==0.27.2
 codacy-coverage==1.3.11
 
 # Development
-ruff==0.1.6
-black==24.3.0
+ruff>=0.1.6,<0.2.0
+black>=24.3.0,<24.4.0

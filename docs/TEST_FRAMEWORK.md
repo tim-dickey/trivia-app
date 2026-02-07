@@ -4,6 +4,22 @@
 
 This document describes the test framework configuration for the trivia-app backend, including the PostgreSQL/SQLite dual database setup and test infrastructure.
 
+## Testing Dependencies
+
+The source of truth for backend test dependencies is `backend/requirements.txt`. Use the project `venv` and install dependencies before running tests.
+
+Key testing-related packages (current requirements):
+- `pytest==9.0.2`
+- `pytest-asyncio>=0.25.0`
+- `pytest-cov==6.0.0`
+
+Note: Keep `pytest` and `pytest-asyncio` compatible when updating versions.
+
+## Recent Updates (2026-02-07)
+
+- Standardized on `venv` for Python environments
+- Updated backend requirements (testing/dev pins and ranges) in `backend/requirements.txt`
+
 ## Test Database Configuration
 
 ### Dual Database Support
@@ -130,6 +146,9 @@ Validates database schema and migrations:
 ```bash
 # Navigate to backend directory
 cd backend
+
+# Ensure the venv is active and dependencies are installed
+# pip install -r requirements.txt
 
 # Run all tests
 pytest
@@ -309,6 +328,16 @@ alembic upgrade head
 1. Check that tests use the `db` fixture
 2. Verify no direct database connections are made
 3. Ensure tests don't commit transactions
+
+## Warning Remediation Notes
+
+Recent local test runs surfaced deprecation warnings. Track these for cleanup during refactors:
+
+- Starlette `python-multipart` import deprecation
+- SQLAlchemy `declarative_base()` deprecation (2.0)
+- Pydantic class-based config deprecation (V2)
+- httpx `app` shortcut deprecation
+- `datetime.utcnow()` deprecation warnings (core + tests)
 
 ## Coverage Requirements
 

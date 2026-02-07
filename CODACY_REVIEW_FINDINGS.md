@@ -87,7 +87,7 @@ exclude_paths: []
 
 **Best Practice**: Exclude common directories that shouldn't be analyzed:
 - `node_modules/`
-- `venv/` or `.venv/`
+- `venv/`
 - `__pycache__/`
 - `.pytest_cache/`
 - `build/` or `dist/`
@@ -232,7 +232,6 @@ fatal() {
    exclude_paths:
      - 'node_modules/**'
      - 'venv/**'
-     - '.venv/**'
      - '__pycache__/**'
      - '.pytest_cache/**'
      - 'backend/alembic/versions/**'
