@@ -40,7 +40,7 @@ export class WebSocketService {
     if (!baseUrl) {
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const host = window.location.hostname;
-      const port = process.env.NODE_ENV === 'production' ? '' : ':8000';
+      const port = import.meta.env.PROD ? '' : ':8000';
       this.url = `${protocol}//${host}${port}`;
     } else {
       this.url = baseUrl;
@@ -90,7 +90,7 @@ export class WebSocketService {
   /**
    * Handle WebSocket connection opened
    */
-  private handleOpen(event: Event): void {
+  private handleOpen(_event: Event): void {
     console.log('WebSocket connected to session:', this.sessionId);
     this.reconnectAttempts = 0;
     this.reconnectDelay = 1000;
@@ -126,8 +126,8 @@ export class WebSocketService {
   /**
    * Handle WebSocket errors
    */
-  private handleError(event: Event): void {
-    console.error('WebSocket error:', event);
+  private handleError(_event: Event): void {
+    console.error('WebSocket error');
   }
 
   /**
