@@ -141,9 +141,11 @@ PYTHONPATH=.. pytest
 PYTHONPATH=.. pytest --cov=backend --cov-report=html
 
 # Run with PostgreSQL (matches CI environment)
-# Ensure docker-compose is running for PostgreSQL service
+# Start PostgreSQL service from project root, then set DATABASE_URL
+cd ..
 docker-compose up -d postgres
-PYTHONPATH=.. pytest
+cd backend
+DATABASE_URL=postgresql://trivia_user:trivia_pass@localhost:5432/trivia_db PYTHONPATH=.. pytest
 
 # Run WebSocket integration tests
 PYTHONPATH=.. pytest tests/integration/test_websocket.py -v
@@ -160,7 +162,7 @@ Alternatively, run from project root:
 pytest backend/tests --cov=backend --cov-report=html
 ```
 
-**Note**: Tests use PostgreSQL when available (via docker-compose), falling back to SQLite for unit tests. CI environment uses PostgreSQL 13 to match production.
+**Note**: Tests use the database specified by the `DATABASE_URL` environment variable. To run tests against PostgreSQL (for example the instance started via `docker-compose`), set `DATABASE_URL` to the Postgres connection string; otherwise tests default to SQLite. CI sets `DATABASE_URL` to a PostgreSQL 13 instance to match production.
 
 **Frontend:**
 ```bash
