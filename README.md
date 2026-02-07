@@ -34,6 +34,8 @@ docker compose up
 docker compose down
 ```
 
+> 📖 **Need more Docker info?** See the comprehensive [Docker Development Guide](docs/DOCKER_GUIDE.md) for commands, workflows, and troubleshooting.
+
 ---
 
 ## Project Structure
@@ -538,6 +540,99 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
    
    # Or change port in .env or vite.config.ts
    ```
+
+#### Docker-Specific Issues
+
+**Problem**: Docker containers fail to start or build
+
+**Solutions**:
+
+1. **Container won't start - "already in use" error**:
+   ```bash
+   # Stop all containers
+   docker compose down
+   
+   # Remove stopped containers
+   docker compose rm -f
+   
+   # Start fresh
+   docker compose up
+   ```
+
+2. **Build fails or outdated dependencies**:
+   ```bash
+   # Rebuild containers from scratch
+   docker compose build --no-cache
+   
+   # Or rebuild specific service
+   docker compose build --no-cache backend
+   ```
+
+3. **Database migrations not running**:
+   ```bash
+   # Check backend logs
+   docker compose logs backend
+   
+   # Manually run migrations in container
+   docker compose exec backend alembic upgrade head
+   ```
+
+4. **Hot reload not working**:
+   - Ensure volumes are mounted correctly in docker-compose.yml
+   - On Windows, you may need to enable file sharing in Docker Desktop settings
+   - Try restarting the specific service:
+     ```bash
+     docker compose restart backend
+     # or
+     docker compose restart frontend
+     ```
+
+5. **Out of disk space or "no space left on device"**:
+   ```bash
+   # Clean up unused Docker resources
+   docker system prune -a
+   
+   # Remove specific volumes (WARNING: deletes data)
+   docker compose down -v
+   ```
+
+6. **Frontend shows blank page or can't connect to backend**:
+   - Check backend is running: `docker compose ps`
+   - Verify backend health: `curl http://localhost:8000/health`
+   - Check CORS settings in backend/.env (should include frontend URL)
+   - View frontend logs: `docker compose logs frontend`
+
+7. **Permission denied errors**:
+   ```bash
+   # Fix entrypoint script permissions
+   chmod +x backend/docker-entrypoint.sh
+   
+   # Or rebuild the image
+   docker compose build backend
+   ```
+
+**Quick Debug Commands**:
+```bash
+# View all container logs
+docker compose logs -f
+
+# View specific service logs
+docker compose logs -f backend
+
+# Check container status
+docker compose ps
+
+# Enter a running container for debugging
+docker compose exec backend bash
+docker compose exec frontend sh
+
+# Restart a service
+docker compose restart backend
+
+# Stop and remove everything (fresh start)
+docker compose down -v
+docker compose up --build
+```
 
 #### Frontend Dependencies Issues
 
