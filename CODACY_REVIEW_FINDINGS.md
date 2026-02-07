@@ -231,7 +231,7 @@ fatal() {
          - 'backend/alembic/versions/**'
    exclude_paths:
      - 'node_modules/**'
-    - 'venv/**'
+     - 'venv/**'
      - '__pycache__/**'
      - '.pytest_cache/**'
      - 'backend/alembic/versions/**'
