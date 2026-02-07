@@ -1,5 +1,9 @@
 # Trivia App
 
+[![CI Pipeline](https://github.com/tim-dickey/trivia-app/actions/workflows/ci.yml/badge.svg)](https://github.com/tim-dickey/trivia-app/actions/workflows/ci.yml)
+[![Frontend CI](https://github.com/tim-dickey/trivia-app/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/tim-dickey/trivia-app/actions/workflows/frontend-ci.yml)
+[![CodeQL](https://github.com/tim-dickey/trivia-app/actions/workflows/codeql.yml/badge.svg)](https://github.com/tim-dickey/trivia-app/actions/workflows/codeql.yml)
+
 A multi-tenant trivia application for corporate training and team engagement.
 
 > 📍 **New to the project?** See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to finding files in the repository.
@@ -239,7 +243,7 @@ npm run lint
 1. **CI/CD Optimization**: Consolidate duplicate test runs (Codacy + CodeQL both run tests on every PR)
 2. ~~**Multi-Tenant Middleware**: Implement organization scoping middleware for automatic data isolation~~ ✅ **COMPLETED**
 3. ~~**WebSocket Infrastructure**: Real-time features not yet implemented (required for Epic 3)~~ ✅ **COMPLETED** (PR #29)
-4. **Frontend CI Pipeline**: No automated testing for frontend changes
+4. ~~**Frontend CI Pipeline**: No automated testing for frontend changes~~ ✅ **COMPLETED**
 
 **High Priority**:
 5. Frontend components not yet implemented (placeholders exist)
@@ -259,34 +263,54 @@ The project uses GitHub Actions for continuous integration and code quality. Cur
 
 ### Active Workflows
 
-**Codacy Workflow** (`.github/workflows/codacy.yml`)
-- **Triggers**: Pull requests, pushes to main, weekly schedule (Thursday 5:33 PM UTC)
-- **Purpose**: Code quality analysis, security scanning, test coverage
+**CI Pipeline** (`.github/workflows/ci.yml`)
+- **Triggers**: Pull requests, pushes to main
+- **Purpose**: Consolidated testing and coverage for backend
 - **What it does**:
-  - Runs backend tests with pytest
-  - Generates coverage reports (XML format)
-  - Uploads coverage to Codacy
-  - Runs Codacy CLI security analysis
+  - Runs backend tests with pytest (80% coverage threshold)
+  - Uploads coverage to Codacy and Codecov
+  - Uses PostgreSQL in CI for test reliability
+
+**Frontend CI** (`.github/workflows/frontend-ci.yml`) ✨ **NEW**
+- **Triggers**: Pull requests, pushes to main (only on frontend changes)
+- **Purpose**: Frontend quality validation
+- **What it does**:
+  - Runs ESLint for code quality
+  - TypeScript type checking
+  - Vite build verification
+  - Vitest unit tests with coverage
+  - Uploads coverage to Codecov and Codacy
+- **Performance**: Completes in under 5 minutes with npm caching
+
+**Codacy Workflow** (`.github/workflows/codacy.yml`)
+- **Triggers**: Weekly schedule (Thursday 5:33 PM UTC), manual dispatch
+- **Purpose**: Deep code quality and security analysis
+- **What it does**:
+  - Runs backend tests with coverage
+  - Executes Codacy CLI security analysis
+  - Uploads results to GitHub Security
 - **Requirements**: `CODACY_PROJECT_TOKEN` secret (for external contributors, maintainers will handle this)
 
 **CodeQL Workflow** (`.github/workflows/codeql.yml`)
 - **Triggers**: Pull requests, pushes to main, weekly schedule (Saturday 11:21 AM UTC)
 - **Purpose**: Security vulnerability scanning
 - **What it does**:
-  - Analyzes GitHub Actions files for security issues
+  - Analyzes Python, JavaScript/TypeScript, and GitHub Actions
+  - Uses security-extended queries for comprehensive scanning
   - Uploads results to GitHub Security tab
-- **Note**: Currently only analyzes GitHub Actions. Python/TypeScript analysis to be added.
 
 **Other Workflows**:
 - **Greetings**: Welcomes new contributors on their first issue/PR
 - **Summary**: AI-powered issue summarization
-- **Dependency Review** (disabled): Planned for dependency vulnerability scanning
+- **Security Scheduled**: Weekly deep security scans
 
-### Known CI/CD Issues
+### CI/CD Best Practices
 
-⚠️ **Duplicate Test Runs**: Both Codacy and CodeQL workflows run tests, causing redundancy. See action items for consolidation plan.
+✅ **No Duplicate Runs**: Tests run once per PR via consolidated CI workflow
 
-⚠️ **No Frontend CI**: Frontend tests are not currently run in CI. This is planned for implementation.
+✅ **Fast Feedback**: Frontend CI uses path filters and caching for quick results
+
+✅ **Comprehensive Coverage**: Both backend and frontend coverage tracked and enforced
 
 ## Architecture
 

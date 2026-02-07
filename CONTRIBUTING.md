@@ -432,9 +432,22 @@ npm test
 # Run with coverage
 npm run test:coverage
 
-# Run in watch mode
-npm run test:watch
+# Run in watch mode (development)
+npm test
+
+# Type checking
+npx tsc --noEmit
+
+# Linting
+npm run lint
+
+# Build verification
+npm run build
 ```
+
+**Coverage Requirements**:
+- Aim for good test coverage on new components
+- Coverage reports are uploaded to Codecov automatically in CI
 
 ## 🔄 CI/CD and GitHub Actions
 
@@ -444,10 +457,21 @@ The project uses several GitHub Actions workflows for automated testing and code
 
 **1. CI Pipeline** (`.github/workflows/ci.yml`)
 - **Runs on**: All PRs and pushes to main
-- **Purpose**: Fast feedback on code quality and test results
+- **Purpose**: Fast feedback on backend code quality and test results
 - **What it does**:
   - Runs backend tests with pytest (enforces 80%+ coverage)
-  - Runs frontend tests and linting
+  - Uploads coverage to Codacy and Codecov
+
+**2. Frontend CI** (`.github/workflows/frontend-ci.yml`) ✨ **NEW**
+- **Runs on**: All PRs and pushes to main (only when frontend files change)
+- **Purpose**: Frontend quality validation
+- **What it does**:
+  - ESLint code quality checks
+  - TypeScript type checking (tsc --noEmit)
+  - Vite build verification
+  - Vitest unit tests with coverage
+  - Uploads coverage to Codecov and Codacy
+- **Performance**: Completes in under 5 minutes with npm caching
   - Uploads coverage to Codacy and GitHub (when secrets available)
   - **Note**: Coverage upload is optional - works without secrets for external contributors
 
@@ -578,12 +602,20 @@ npm ci  # or npm install if no package-lock.json
 # Run linter
 npm run lint
 
+# Type checking
+npx tsc --noEmit
+
 # Run tests
-npm test
+npm test -- --run
+
+# Run tests with coverage
+npm run test:coverage -- --run
 
 # Build check
 npm run build
 ```
+
+**Note**: All frontend checks run automatically in the Frontend CI workflow. The workflow uses npm caching for faster builds and only runs when frontend files change.
 
 #### Security Scanning (Optional)
 ```bash
@@ -600,7 +632,7 @@ java -jar codacy-cli.jar analyze --directory . --format json --output results.js
 
 ⚠️ **Test Database Configuration**: CI and production both use PostgreSQL (via `DATABASE_URL` in `.github/workflows/ci.yml`). If you run tests locally with SQLite or another database, be aware of potential behavior differences and ensure migrations and tests are validated against PostgreSQL before merging. See [action items](../_bmad-output/implementation-artifacts/action-items-2026-02-02.md) for details.
 
-⚠️ **Frontend Tests**: Frontend test suite is still being developed. CI runs tests but they are currently optional (continue-on-error).
+✅ **Frontend Tests**: Frontend CI is now fully implemented with comprehensive quality checks.
 
 ## 📝 Pull Request Process
 
