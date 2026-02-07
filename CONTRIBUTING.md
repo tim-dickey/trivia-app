@@ -472,10 +472,8 @@ The project uses several GitHub Actions workflows for automated testing and code
   - Vitest unit tests with coverage
   - Uploads coverage to Codecov and Codacy
 - **Performance**: Completes in under 5 minutes with npm caching
-  - Uploads coverage to Codacy and GitHub (when secrets available)
-  - **Note**: Coverage upload is optional - works without secrets for external contributors
 
-**2. Security Scans** (`.github/workflows/security-scheduled.yml`)
+**3. Security Scans** (`.github/workflows/security-scheduled.yml`)
 - **Runs on**: Weekly schedule (Saturday) and pushes to main
 - **Purpose**: Deep security analysis
 - **What it does**:

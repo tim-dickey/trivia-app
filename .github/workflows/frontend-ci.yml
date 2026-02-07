@@ -87,10 +87,16 @@ jobs:
         run: |
           echo "## Frontend CI Results 🚀" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ ESLint passed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ TypeScript type checking passed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Build successful" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Tests passed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Coverage generated" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "All frontend quality checks completed! 🎉" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.frontend-quality.result }}" == "success" ]; then
+            echo "✅ ESLint passed" >> $GITHUB_STEP_SUMMARY
+            echo "✅ TypeScript type checking passed" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Build successful" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Tests passed" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Coverage generated" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "All frontend quality checks completed! 🎉" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Some quality checks failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please review the logs above for details." >> $GITHUB_STEP_SUMMARY
+          fi
