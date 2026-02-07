@@ -87,6 +87,8 @@ This starts PostgreSQL and Redis containers.
 cd backend
 
 # Create virtual environment
+# IMPORTANT: Use 'venv' as the directory name (not '.venv')
+# This project standardizes on 'venv/' for consistency
 python -m venv venv
 
 # Activate virtual environment
