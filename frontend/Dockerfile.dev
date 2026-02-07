@@ -3,9 +3,6 @@
 
 FROM node:20-alpine
 
-# Install wget for health checks
-RUN apk add --no-cache wget
-
 # Set working directory
 WORKDIR /app
 
@@ -13,7 +10,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+# Using npm install since package-lock.json may not exist
+RUN npm install
 
 # Copy application code
 # Note: In docker-compose, we'll mount the code as a volume for hot reload

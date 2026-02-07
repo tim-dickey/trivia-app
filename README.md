@@ -14,7 +14,7 @@ git clone <repository-url>
 cd trivia-app
 
 # Start all services (PostgreSQL, Redis, Backend, Frontend)
-docker-compose up
+docker compose up
 ```
 
 **Access the application:**
@@ -31,7 +31,7 @@ docker-compose up
 
 **To stop all services:**
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ---
@@ -112,7 +112,7 @@ git clone <repository-url>
 cd trivia-app
 
 # 2. Start all services
-docker-compose up
+docker compose up
 ```
 
 That's it! The application will:
@@ -129,19 +129,19 @@ That's it! The application will:
 **Common Docker Commands:**
 ```bash
 # Start in background
-docker-compose up -d
+docker compose up -d
 
 # View logs
-docker-compose logs -f
+docker compose logs -f
 
 # Stop all services
-docker-compose down
+docker compose down
 
 # Rebuild containers after dependency changes
-docker-compose up --build
+docker compose up --build
 
 # Stop and remove volumes (clean slate)
-docker-compose down -v
+docker compose down -v
 ```
 
 ---
@@ -160,7 +160,7 @@ cd trivia-app
 #### 2. Start Infrastructure Services
 
 ```bash
-docker-compose up -d postgres redis
+docker compose up -d postgres redis
 ```
 
 This starts only PostgreSQL and Redis containers.
@@ -445,15 +445,15 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
 **Solutions**:
 1. Ensure Docker containers are running:
    ```bash
-   docker-compose ps
+   docker compose ps
    ```
 2. If containers aren't running:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 3. Check PostgreSQL logs:
    ```bash
-   docker-compose logs postgres
+   docker compose logs postgres
    ```
 4. Verify database connection settings in `.env`:
    ```
@@ -477,8 +477,8 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
    ```
 3. If corrupted, drop and recreate database:
    ```bash
-   docker-compose down -v
-   docker-compose up -d
+   docker compose down -v
+   docker compose up -d
    alembic upgrade head
    ```
 

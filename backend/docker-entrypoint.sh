@@ -18,11 +18,9 @@ echo "PostgreSQL is ready!"
 
 # Run database migrations
 echo "Running database migrations..."
-cd /app/backend
 alembic upgrade head
 echo "Migrations completed!"
 
 # Start the application
 echo "Starting FastAPI application..."
-cd /app
 exec uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
