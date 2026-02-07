@@ -4,6 +4,38 @@ A multi-tenant trivia application for corporate training and team engagement.
 
 > 📍 **New to the project?** See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to finding files in the repository.
 
+## ⚡ Quick Start
+
+Get the entire application running with a single command:
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd trivia-app
+
+# Start all services (PostgreSQL, Redis, Backend, Frontend)
+docker-compose up
+```
+
+**Access the application:**
+- 🌐 **Frontend**: http://localhost:5173
+- 🔌 **Backend API**: http://localhost:8000
+- 📚 **API Documentation**: http://localhost:8000/docs
+- 🩺 **Health Check**: http://localhost:8000/health
+
+**Features:**
+- ✅ Automatic database migrations
+- ✅ Hot reload for both backend and frontend
+- ✅ Full development environment in < 2 minutes
+- ✅ No manual setup required
+
+**To stop all services:**
+```bash
+docker-compose down
+```
+
+---
+
 ## Project Structure
 
 ```
@@ -57,30 +89,83 @@ trivia-app/
 
 ## Prerequisites
 
+**For Docker Setup (Recommended):**
+- Docker & Docker Compose
+- Git
+
+**For Manual Setup:**
 - Python 3.11+
 - Node.js 18+
-- Docker & Docker Compose (PostgreSQL 13+, Redis 7+)
+- Docker & Docker Compose (for PostgreSQL 13+ and Redis 7+)
 - Git
 - OpenSSL (for JWT secret generation)
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+### Option 1: Docker Setup (Recommended) 🐳
+
+**Fastest way to get started - runs everything in containers:**
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd trivia-app
+
+# 2. Start all services
+docker-compose up
+```
+
+That's it! The application will:
+- ✅ Start PostgreSQL and Redis
+- ✅ Build backend and frontend containers
+- ✅ Run database migrations automatically
+- ✅ Start both services with hot reload enabled
+
+**Access the application at:**
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+
+**Common Docker Commands:**
+```bash
+# Start in background
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Rebuild containers after dependency changes
+docker-compose up --build
+
+# Stop and remove volumes (clean slate)
+docker-compose down -v
+```
+
+---
+
+### Option 2: Manual Setup (Advanced)
+
+**If you prefer to run services locally without Docker:**
+
+#### 1. Clone the Repository
 
 ```bash
 git clone <repository-url>
 cd trivia-app
 ```
 
-### 2. Start Infrastructure Services
+#### 2. Start Infrastructure Services
 
 ```bash
-docker-compose up -d
+docker-compose up -d postgres redis
 ```
 
-This starts PostgreSQL and Redis containers.
+This starts only PostgreSQL and Redis containers.
 
-### 3. Backend Setup
+#### 3. Backend Setup
 
 ```bash
 # Navigate to backend directory
@@ -115,7 +200,7 @@ python main.py
 Backend will be available at: http://localhost:8000
 API Documentation: http://localhost:8000/docs
 
-### 4. Frontend Setup
+#### 4. Frontend Setup
 
 ```bash
 # Navigate to frontend directory (from project root)
