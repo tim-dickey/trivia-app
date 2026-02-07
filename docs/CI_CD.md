@@ -3,7 +3,7 @@
 > **Last Updated**: February 7, 2026  
 > **Status**: Consolidated workflows - Single CI for PRs, scheduled security scans
 > 
-> **Recent Change**: Removed `.venv/` support from project. Only `venv/` is supported for Python virtual environments. This standardization overwrites any previous configurations or documentation that mentioned `.venv/`.
+> **Recent Change**: Removed `.venv/` support from project. Only `venv/` should be used for Python virtual environments. This standardization supersedes any previous configurations or documentation that mentioned `.venv/`.
 
 ## Overview
 
@@ -48,7 +48,7 @@ The following tools are configured for code analysis:
 
 To optimize analysis time, the following paths are excluded from Codacy analysis:
 
-**Note**: As of February 7, 2026, the project has standardized on `venv/` for Python virtual environments. The `.venv/` pattern has been removed from `.gitignore` and is **no longer supported**. This change overwrites any previous documentation or configurations that referenced `.venv/`.
+**Note**: As of February 7, 2026, the project has standardized on `venv/` for Python virtual environments. The `.venv/` pattern has been removed from `.gitignore` and **should not be used** going forward. This standardization supersedes any previous documentation or configurations that referenced `.venv/`.
 
 - `node_modules/**` - Node.js dependencies
 - `venv/**` - Python virtual environments (**use `venv/` only, NOT `.venv/`**)
@@ -528,7 +528,7 @@ Set these in: **Repository Settings** → **Secrets and variables** → **Action
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-02-07 | **Removed `.venv/` support - standardized on `venv/` only** | PR #58 (overwrites prior PRs) |
+| 2026-02-07 | **Removed `.venv/` support - standardized on `venv/` only** | PR #58 (supersedes prior `.venv` guidance) |
 | 2026-02-02 | Initial CI/CD documentation | Documentation update |
 | 2026-02-01 | Added Codacy and CodeQL workflows | PR #21 |
 
