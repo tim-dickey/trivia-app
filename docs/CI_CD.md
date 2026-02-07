@@ -47,7 +47,7 @@ The following tools are configured for code analysis:
 To optimize analysis time, the following paths are excluded from Codacy analysis:
 
 - `node_modules/**` - Node.js dependencies
-- `venv/**` - Python virtual environments
+- `venv/**` - Python virtual environments (use `venv/`, not `.venv/`)
 - `__pycache__/**` - Python bytecode cache
 - `.pytest_cache/**` - Pytest cache
 - `backend/alembic/versions/**` - Auto-generated database migrations
