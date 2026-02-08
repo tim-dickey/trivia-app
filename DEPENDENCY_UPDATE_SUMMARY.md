@@ -35,6 +35,23 @@ Successfully updated all outdated dependencies with security patches as requeste
 #### Notes
 - **pytest**: Already at `9.0.2` (newer than requested 8.x) - no change needed
 - **pydantic**: Remains at `2.12.5` (latest stable version in 2.x series at time of update)
+  - **Security Verified**: No known CVEs (verified with GitHub Advisory Database)
+  - **Compatibility**: FastAPI 0.115.6 requires `pydantic>=1.7.4,<3.0.0` ✓
+  - **Recommendation**: Keep 2.12.5 for stability and security
+
+#### Dependency Pinning for Reproducibility
+7. **pytest-asyncio**: Pinned to `1.3.0` (was `>=0.25.0`)
+   - Latest stable version
+   - Compatible with pytest `>=8.2,<10` (pytest 9.0.2 ✓)
+   - Ensures reproducible test environments
+
+8. **ruff**: Pinned to `0.1.15` (was `>=0.1.6,<0.2.0`)
+   - Stable version in 0.1.x series
+   - Ensures consistent linting across environments
+
+9. **black**: Pinned to `24.3.0` (was `>=24.3.0,<24.4.0`)
+   - Stable version in 24.3.x series
+   - Ensures consistent code formatting
 
 ### Frontend Dependencies (package.json)
 
