@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `black`: now pinned to `24.3.0` (was `>=24.3.0,<24.4.0`)
 
 ### Testing
-- All backend tests pass (133/134 tests, 96% coverage maintained)
+- Backend test suite: 133/134 tests passing (1 known failing test; pre-existing and unrelated to these dependency updates; 96% coverage maintained)
 - Frontend builds successfully with updated dependencies
 - No breaking changes in API contracts
 
