@@ -4,6 +4,40 @@ A multi-tenant trivia application for corporate training and team engagement.
 
 > 📍 **New to the project?** See [FILE_LOCATIONS.md](FILE_LOCATIONS.md) for a complete guide to finding files in the repository.
 
+## ⚡ Quick Start
+
+Get the entire application running with a single command:
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd trivia-app
+
+# Start all services (PostgreSQL, Redis, Backend, Frontend)
+docker compose up
+```
+
+**Access the application:**
+- 🌐 **Frontend**: http://localhost:5173
+- 🔌 **Backend API**: http://localhost:8000
+- 📚 **API Documentation**: http://localhost:8000/docs
+- 🩺 **Health Check**: http://localhost:8000/health
+
+**Features:**
+- ✅ Automatic database migrations
+- ✅ Hot reload for both backend and frontend
+- ✅ Full development environment in < 2 minutes
+- ✅ No manual setup required
+
+**To stop all services:**
+```bash
+docker compose down
+```
+
+> 📖 **Need more Docker info?** See the comprehensive [Docker Development Guide](docs/DOCKER_GUIDE.md) for commands, workflows, and troubleshooting.
+
+---
+
 ## Project Structure
 
 ```
@@ -57,30 +91,83 @@ trivia-app/
 
 ## Prerequisites
 
+**For Docker Setup (Recommended):**
+- Docker & Docker Compose
+- Git
+
+**For Manual Setup:**
 - Python 3.11+
 - Node.js 18+
-- Docker & Docker Compose (PostgreSQL 13+, Redis 7+)
+- Docker & Docker Compose (for PostgreSQL 13+ and Redis 7+)
 - Git
 - OpenSSL (for JWT secret generation)
 
 ## Setup Instructions
 
-### 1. Clone the Repository
+### Option 1: Docker Setup (Recommended) 🐳
+
+**Fastest way to get started - runs everything in containers:**
+
+```bash
+# 1. Clone the repository
+git clone <repository-url>
+cd trivia-app
+
+# 2. Start all services
+docker compose up
+```
+
+That's it! The application will:
+- ✅ Start PostgreSQL and Redis
+- ✅ Build backend and frontend containers
+- ✅ Run database migrations automatically
+- ✅ Start both services with hot reload enabled
+
+**Access the application at:**
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+
+**Common Docker Commands:**
+```bash
+# Start in background
+docker compose up -d
+
+# View logs
+docker compose logs -f
+
+# Stop all services
+docker compose down
+
+# Rebuild containers after dependency changes
+docker compose up --build
+
+# Stop and remove volumes (clean slate)
+docker compose down -v
+```
+
+---
+
+### Option 2: Manual Setup (Advanced)
+
+**If you prefer to run services locally without Docker:**
+
+#### 1. Clone the Repository
 
 ```bash
 git clone <repository-url>
 cd trivia-app
 ```
 
-### 2. Start Infrastructure Services
+#### 2. Start Infrastructure Services
 
 ```bash
-docker-compose up -d
+docker compose up -d postgres redis
 ```
 
-This starts PostgreSQL and Redis containers.
+This starts only PostgreSQL and Redis containers.
 
-### 3. Backend Setup
+#### 3. Backend Setup
 
 ```bash
 # Navigate to backend directory
@@ -115,7 +202,7 @@ python main.py
 Backend will be available at: http://localhost:8000
 API Documentation: http://localhost:8000/docs
 
-### 4. Frontend Setup
+#### 4. Frontend Setup
 
 ```bash
 # Navigate to frontend directory (from project root)
@@ -433,15 +520,15 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
 **Solutions**:
 1. Ensure Docker containers are running:
    ```bash
-   docker-compose ps
+   docker compose ps
    ```
 2. If containers aren't running:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 3. Check PostgreSQL logs:
    ```bash
-   docker-compose logs postgres
+   docker compose logs postgres
    ```
 4. Verify database connection settings in `.env`:
    ```
@@ -465,8 +552,8 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
    ```
 3. If corrupted, drop and recreate database:
    ```bash
-   docker-compose down -v
-   docker-compose up -d
+   docker compose down -v
+   docker compose up -d
    alembic upgrade head
    ```
 
@@ -526,6 +613,99 @@ See [`docs/validation/epic-1-validation-report.md`](docs/validation/epic-1-valid
    
    # Or change port in .env or vite.config.ts
    ```
+
+#### Docker-Specific Issues
+
+**Problem**: Docker containers fail to start or build
+
+**Solutions**:
+
+1. **Container won't start - "already in use" error**:
+   ```bash
+   # Stop all containers
+   docker compose down
+   
+   # Remove stopped containers
+   docker compose rm -f
+   
+   # Start fresh
+   docker compose up
+   ```
+
+2. **Build fails or outdated dependencies**:
+   ```bash
+   # Rebuild containers from scratch
+   docker compose build --no-cache
+   
+   # Or rebuild specific service
+   docker compose build --no-cache backend
+   ```
+
+3. **Database migrations not running**:
+   ```bash
+   # Check backend logs
+   docker compose logs backend
+   
+   # Manually run migrations in container
+   docker compose exec backend alembic upgrade head
+   ```
+
+4. **Hot reload not working**:
+   - Ensure volumes are mounted correctly in docker-compose.yml
+   - On Windows, you may need to enable file sharing in Docker Desktop settings
+   - Try restarting the specific service:
+     ```bash
+     docker compose restart backend
+     # or
+     docker compose restart frontend
+     ```
+
+5. **Out of disk space or "no space left on device"**:
+   ```bash
+   # Clean up unused Docker resources
+   docker system prune -a
+   
+   # Remove specific volumes (WARNING: deletes data)
+   docker compose down -v
+   ```
+
+6. **Frontend shows blank page or can't connect to backend**:
+   - Check backend is running: `docker compose ps`
+   - Verify backend health: `curl http://localhost:8000/health`
+   - Check CORS settings in backend/.env (should include frontend URL)
+   - View frontend logs: `docker compose logs frontend`
+
+7. **Permission denied errors**:
+   ```bash
+   # Fix entrypoint script permissions
+   chmod +x backend/docker-entrypoint.sh
+   
+   # Or rebuild the image
+   docker compose build backend
+   ```
+
+**Quick Debug Commands**:
+```bash
+# View all container logs
+docker compose logs -f
+
+# View specific service logs
+docker compose logs -f backend
+
+# Check container status
+docker compose ps
+
+# Enter a running container for debugging
+docker compose exec backend bash
+docker compose exec frontend sh
+
+# Restart a service
+docker compose restart backend
+
+# Stop and remove everything (fresh start)
+docker compose down -v
+docker compose up --build
+```
 
 #### Frontend Dependencies Issues
 
