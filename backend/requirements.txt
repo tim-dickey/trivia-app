@@ -2,8 +2,8 @@
 # Generated for trivia-app Story 1.1
 
 # Core Framework
-fastapi==0.109.0
-uvicorn[standard]==0.27.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
+fastapi==0.115.6
+uvicorn[standard]==0.34.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
 
 # Database
 sqlalchemy==2.0.46
@@ -11,7 +11,8 @@ alembic==1.13.1
 psycopg[binary]==3.3.2  # PostgreSQL adapter
 
 # Authentication & Security
-python-jose[cryptography]==3.4.0
+pyjwt==2.10.1
+cryptography==44.0.1  # For PyJWT cryptographic algorithms
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 python-multipart==0.0.22
@@ -22,16 +23,16 @@ redis==5.0.1 #Ensure actual Redis server version (container or cloud) is reasona
 
 # Validation & Settings
 pydantic==2.12.5
-pydantic-settings==2.1.0
-email-validator==2.1.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
+pydantic-settings==2.12.0
+email-validator==2.2.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
 
 # Testing
 pytest==9.0.2
-pytest-asyncio>=0.25.0 # important: not pinned to exactly 0.25.0
+pytest-asyncio==1.3.0  # Pinned for reproducibility, compatible with pytest >=8.2,<10
 pytest-cov==6.0.0
 httpx==0.27.2
 codacy-coverage==1.3.11
 
 # Development
-ruff>=0.1.6,<0.2.0
-black>=24.3.0,<24.4.0
+ruff==0.1.15  # Pinned for reproducibility and stability
+black==24.3.0  # Pinned for reproducibility and stability

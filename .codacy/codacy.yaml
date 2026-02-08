@@ -1,8 +1,7 @@
 runtimes:
-    - node@20.18.1
+    - node@20.0.0
     - python@3.11.11
 tools:
     - eslint@8.57.0
-    - lizard@1.17.31
-    - semgrep@1.78.0
+    - pylint@3.3.6
     - trivy@0.66.0
