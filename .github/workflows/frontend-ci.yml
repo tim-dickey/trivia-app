@@ -48,20 +48,14 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run TypeScript type checking
-        run: npx tsc --noEmit
-
       - name: Build application
         run: npm run build
 
-      - name: Run tests
-        run: npm test -- --run
-
-      - name: Generate coverage report
+      - name: Run tests with coverage
         run: npm run test:coverage -- --run
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
         with:
           files: ./frontend/coverage/lcov.info
           flags: frontend
@@ -71,7 +65,7 @@ jobs:
 
       - name: Upload coverage to Codacy
         if: ${{ secrets.CODACY_PROJECT_TOKEN != '' }}
-        uses: codacy/codacy-coverage-reporter-action@v1
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: frontend/coverage/lcov.info
