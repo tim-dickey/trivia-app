@@ -44,7 +44,7 @@ python3 scripts/create-p1-issues.py
 Creates GitHub issues from the consolidated `issues-log.json` file which includes all issues from multiple sources (code review, PRD validation, etc.).
 
 **Features**:
-- Creates issues from consolidated log (20 issues total)
+- Creates issues from consolidated log (issue count varies by review)
 - Tracks created issues by updating the log file
 - Skips already-created issues
 - Updates GitHub issue numbers in the log
@@ -69,7 +69,7 @@ python3 scripts/create-issues-from-log.py
 Creates GitHub issues from the original code review JSON files (P0, P1, P2).
 
 **Features**:
-- Creates 15 code review issues
+- Creates code review issues from JSON files (issue count varies by review)
 - Validates JSON structure
 - Generates tracking file
 
@@ -107,16 +107,28 @@ bash scripts/run-issue-creation.sh
 
 ---
 
+### 6. run-issue-creation.ps1
+
+PowerShell wrapper script that calls the Python automation with proper setup.
+
+**Usage**:
+```powershell
+./scripts/run-issue-creation.ps1
+```
+
+---
+
 ## Comparison
 
 | Script | Issues | Source | Tracking | Best For |
 |--------|--------|--------|----------|----------|
 | **create-p1-issues.py** | 5 | P1 JSON | p1-issues-created.json | **Creating P1 issues only** |
 | **create-p1-issues.sh** | 5 | P1 JSON | None | **Bash users, P1 only** |
-| **create-issues-from-log.py** | 20 | Consolidated log | Updates log file | **Most comprehensive, all issues** |
-| create-github-issues.py | 15 | Code review JSONs | Separate tracking file | Code review issues only |
-| create-code-review-issues.sh | 15 | Inline bash | Manual | Bash users, selective creation |
-| run-issue-creation.sh | 15 | Via Python | Via Python script | Simple wrapper |
+| **create-issues-from-log.py** | Varies | Consolidated log | Updates log file | **Most comprehensive, all issues** |
+| create-github-issues.py | Varies | Code review JSONs | Separate tracking file | Code review issues only |
+| create-code-review-issues.sh | Varies | Inline bash | Manual | Bash users, selective creation |
+| run-issue-creation.sh | Varies | Via Python | Via Python script | Simple wrapper (bash) |
+| run-issue-creation.ps1 | Varies | Via Python | Via Python script | Simple wrapper (PowerShell) |
 
 ## Recommended Workflow
 
@@ -134,7 +146,7 @@ python3 scripts/create-p1-issues.py
 
 ### Create All Issues
 ```bash
-# Create all 20 issues from consolidated log
+# Create all issues from consolidated log
 python3 scripts/create-issues-from-log.py
 ```
 
@@ -153,20 +165,20 @@ The script is **idempotent** - it will:
 
 Example output:
 ```
-ℹ️  15 issues already created, skipping:
+ℹ️  Issues already created, skipping:
    - LOG-001: #23 [P0] Consolidate CI/CD Workflows
    - LOG-002: #24 [P0] Organization Scoping Middleware
    ...
 
-Creating 5 new issues...
+Creating new issues...
 ```
 
 ## Issue Log Structure
 
-The consolidated log includes:
-- **20 total issues**
-  - 15 from Code Review 2026-02-02
-  - 5 from PRD Validation 2026-01-24
+The consolidated log includes (issue count varies by review):
+- **Example**: 20 total issues (current log)
+  - 15 from Code Review 2026-02-02 (current log)
+  - 5 from PRD Validation 2026-01-24 (current log)
 - **Priorities**: 5 P0 (Critical), 5 P1 (High), 10 P2 (Medium)
 - **Total Effort**: 5.9 days (47.25 hours)
 

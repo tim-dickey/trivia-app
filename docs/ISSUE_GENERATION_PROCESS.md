@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the complete process for generating GitHub issues from JSON files, supporting all 4 priority levels (P0-P3).
+This document describes the complete process for generating GitHub issues from JSON files, supporting all 4 priority levels (P0-P3). The issue count varies based on BMAD review results.
 
 ## Priority Levels
 
@@ -74,6 +74,17 @@ cd trivia-app/scripts
 cd trivia-app
 python3 scripts/create-github-issues.py
 ```
+
+```powershell
+# Method 3: PowerShell wrapper
+cd trivia-app
+./scripts/run-issue-creation.ps1
+```
+
+**WSL Notes**:
+- Run `gh auth login` inside WSL (Windows auth does not carry over).
+- If you see `^M` or `command not found`, convert line endings:
+  `sed -i 's/\r$//' scripts/run-issue-creation.sh`
 
 ### Output
 

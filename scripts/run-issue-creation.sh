@@ -16,7 +16,7 @@ echo ""
 # Note: This script should be run with proper GitHub authentication
 # If gh is not authenticated, it will use the current session's credentials
 
-echo "Note: Creating 20 issues (5 P0, 5 P1, 5 P2, 5 P3)"
+echo "Note: Issue count varies based on BMAD review results"
 echo "This may take a few minutes..."
 echo ""
 
