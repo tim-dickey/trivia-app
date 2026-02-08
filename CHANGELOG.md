@@ -18,10 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `email-validator` from 2.1.0 to 2.2.0
 
 #### Frontend
-- **CRITICAL**: Updated `vite` from 5.0.8 to 5.4.21 (fixes file system bypass vulnerability)
+- **CRITICAL**: Updated `vite` from 5.0.8 to 5.4.19 (fixes file system bypass vulnerability)
 - Updated `react` and `react-dom` from 18.2.0 to 18.3.1
 - Updated `typescript` from 5.2.2 to 5.7.3 (performance improvements)
-- Updated `tailwindcss` from 3.3.6 to 3.4.19
+- Updated `tailwindcss` from 3.3.6 to 3.4.18
 
 ### Changed
 
