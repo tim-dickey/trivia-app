@@ -10,13 +10,14 @@ Supports all 4 priority levels:
 """
 
 import json
+import os
 import subprocess
 import sys
 import time
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 
-REPO = "tim-dickey/trivia-app"
+REPO = os.environ.get("GITHUB_REPOSITORY", "tim-dickey/trivia-app")
 SCRIPT_DIR = Path(__file__).parent
 ISSUES_DIR = SCRIPT_DIR.parent / "_bmad-output/implementation-artifacts"
 
