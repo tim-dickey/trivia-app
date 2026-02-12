@@ -4,7 +4,8 @@ Security utilities for password hashing and JWT token management
 from datetime import datetime, timedelta
 from typing import Any
 from passlib.context import CryptContext
-from jose import jwt, JWTError
+import jwt
+from jwt.exceptions import PyJWTError
 from backend.core.config import settings
 
 # Password hashing context
@@ -90,5 +91,5 @@ def decode_token(token: str) -> dict[str, Any] | None:
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         return payload
-    except JWTError:
+    except PyJWTError:
         return None

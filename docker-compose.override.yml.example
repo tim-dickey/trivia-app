@@ -1,0 +1,74 @@
+# docker-compose.override.yml.example
+#
+# This file shows examples of how to customize the Docker Compose setup
+# for your local development environment.
+#
+# To use:
+# 1. Copy this file to docker-compose.override.yml
+# 2. Uncomment and modify the sections you need
+# 3. Run `docker compose up` (override file is automatically loaded)
+#
+# Note: docker-compose.override.yml is gitignored, so your local changes
+# won't be committed.
+
+# Example: Change ports to avoid conflicts
+# services:
+#   backend:
+#     ports:
+#       - "8001:8000"  # Use port 8001 instead of 8000
+#   
+#   frontend:
+#     ports:
+#       - "3000:5173"   # Use port 3000 instead of 5173
+#   
+#   postgres:
+#     ports:
+#       - "5433:5432"   # Use port 5433 instead of 5432
+
+# Example: Add custom environment variables
+# services:
+#   backend:
+#     environment:
+#       - LOG_LEVEL=DEBUG
+#       - CUSTOM_FEATURE_FLAG=true
+
+# Example: Mount additional volumes
+# services:
+#   backend:
+#     volumes:
+#       - ./custom-scripts:/scripts:ro
+
+# Example: Override command for debugging
+# services:
+#   backend:
+#     command: /bin/bash -c "pip install debugpy && python -m debugpy --listen 0.0.0.0:5678 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload"
+#     ports:
+#       - "8000:8000"
+#       - "5678:5678"  # Debug port
+
+# Example: Add a database admin tool (pgAdmin)
+# services:
+#   pgadmin:
+#     image: dpage/pgadmin4:latest
+#     environment:
+#       - PGADMIN_DEFAULT_EMAIL=admin@example.com
+#       - PGADMIN_DEFAULT_PASSWORD=admin
+#     ports:
+#       - "5050:80"
+#     depends_on:
+#       - postgres
+
+# Example: Run tests automatically
+# services:
+#   backend-test:
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile.dev
+#     command: pytest -v --cov=backend
+#     volumes:
+#       - ./backend:/app
+#     environment:
+#       - DATABASE_URL=postgresql://trivia_user:trivia_pass@postgres:5432/trivia_db_test
+#     depends_on:
+#       postgres:
+#         condition: service_healthy
