@@ -22,7 +22,7 @@ celery==5.3.4
 redis==5.0.1 #Ensure actual Redis server version (container or cloud) is reasonably current
 
 # Validation & Settings
-pydantic==2.12.5  # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
+pydantic==2.12.5 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
 pydantic-settings==2.12.0
 email-validator==2.2.0
 
