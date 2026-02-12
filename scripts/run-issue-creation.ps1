@@ -4,23 +4,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-if (-not $Repo -or $Repo.Trim() -eq '') {
-    # Prefer an existing GITHUB_REPOSITORY environment variable (e.g., in CI)
-    if ($env:GITHUB_REPOSITORY) {
-        $Repo = $env:GITHUB_REPOSITORY
-    } else {
-        # Try GitHub CLI to get the current repository nameWithOwner
-        $ghCmd = Get-Command gh -ErrorAction SilentlyContinue
-        if ($null -ne $ghCmd) {
-            try {
-                $repoInfo = gh repo view --json nameWithOwner | ConvertFrom-Json
-                if ($repoInfo -and $repoInfo.nameWithOwner) {
-                    $Repo = $repoInfo.nameWithOwner
-                }
-            } catch {
-                # Ignore errors and continue to other detection methods
-            }
-        }
+$repo = if ($env:GITHUB_REPOSITORY) { $env:GITHUB_REPOSITORY } else { 'tim-dickey/trivia-app' }
 
         # Fallback: derive from git remote URL if available
         if (-not $Repo) {

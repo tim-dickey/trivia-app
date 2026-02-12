@@ -42,6 +42,9 @@ coverage.xml
 .env
 .env.local
 
+# Docker
+docker-compose.override.yml
+
 # Node.js
 node_modules/
 npm-debug.log*
@@ -67,3 +70,8 @@ Thumbs.db
 
 # Alembic
 backend/alembic/versions/*.pyc
+
+# Codacy
+.codacy/cli-config.yaml
+.codacy/tools-configs/
+.codacy/logs/
