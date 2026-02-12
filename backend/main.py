@@ -8,6 +8,7 @@ from backend.core.config import settings
 from backend.api.v1 import api_router
 from backend.websocket.manager import manager
 from backend.core.security import decode_token
+from backend.core.security_middleware import SecurityHeadersMiddleware
 import logging
 
 logger = logging.getLogger(__name__)
@@ -26,6 +27,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Security headers middleware
+app.add_middleware(SecurityHeadersMiddleware)
 
 # Include API v1 router
 app.include_router(api_router, prefix=settings.API_V1_PREFIX)
