@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 
-$repo = 'tim-dickey/trivia-app'
+$repo = if ($env:GITHUB_REPOSITORY) { $env:GITHUB_REPOSITORY } else { 'tim-dickey/trivia-app' }
 
 Write-Host '============================================================'
 Write-Host 'Creating GitHub Issues from Code Review Findings'
