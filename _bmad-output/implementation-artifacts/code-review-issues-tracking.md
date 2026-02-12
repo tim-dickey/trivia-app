@@ -5,13 +5,14 @@ Source: Code Review 2026-02-02
 
 ## Created Issues
 
+**Note**: P0-3 (Implement WebSocket Infrastructure for Real-Time Features) from the source JSON was not created as a GitHub issue during the initial creation run. This may have been intentional or an oversight during the creation process.
+
 ### P0 (Critical)
 
 - [ ] #61 - [P0] Consolidate CI/CD Workflows to Eliminate Duplicate Test Runs
 - [ ] #62 - [P0] Implement Organization Scoping Middleware for Multi-Tenancy
 - [ ] #63 - [P0] Fix Test Database Configuration (PostgreSQL in CI)
 - [ ] #64 - [P0] Document Required GitHub Secrets for CI/CD
-- [ ] (TBD) - [P0] P0-3: Implement WebSocket Infrastructure for Real-Time Features (issue to be created and linked)
 
 ### P1 (High)
 
