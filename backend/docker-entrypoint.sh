@@ -8,9 +8,14 @@ echo "==================================="
 echo "Starting Trivia App Backend..."
 echo "==================================="
 
+# Extract database connection details from DATABASE_URL or use defaults
+DB_HOST="${PGHOST:-postgres}"
+DB_USER="${PGUSER:-trivia_user}"
+DB_NAME="${PGDATABASE:-trivia_db}"
+
 # Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to be ready..."
-until pg_isready -h postgres -U trivia_user -d trivia_db; do
+until pg_isready -h "$DB_HOST" -U "$DB_USER" -d "$DB_NAME"; do
   echo "PostgreSQL is unavailable - sleeping"
   sleep 2
 done

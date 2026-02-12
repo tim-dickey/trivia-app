@@ -43,7 +43,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://trivia_user:trivia_pass@postgres:5432/trivia_db
       - REDIS_URL=redis://redis:6379/0
-      - SECRET_KEY=dev-secret-key-change-in-production-use-openssl-rand-hex-32
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-change-in-production-use-openssl-rand-hex-32}
       - DEBUG=True
       - CORS_ORIGINS=["http://localhost:5173","http://localhost:3000"]
       - APP_NAME=trivia-app

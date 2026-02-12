@@ -11,7 +11,7 @@ Successfully updated all outdated dependencies with security patches as requeste
 1. **python-jose → PyJWT Migration** ✅
    - **Removed**: `python-jose[cryptography]==3.4.0` (had CVE vulnerabilities)
    - **Added**: `PyJWT==2.10.1` (secure, actively maintained)
-   - **Added**: `cryptography==44.0.1` (for PyJWT cryptographic algorithms)
+   - **Added**: `cryptography==46.0.5` (for PyJWT cryptographic algorithms; fixes subgroup validation vulnerability for SECT curves)
    - **Code Changes**: Updated `backend/core/security.py`
      - Changed import: `from jose import jwt, JWTError` → `import jwt` and `from jwt.exceptions import PyJWTError`
      - Updated exception handling to use `PyJWTError` instead of `JWTError`
@@ -24,8 +24,8 @@ Successfully updated all outdated dependencies with security patches as requeste
 
 3. **Cryptography Security Fix** ✅
    - **Before**: N/A
-   - **After**: `cryptography==44.0.1`
-   - **Fix**: Addresses CVE-2024-12797 (low severity)
+   - **After**: `cryptography==46.0.5`
+   - **Fix**: Addresses subgroup validation vulnerability for SECT curves (CVE affecting versions ≤ 46.0.4)
 
 #### Other Backend Updates
 4. **uvicorn**: `0.27.0` → `0.34.0` (includes security patches)

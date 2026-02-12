@@ -12,7 +12,7 @@ psycopg[binary]==3.3.2  # PostgreSQL adapter
 
 # Authentication & Security
 pyjwt==2.10.1
-cryptography==44.0.1  # For PyJWT cryptographic algorithms
+cryptography==46.0.5  # For PyJWT cryptographic algorithms
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 python-multipart==0.0.22
@@ -22,9 +22,9 @@ celery==5.3.4
 redis==5.0.1 #Ensure actual Redis server version (container or cloud) is reasonably current
 
 # Validation & Settings
-pydantic==2.12.5
+pydantic==2.12.5 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
 pydantic-settings==2.12.0
-email-validator==2.2.0 # Track FastAPI reasonably closely; upgrade Pydantic within the same major version when needed, not arbitrarily
+email-validator==2.2.0
 
 # Testing
 pytest==9.0.2

@@ -20,7 +20,6 @@ wheels/
 .installed.cfg
 *.egg
 venv/
-.venv/
 env/
 ENV/
 
@@ -71,3 +70,8 @@ Thumbs.db
 
 # Alembic
 backend/alembic/versions/*.pyc
+
+# Codacy
+.codacy/cli-config.yaml
+.codacy/tools-configs/
+.codacy/logs/

@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Backend
 - **CRITICAL**: Migrated from `python-jose` to `PyJWT` (2.10.1) to address CVE vulnerabilities
 - **CRITICAL**: Updated `fastapi` from 0.109.0 to 0.115.6 (fixes ReDoS vulnerability in Content-Type header parsing)
-- Updated `cryptography` to 44.0.1 (fixes CVE-2024-12797)
+- **CRITICAL**: Updated `cryptography` to 46.0.5 (fixes subgroup validation vulnerability for SECT curves; CVE affecting ≤ 46.0.4)
 - Updated `uvicorn` from 0.27.0 to 0.34.0 (includes security patches)
 - Updated `pydantic-settings` from 2.1.0 to 2.12.0
 - Updated `email-validator` from 2.1.0 to 2.2.0

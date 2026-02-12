@@ -19,13 +19,13 @@ Code review of PR #20 documented critical issues. All necessary files have been 
 
 ✅ **Complete**: All infrastructure and documentation
 - Issue JSON files (P0, P1, P2) in `_bmad-output/implementation-artifacts/`
-- **Consolidated Issues Log** in `_bmad-output/implementation-artifacts/issues-log.json` (20 issues)
-- **Recommended**: `scripts/create-issues-from-log.py` - Creates all 20 issues and updates log
-- **Alternative**: `scripts/create-github-issues.py` - Creates only 15 code review issues
+- **Consolidated Issues Log** in `_bmad-output/implementation-artifacts/issues-log.json` (issue count varies; current log has 20)
+- **Recommended**: `scripts/create-issues-from-log.py` - Creates all issues in log (count varies) and updates log
+- **Alternative**: `scripts/create-github-issues.py` - Creates code review issues from JSON files (count varies)
 - Bash scripts in `scripts/` directory
 - Comprehensive documentation in `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 
-❌ **Pending**: Actual GitHub issues creation (20 issues total: 15 from code review + 5 from PRD validation)
+❌ **Pending**: Actual GitHub issues creation (count varies; current log has 20: 15 from code review + 5 from PRD validation)
 
 ## Why Issues Weren't Created Automatically
 
@@ -43,14 +43,14 @@ The automated scripts require GitHub CLI (`gh`) authentication, which is not ava
    gh auth login
    ```
 
-2. **Run the consolidated log script** (creates all 20 issues):
+2. **Run the consolidated log script** (creates all issues in log; count varies):
    ```bash
    cd /home/runner/work/trivia-app/trivia-app
    python3 scripts/create-issues-from-log.py
    ```
 
    This will:
-   - Create all 20 issues automatically (15 code review + 5 PRD validation)
+   - Create all issues automatically (count varies; current log has 20: 15 code review + 5 PRD validation)
    - Apply correct labels (priority:critical, priority:high, priority:medium, etc.)
    - Update `issues-log.json` with GitHub issue numbers automatically
    - Update status and date fields in the log
@@ -62,23 +62,23 @@ The automated scripts require GitHub CLI (`gh`) authentication, which is not ava
    python3 scripts/create-github-issues.py
    ```
    
-   This creates only the 15 code review issues and generates a separate tracking file. Does not update `issues-log.json` or include PRD validation issues.
+   This creates the code review issues from JSON files (count varies) and generates a separate tracking file. Does not update `issues-log.json` or include PRD validation issues.
 
 ### Option 2: Manual Creation via Web UI
 
 Visit https://github.com/tim-dickey/trivia-app/issues/new for each issue and use the content from:
 
 1. **Consolidated Issues Log** (RECOMMENDED): `_bmad-output/implementation-artifacts/issues-log.md`
-   - Contains all 20 issues (15 code review + 5 PRD validation)
+   - Contains all issues in log (count varies; current log has 20: 15 code review + 5 PRD validation)
    - Well-formatted with all details
    - Organized by priority (P0, P1, P2)
 
 2. **Detailed Documentation**: `_bmad-output/implementation-artifacts/all-issues-to-create.md`
-   - Contains 15 code review issues with full body text
+   - Contains the code review issues with full body text (count varies)
    - Each issue separated by `---ISSUE-SEPARATOR---`
 
 3. **JSON Data Files** (for API/automation):
-   - `_bmad-output/implementation-artifacts/issues-log.json` - All 20 issues consolidated
+   - `_bmad-output/implementation-artifacts/issues-log.json` - consolidated issues (count varies; current log has 20)
    - `_bmad-output/implementation-artifacts/code-review-issues-p0.json` - 5 P0 Critical issues
    - `_bmad-output/implementation-artifacts/code-review-issues-p1.json` - 5 P1 High priority issues
    - `_bmad-output/implementation-artifacts/code-review-issues-p2.json` - 5 P2 Medium priority issues
@@ -98,11 +98,11 @@ curl -X POST \
 
 ## Issue Summary
 
-**Total: 20 issues - 5.4 days effort**
+**Total: Example from 2026-02-02 review (future reviews may differ)**
 
 ### Sources
-- **Code Review 2026-02-02**: 15 issues (PR #20 findings)
-- **PRD Validation 2026-01-24**: 5 issues (requirements improvements)
+- **Code Review 2026-02-02**: Example issues from PR #20 findings
+- **PRD Validation 2026-01-24**: Example issues from requirements improvements
 
 ### P0 (Critical) - 5 issues - 2.6 days effort
 1. **[P0] Consolidate CI/CD Workflows** (3h) - Eliminate duplicate test runs
@@ -139,7 +139,7 @@ curl -X POST \
 ## Verification
 
 After creating the issues, verify:
-- [ ] All 20 issues created
+- [ ] All issues created (count varies)
 - [ ] Correct labels applied (priority:critical, priority:high, priority:medium, etc.)
 - [ ] Issue numbers tracked in `issues-log.json`
 - [ ] Issues are properly linked in project board (if applicable)
@@ -155,7 +155,7 @@ After creating the issues, verify:
 
 ## Additional Resources
 
-- **Consolidated Issues Log**: `_bmad-output/implementation-artifacts/issues-log.md` (all 20 issues)
+- **Consolidated Issues Log**: `_bmad-output/implementation-artifacts/issues-log.md` (all issues in log; current log has 20)
 - **Issues Log JSON**: `_bmad-output/implementation-artifacts/issues-log.json` (machine-readable)
 - **Full documentation**: `_bmad-output/implementation-artifacts/issues-creation-guide.md`
 - **Action items detail**: `_bmad-output/implementation-artifacts/action-items-2026-02-02.md` (916 lines)
