@@ -48,7 +48,7 @@ The following tools are configured for code analysis:
 
 To optimize analysis time, the following paths are excluded from Codacy analysis:
 
-**Note**: As of February 7, 2026, the project has standardized on `venv/` for Python virtual environments. The `.venv/` pattern has been removed from `.gitignore` and **should not be used** going forward. This standardization supersedes any previous documentation or configurations that referenced `.venv/`.
+**Note**: As of February 7, 2026, the project has standardized on `venv/` for Python virtual environments. While `venv/` is the standard, both `venv/` and `.venv/` should remain in `.gitignore` to prevent accidental commits of local environments.
 
 - `node_modules/**` - Node.js dependencies
 - `venv/**` - Python virtual environments (**use `venv/` only, NOT `.venv/`**)
