@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/your-org/trivia-app/discussions
+    about: Ask questions and discuss ideas in our community discussions
+  - name: Security Vulnerability
+    url: https://github.com/your-org/trivia-app/security/advisories
+    about: Report security vulnerabilities privately using GitHub's security advisory

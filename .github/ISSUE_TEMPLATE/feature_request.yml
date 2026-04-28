@@ -1,0 +1,60 @@
+name: Feature Request
+description: Suggest an idea for improvement
+labels: ["enhancement"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: textarea
+    id: problem_statement
+    attributes:
+      label: Problem Statement
+      description: Describe the problem or limitation you're addressing
+      placeholder: |
+        Is your feature request related to a problem? Please describe it.
+        Example: I'm frustrated when... / It would be useful if...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like
+      placeholder: "How would you like this feature to work?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives_considered
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+      placeholder: |
+        - Alternative 1: ...
+        - Alternative 2: ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Any additional information, screenshots, diagrams, or use cases
+      placeholder: "Add any other context or examples here..."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched for existing feature requests
+          required: true
+        - label: This is not a security vulnerability
+          required: true
