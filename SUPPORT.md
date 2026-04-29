@@ -5,7 +5,7 @@ Thank you for using Trivia App! We're here to help.
 ## Getting Help
 
 ### GitHub Issues
-For bugs, feature requests, and technical issues, please open a [GitHub Issue](https://github.com/your-org/trivia-app/issues). 
+For bugs, feature requests, and technical issues, please open a [GitHub Issue](/issues).
 
 Before opening an issue:
 - Search existing issues to avoid duplicates
@@ -13,7 +13,7 @@ Before opening an issue:
 - Include relevant context: environment, steps to reproduce, expected vs. actual behavior
 
 ### GitHub Discussions
-For general questions, ideas, and discussions about the project, please use [GitHub Discussions](https://github.com/your-org/trivia-app/discussions).
+For general questions, ideas, and discussions about the project, please use [GitHub Discussions](/discussions).
 
 This is the best place for:
 - How-to questions
