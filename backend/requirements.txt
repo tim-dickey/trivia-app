@@ -15,7 +15,7 @@ pyjwt==2.10.1
 cryptography==46.0.5  # For PyJWT cryptographic algorithms
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
-python-multipart==0.0.22
+python-multipart==0.0.27
 
 # Task Queue
 celery==5.3.4
